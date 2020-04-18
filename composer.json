@@ -1,0 +1,16 @@
+{
+  "name": "smwdigital/rotas",
+  "description": "descrição",
+  "require": {
+    "php": ">= 7.2",
+    "ext-json": "*",
+    "php-di/php-di": "6.1.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Solital\\": "app/Solital/",
+      "Wolf\\": "app/Wolf/",
+      "Component\\": "components/"
+    }
+  }
+}
