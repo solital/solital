@@ -28,7 +28,7 @@ class ClassLoader implements IClassLoader
     public function loadClass(string $class)
     {
         if (class_exists($class) === false) {
-            throw new NotFoundHttpException(sprintf('Class "%s" does not exist', $class), 404);
+            NotFoundHttpException::alertMessage(404, "Class '$class' does not exist");
         }
 
         if ($this->useDependencyInjection === true) {

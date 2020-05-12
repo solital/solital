@@ -1,26 +1,29 @@
 <?php
 
-#require_once '../config/config.php';
-#require_once '../config/db.php';
+/**
+ * ALERT: The files below should not be changed. 
+ * Changing them may cause a fatal error in your project.
+ */
 
-function includes(){
-    foreach(glob('../config/*.php') as $arquivo){
-        require_once $arquivo;
-    }
-}
-
-includes();
+session_start();
 
 require_once '../vendor/autoload.php';
 
+foreach(glob('../config/*.php') as $file){
+    require_once $file;
+}
+
 use Solital\Course\Course;
-use Solital\Guardian\Guardian;
+use Wolf\Wolf;
 
 /* Load external routes file */
-require_once '../routers/routes.php';
+require_once ROOT.'/helpers.php';
+require_once ROOT.'/routers/routes.php';
 
-if (DEV_MODE === true) {
-    Course::get('/dev-mode', 'Solital\Controllers\DevModeController@index');   
+if (VINCI_MODE === true) {
+    Course::get('/vinci-mode', function(){
+        Wolf::loadDevView('vinci/vinci', []);
+    });   
 }
 
 if (ERRORS_DISPLAY === true) {
@@ -28,14 +31,10 @@ if (ERRORS_DISPLAY === true) {
     error_reporting(E_ALL);
 }
 
-if (GUARDIAN_MAIL_SEND === true) {
-    Guardian::send();
-}
-
 /**
  * The default namespace for route-callbacks, so we don't have to specify it each time.
  * Can be overwritten by using the namespace config option on your routes.
  */
 
-Course::setDefaultNamespace('Pecee\Controllers');
+Course::setDefaultNamespace('Solital\Controller');
 Course::start();

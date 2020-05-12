@@ -19,6 +19,7 @@ abstract class Exception
                 </div>
             </body>
         ";
+        die;
     }
     
     public static function alertWarning(string $msg) 
@@ -31,6 +32,19 @@ abstract class Exception
                 </div>
             </body>
         ";
+    }
+
+    public static function message(string $msg) 
+    {
+        echo "
+            <body style='background: #F8F8FF;'>
+                <div style='background: #FFF; padding: 15px; font-family: sans-serif;'>
+                    <p><h1 style='color: #EE0000;'>Katrina alert: Division by zero</h1></p><hr>
+                    <p><strong>Type error:</strong> ".$msg."<br><hr></p>
+                </div>
+            </body>
+        ";
+        die;
     }
     
 }

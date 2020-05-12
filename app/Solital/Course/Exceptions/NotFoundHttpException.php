@@ -16,6 +16,7 @@ class NotFoundHttpException extends HttpException
                 </div>
             </body>
         ";
+        die;
     }
     
     public static function alertWarning(int $code, string $msg) 
@@ -29,6 +30,7 @@ class NotFoundHttpException extends HttpException
                 </div>
             </body>
         ";
+        die;
     }
 
 }

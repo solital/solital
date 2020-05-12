@@ -1,9 +1,11 @@
 <?php
 
-namespace Source\Upload;
-use Source\Verify\Verify;
+namespace Component\Uplayer;
+use Component\Verify\Verify;
+use Component\Exception\NotFoundException;
+use Component\Exception\Exception;
 
-class Upload extends Verify
+class Uplayer extends Verify
 {
 
     private $directory;
@@ -25,8 +27,7 @@ class Upload extends Verify
 
             if (isset($format)) {
                 if (!in_array($extFile, $format)) {
-                    echo "<h1 style='font-family: sans-serif;'>File format is different from the one informed</h1>";
-                    die();
+                    Exception::fileError("File format is different from the one informed");
                 }  
             }
  
@@ -36,17 +37,16 @@ class Upload extends Verify
 
             if ($unique == true) {               
                 if (!move_uploaded_file($file['tmp_name'], $this->directory."/". $newName)) {
-                    echo "<h1 style='font-family: sans-serif;'>File could not be uploaded</h1>";
+                    Exception::fileError("File could not be uploaded");
                 }
             } else {
                 if (!move_uploaded_file($file['tmp_name'], $this->directory."/". $file['name'])) {
-                    echo "<h1 style='font-family: sans-serif;'>File could not be uploaded</h1>";
+                    Exception::fileError("File could not be uploaded");
                 }
             }
             
         } else {
-            echo "<h1 style='font-family: sans-serif;'>File not found</h1>";
-            echo "<p style='font-family: sans-serif;'>No files were sent</p>";
+            NotFoundException::fileNotFound("File not found", "No files were sent");
         }
     }
 
@@ -64,8 +64,7 @@ class Upload extends Verify
 
                 if (isset($format)) {
                     if (!in_array($extFile, $format)) {
-                        echo "<h1 style='font-family: sans-serif;'>File format is different from the one informed</h1>";
-                        die();
+                        Exception::fileError("File format is different from the one informed");
                     }  
                 }
 
@@ -75,18 +74,17 @@ class Upload extends Verify
                 
                 if ($unique == true) {
                     if (!move_uploaded_file($file['tmp_name'][$i], $this->directory."/". $newName)) {
-                        echo "<h1 style='font-family: sans-serif;'>Files could not be uploaded</h1>";
+                        Exception::fileError("Files could not be uploaded");
                     }
                 } else {
                     if (!move_uploaded_file($file['tmp_name'][$i], $this->directory."/". $file['name'][$i])) {
-                        echo "<h1 style='font-family: sans-serif;'>Files could not be uploaded</h1>";
+                        Exception::fileError("Files could not be uploaded");
                     }
                 }
             }
             
         } else {
-            echo "<h1 style='font-family: sans-serif;'>Files not found</h1>";
-            echo "<p style='font-family: sans-serif;'>No files were sent</p>";
+            NotFoundException::fileNotFound("File not found", "No files were sent");
         }
     }
 }

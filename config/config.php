@@ -5,7 +5,17 @@
  */
 define('ROOT', dirname(__DIR__));
 
-define('DEV_MODE', true);
+/**
+ * CONFIG CONSTANTS
+ */
+
+define('VINCI_MODE', true);
 define('ERRORS_DISPLAY', true);
 
-define('GUARDIAN_MAIL_SEND', true);
+/**
+ * GUARDIAN CONSTANTS
+ */
+
+define('URL_LOGIN', '/login');
+define('URL_DASHBOARD', '/home');
+define('INDEX_LOGIN', 'nomeAdm');

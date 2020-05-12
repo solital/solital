@@ -1,14 +1,19 @@
 {
-  "name": "smwdigital/rotas",
-  "description": "descrição",
+  "name": "solital/solital",
+  "description": "Solital is a framework for php projects. Contains a route system, template, ORM and API",
+  "license": "MIT",
   "require": {
     "php": ">= 7.2",
     "ext-json": "*",
     "php-di/php-di": "6.1.*"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^6.0"
+  },
   "autoload": {
     "psr-4": {
       "Solital\\": "app/Solital/",
+      "Vinci\\": "app/Vinci/",
       "Wolf\\": "app/Wolf/",
       "Component\\": "components/"
     }

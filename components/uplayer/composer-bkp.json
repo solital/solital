@@ -3,7 +3,7 @@
     "description": "descrição",
     "autoload": {
         "psr-4": {
-            "Source\\": "Source/"
+            "Uplayer\\": "uplayer/"
         }
     }
 }

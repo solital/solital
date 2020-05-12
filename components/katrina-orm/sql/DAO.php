@@ -9,22 +9,21 @@ use PDO;
 abstract class DAO extends CustomDAO
 {
 
-    public function verifyLogin(string $column, string $value, string $password)
+    public function verifyLogin(string $column_email, string $column_pass, string $email, string $password)
     {
         try {
-            $sql = "SELECT * FROM $this->table WHERE $column = '$value'";
+            $sql = "SELECT * FROM $this->table WHERE $column_email = '$email'";
             $stmt = DB::prepare($sql);
             $stmt->execute();
             $res = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            if (password_verify($password, $res[$this->columns[1]])) {
-                return true;
+
+            if (password_verify($password, $res[$column_pass])) {
+                return $res;
             } else {
                 return false;
             }
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'verifyLogin()' error");
-            die();
         }
     }
 
@@ -42,7 +41,6 @@ abstract class DAO extends CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'listAll()' error");
-            die();
         }
     }
 
@@ -64,7 +62,6 @@ abstract class DAO extends CustomDAO
             }
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'listOnlyId()' error");
-            die();
         }
     }
 
@@ -85,7 +82,6 @@ abstract class DAO extends CustomDAO
             }
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'innerJoin()' error");
-            die();
         }
     }
 
@@ -107,7 +103,6 @@ abstract class DAO extends CustomDAO
             }
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'innerJoinId()' error");
-            die();
         }
     }
 
@@ -129,7 +124,6 @@ abstract class DAO extends CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'insert()' error");
-            die();
         }
     }
 
@@ -159,7 +153,6 @@ abstract class DAO extends CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'update()' error");
-            die();
         }
     }
 
@@ -178,7 +171,6 @@ abstract class DAO extends CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'delete()' error");
-            die();
         }
     }
 
@@ -198,7 +190,6 @@ abstract class DAO extends CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'call()' error");
-            die();
         }
     }
 }

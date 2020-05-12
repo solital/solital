@@ -3,6 +3,11 @@
 use Solital\Course\Course;
 use Wolf\Wolf;
 
-Course::get('/', 'Solital\Controllers\UserController@index');
-Course::get('/about', 'Solital\Controllers\UserController@about');
-Course::get('/contact', 'Solital\Controllers\UserController@contact');
+Course::get('/', function(){
+    Wolf::loadView('welcome', [], false);
+});
+Course::get('/home', 'Solital\Controller\UserController@home');
+Course::get('/about', 'Solital\Controller\UserController@about');
+Course::get('/login', 'Solital\Controller\UserController@login');
+Course::get('/sair', 'Solital\Controller\UserController@logoff');
+Course::post('/verificar-login', 'Solital\Controller\UserController@verificar');

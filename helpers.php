@@ -1,9 +1,9 @@
 <?php
 
-use Lua\Course\Course as Router;
-use Lua\Http\Url;
-use Lua\Http\Response;
-use Lua\Http\Request;
+use Solital\Course\Course as Router;
+use Solital\Http\Url;
+use Solital\Http\Response;
+use Solital\Http\Request;
 
 /**
  * Get url for a route by using either name/alias, class or method name.
@@ -20,7 +20,7 @@ use Lua\Http\Request;
  * @param string|null $name
  * @param string|array|null $parameters
  * @param array|null $getParams
- * @return \Lua\Http\Url
+ * @return \Solital\Http\Url
  * @throws \InvalidArgumentException
  */
 function url(?string $name = null, $parameters = null, ?array $getParams = null): Url
@@ -29,7 +29,7 @@ function url(?string $name = null, $parameters = null, ?array $getParams = null)
 }
 
 /**
- * @return \Lua\Http\Response
+ * @return \Solital\Http\Response
  */
 function response(): Response
 {
@@ -37,7 +37,7 @@ function response(): Response
 }
 
 /**
- * @return \Lua\Http\Request
+ * @return \Solital\Http\Request
  */
 function request(): Request
 {
@@ -49,7 +49,7 @@ function request(): Request
  * @param string|null $index Parameter index name
  * @param string|null $defaultValue Default return value
  * @param array ...$methods Default methods
- * @return \Lua\Http\Input\InputHandler|array|string|null
+ * @return \Solital\Http\Input\InputHandler|array|string|null
  */
 function input($index = null, $defaultValue = null, ...$methods)
 {
@@ -71,6 +71,7 @@ function redirect(string $url, ?int $code = null): void
     }
 
     response()->redirect($url);
+    exit;
 }
 
 /**

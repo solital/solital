@@ -116,7 +116,7 @@ abstract class Route implements IRoute
         $method = $controller[1];
 
         if (method_exists($class, $method) === false) {
-            throw new NotFoundHttpException(sprintf('Method "%s" does not exist in class "%s"', $method, $className), 404);
+            NotFoundHttpException::alertMessage(404, "Method '$method' does not exist in class '$className'");
         }
 
         $router->debug('Executing callback');

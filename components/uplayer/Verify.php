@@ -1,8 +1,8 @@
 <?php
 
-namespace Source\Verify;
+namespace Component\Verify;
 
-class Verify
+abstract class Verify
 {
     public function validation(string $extension)
     {

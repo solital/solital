@@ -3,9 +3,10 @@
 namespace Component\Katrina;
 use Component\Katrina\DB as DB;
 use Component\Katrina\Exception;
+use Component\Katrina\Pagination as Pagination;
 use PDO;
 
-abstract class CustomDAO
+abstract class CustomDAO extends Pagination
 {
     public function customQueryAll(string $query)
     {
@@ -17,7 +18,6 @@ abstract class CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'customQueryAll()' error");
-            die();
         }
     }
 
@@ -31,7 +31,6 @@ abstract class CustomDAO
             return $res;
         } catch (\PDOException $e) {
             Exception::alertMessage($e, "'customQueryOnly()' error");
-            die();
         }
     }
 }
