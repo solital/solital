@@ -9,8 +9,8 @@ define('ERRORS_DISPLAY', true);
  */
 
 define('URL_LOGIN', '/login');
-define('URL_DASHBOARD', '/home');
-define('INDEX_LOGIN', 'nomeAdm');
+define('URL_DASHBOARD', '/dashboard');
+define('INDEX_LOGIN', 'solital_index_login');
 
 /**
  * OPENSSL CONSTANTS

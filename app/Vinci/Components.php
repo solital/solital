@@ -74,7 +74,7 @@ class Components
         $dir = \dirname(__DIR__)."/Components/Controller/";
         
         if (is_dir($dir)) {
-            file_put_contents($dir."$name.php", "<?php\n\nnamespace Solital\Controller;\n\nclass ".$name."\n{\n\n}");
+            file_put_contents($dir."$name.php", "<?php\n\nnamespace Solital\Components\Controller;\n\nclass ".$name."\n{\n\n}");
             
             return true;
         }
@@ -99,7 +99,7 @@ class Components
         $dir = \dirname(__DIR__)."/Components/Model/";
         
         if (is_dir($dir)) {
-            file_put_contents($dir."$name.php", "<?php\n\nnamespace Solital\Model;\n\nclass ".$name."\n{\n\n}");
+            file_put_contents($dir."$name.php", "<?php\n\nnamespace Solital\Components\Model;\nuse Solital\Components\Model;\n\nclass ".$name." extends Model\n{\n\n}");
             
             return true;
         }

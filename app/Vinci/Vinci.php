@@ -5,6 +5,9 @@ use Solital\Vinci\Components;
 
 class Vinci extends Components
 {
+    const SOLITAL_VERSION = "0.3.3";
+    const VINCI_VERSION = "0.3.2";
+
     public static function verify($command, $file_create)
     {
         switch ($command) {
@@ -23,7 +26,8 @@ class Vinci extends Components
 
             case 'model':
                 $file = ucfirst($file_create);
-                $return = Components::model($file);
+                $file_complete = $file.'Model';
+                $return = Components::model($file_complete);
             
                 if ($return == true) {
                     print_r("Model created\n\n");
@@ -81,7 +85,8 @@ class Vinci extends Components
 
             case 'remove-model':
                 $file = ucfirst($file_create);
-                $return = Components::removeModel($file);
+                $file_complete = $file.'Model';
+                $return = Components::removeModel($file_complete);
             
                 if ($return == true) {
                     print_r("Model removed\n\n");
@@ -153,13 +158,13 @@ class Vinci extends Components
                 break;
 
             case 'about':
-                $about = "Solital framework \033[96m 0.3.0\033[0m\n\n";
+                $about = "Solital framework \033[96m ".Vinci::SOLITAL_VERSION."\033[0m\n\n";
                 $about .= "Thank you for using Solital, you can see the full documentation at https://solital.com/documentation/starting\n\n";
                 $about .= "Components Version\n";
                 $about .= "+------------------------+\n";
-                $about .= "+ Katrina ORM   |\033[93m 0.1.4\033[0m  +\n";
+                $about .= "+ Katrina ORM   |\033[93m ".\Katrina\Version::KATRINA_VERSION."\033[0m  +\n";
                 $about .= "+------------------------+\n";
-                $about .= "+ Vinci Console |\033[93m 0.3.0\033[0m  +\n";
+                $about .= "+ Vinci Console |\033[93m ".Vinci::VINCI_VERSION."\033[0m  +\n";
                 $about .= "+------------------------+\n\n";
                 $about .= "To access the list of Vinci commands, run the command \033[92mphp vinci show\033[0m\n\n";
                 
