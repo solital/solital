@@ -1,13 +1,8 @@
 <?php
 
 use Solital\Course\Course;
-use Wolf\Wolf;
+use Solital\Wolf\Wolf;
 
 Course::get('/', function(){
-    Wolf::loadView('welcome', [], false);
+    Wolf::loadView('welcome');
 });
-Course::get('/home', 'Solital\Controller\UserController@home');
-Course::get('/about', 'Solital\Controller\UserController@about');
-Course::get('/login', 'Solital\Controller\UserController@login');
-Course::get('/sair', 'Solital\Controller\UserController@logoff');
-Course::post('/verificar-login', 'Solital\Controller\UserController@verificar');

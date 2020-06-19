@@ -411,6 +411,21 @@ class Request
         return $this;
     }
 
+    public function getParamsInput()
+    {
+        $body = file_get_contents('php://input');
+        
+        return $body;
+    }
+
+    public function getParamInput(string $param)
+    {
+        $body = file_get_contents('php://input');
+        $json = json_decode($body);
+    
+        return $json->$param;
+    }
+
     public function __isset($name)
     {
         return array_key_exists($name, $this->data) === true;

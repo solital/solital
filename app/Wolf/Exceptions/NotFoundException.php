@@ -1,6 +1,6 @@
 <?php
 
-namespace Wolf;
+namespace Solital\Wolf;
 
 abstract class NotFoundException 
 {
@@ -15,6 +15,7 @@ abstract class NotFoundException
                 </div>
             </body>
             ";
+        die();
     }
     
 }

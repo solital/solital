@@ -1,0 +1,20 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__.'/vendor/autoload.php';
+
+#var_dump($argv);
+
+$command = $argv[1];
+
+if (stripos($command, ":") !== false) {
+    
+    $file = explode(':', $command);
+
+    Solital\Vinci\Vinci::verify($file[0], $file[1]);
+
+} else {
+
+    Solital\Vinci\Vinci::vinciCommand($command);
+
+}

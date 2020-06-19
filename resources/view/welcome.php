@@ -14,9 +14,13 @@
             font-family: 'Montserrat', sans-serif;
         }
 
+        h2 {
+            font-weight: 500;
+        }
+
         .main-text {
-            font-size: 50px;
-            font-weight: 300;
+            font-size: 60px;
+            font-weight: 500;
         }
 
         .container {
@@ -27,7 +31,7 @@
         .link {
             color: #1C1C1C;
             text-decoration: none;
-            margin-right: 15px;
+            margin-right: 25px;
             transition: 0.2s;
         }
 
@@ -36,10 +40,21 @@
             color: #1E90FF;
         }
 
+        .info-2 {
+            font-size: 25px;
+            margin-top: 100px;
+        }
+
         .info {
             background-color: #DCDCDC;
             padding: 20px;
             margin-top: 30px;
+            font-size: 18px;
+        }
+
+        .info-2 > .version {
+            font-size: 20px;
+            margin-top: 100px;
         }
 
         .info a {
@@ -53,26 +68,17 @@
     <section class="container">
         <h1 class="main-text">Welcome to Solital</h1>
 
-        <div class="links">
-            <a href="#" class="link">loren ipsum 1</a>
-            <a href="#" class="link">loren ipsum 2</a>
-            <a href="#" class="link">loren ipsum 3</a>
-            <a href="#" class="link">loren ipsum 4</a>
-            <a href="#" class="link">loren ipsum 5</a>
-        </div>
-
         <div class="info">
-            <a href="#">loren ipsum</a>
+            <a href="#" target="_blank" class="link">Documentation</a>
+            <a href="/vinci-mode" target="_blank" class="link">Vinci Mode</a>
+            <a href="https://github.com/solital/solital" target="_blank" class="link">Github</a>
+            <a href="#" target="_blank" class="link">Blog</a>
         </div>
 
-        <div class="info">
-            <a href="#">loren ipsum</a>
+        <div class="info-2">
+            <p>All right!!! You can now start creating your projects</p>
+            <p class="version">Version: 0.1.0</p>
         </div>
-
-        <div class="info">
-            <a href="#">loren ipsum</a>
-        </div>
-
     </section>
 </body>
 

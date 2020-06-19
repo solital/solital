@@ -11,6 +11,7 @@
 namespace Solital\Course;
 
 use DI\Container;
+use Solital\Wolf\Wolf;
 use Solital\Exceptions\InvalidArgumentException;
 use Solital\Http\Exceptions\MalformedUrlException;
 use Solital\Http\Middleware\BaseCsrfVerifier;
@@ -68,6 +69,27 @@ class Course
      *
      * @return array
      */
+    
+    public static function verifyComponents() 
+    {
+        /* Load external routes file */
+        
+        foreach(glob('../config/*.php') as $configs){
+            require_once $configs;
+        }
+
+        require_once ROOT.'/helpers.php';
+        
+        foreach(glob('../routers/*.php') as $routers){
+            require_once $routers;
+        }
+
+        if (ERRORS_DISPLAY === true) {
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
+        }
+    }
+    
     public static function startDebug(): array
     {
         $routerOutput = null;

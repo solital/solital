@@ -5,16 +5,15 @@
   "require": {
     "php": ">= 7.2",
     "ext-json": "*",
-    "php-di/php-di": "6.1.*"
+    "php-di/php-di": "6.1.*",
+    "solital/katrina": "^0.1.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.0"
   },
   "autoload": {
     "psr-4": {
-      "Solital\\": "app/Solital/",
-      "Vinci\\": "app/Vinci/",
-      "Wolf\\": "app/Wolf/",
+      "Solital\\": "app/",
       "Component\\": "components/"
     }
   }

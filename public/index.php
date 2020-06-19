@@ -9,28 +9,15 @@ session_start();
 
 require_once '../vendor/autoload.php';
 
-foreach(glob('../config/*.php') as $file){
-    require_once $file;
-}
-
 use Solital\Course\Course;
-use Wolf\Wolf;
 
-/* Load external routes file */
-require_once ROOT.'/helpers.php';
-require_once ROOT.'/routers/routes.php';
+define('ROOT', dirname(__DIR__));
 
-if (VINCI_MODE === true) {
-    Course::get('/vinci-mode', function(){
-        Wolf::loadDevView('vinci/vinci', []);
-    });   
-}
+/**
+ * DON'T REMOVE OR CHANGE THE METHOD BELOW
+ */
 
-if (ERRORS_DISPLAY === true) {
-    ini_set('display_errors', 1);
-    error_reporting(E_ALL);
-}
-
+Course::verifyComponents();
 /**
  * The default namespace for route-callbacks, so we don't have to specify it each time.
  * Can be overwritten by using the namespace config option on your routes.

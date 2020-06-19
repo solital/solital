@@ -1,9 +1,0 @@
-{
-    "name": "brenno-duarte/dbabstraction",
-    "description": "descrição",
-    "autoload": {
-        "psr-4": {
-            "Damaper\\": "123src/"
-        }
-    }
-}

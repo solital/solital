@@ -1,46 +1,32 @@
 <?php
 
-namespace Wolf;
-use Wolf\NotFoundException;
+namespace Solital\Wolf;
+use Solital\Wolf\NotFoundException;
 
 class Wolf 
 {
     
     private static $header = ROOT.'/resources/view/header.php';
     private static $footer = ROOT.'/resources/view/footer.php'; 
+    private static $view;
+    private static $ext;
+    private static $data = [];
     
-    public static function loadDevView(string $view, array $key = null, string $ext = "php") 
+    public static function loadView(string $view, array $data = null, string $ext = "php") 
     {
+        $file = ROOT.'/resources/view/'.$view.'.'.$ext;
         
-        if (file_exists(ROOT.'/resources/'.$view.'.'.$ext)) {
-            include_once ROOT.'/resources/'.$view.'.'.$ext;
+        if (isset($data)) {
+            extract($data, EXTR_SKIP);
+        }
+
+        if (file_exists($file)) {
+            include_once $file;
         } else {
             NotFoundException::alertMessage($view, $ext);
-            die();
         }
-    }
-    
-    public static function loadView(string $view, array $key = null, bool $header_footer = true, string $ext = "php") 
-    {
-        
-        if ($header_footer == true) {
-            if (file_exists(self::$header)) {
-                include_once self::$header;
-            }    
-        }
-        
-        if (file_exists(ROOT.'/resources/view/'.$view.'.'.$ext)) {
-            include_once ROOT.'/resources/view/'.$view.'.'.$ext;
-        } else {
-            NotFoundException::alertMessage($view, $ext);
-            die();
-        }
-        
-        if ($header_footer == true) {
-            if (file_exists(self::$footer)) {
-                include_once self::$footer;
-            }
-        }
+
+        return __CLASS__;
     }
     
     public static function loadCss(string $asset) 
@@ -60,16 +46,51 @@ class Wolf
         $img = '//'.$_SERVER['HTTP_HOST'].'/assets/_img/'.$asset;
         return $img;
     }
-    
-    public static function loadHeader(string $header) 
+
+    public static function cache(string $file_name)
     {
-        $load = '//'.$_SERVER['HTTP_HOST'].'/'.$header;
-        return $load;
-    }
-    
-    public static function loadFooter(string $footer) 
-    {
-        $load = '//'.$_SERVER['HTTP_HOST'].'/'.$footer;
-        return $load;
+
+        ob_start();
+
+        $start = microtime(true);
+
+        if (!is_dir(ROOT. "/resources/view/cache/")) {
+            mkdir(ROOT."/resources/view/cache/", 0777, true);
+        }
+
+        $page = explode(".", $file_name);
+        $cache_dir = ROOT."/resources/view/cache/".$page[0].".cache.php";
+        
+        $page_view = "";
+        
+        if (file_exists(self::$header)) {
+            $page_view .= file_get_contents(self::$header);
+        }
+        
+        $page_view .= file_get_contents(ROOT. "/resources/view/".$file_name);
+        
+        if (file_exists(self::$footer)) {
+            $page_view .= file_get_contents(self::$footer);
+        }
+        
+        if (file_exists($cache_dir) && filemtime($cache_dir) > time()-20) {
+            echo 'from cache';
+            readfile($cache_dir);
+            #include_once($cache_dir);
+            exit;
+        }
+        
+        
+        #$res = ob_get_contents();
+        #var_dump($res);
+        $handle = fopen($cache_dir, 'w');
+        fwrite($handle, ob_get_contents());
+        fclose($handle);
+        
+        ob_end_flush();
+        
+        $end = microtime(true);
+        echo round($end-$start, 4);
+        
     }
 }
