@@ -48,6 +48,17 @@ class Vinci extends Components
 
                 break;
 
+            case 'router':
+                $return = Components::router($file_create);
+            
+                if ($return == true) {
+                    print_r("Router created\n\n");
+                } else {
+                    print_r("Error: Router not created\n\n");
+                }
+
+                break;
+
             case 'js':
                 $return = Components::jsFile($file_create);
             
@@ -103,6 +114,17 @@ class Vinci extends Components
                     print_r("View removed\n\n");
                 } else {
                     print_r("Error: View not removed or doesn't exist\n\n");
+                }
+                
+                break;
+
+            case 'remove-router':
+                $return = Components::removeRouter($file_create);
+            
+                if ($return == true) {
+                    print_r("Router removed\n\n");
+                } else {
+                    print_r("Error: Router not removed or doesn't exist\n\n");
                 }
                 
                 break;
@@ -183,11 +205,13 @@ class Vinci extends Components
                 $show .= "  \033[92mcontroller\033[0m          Create a new Controller\n";
                 $show .= "  \033[92mmodel\033[0m               Create a new Model\n";
                 $show .= "  \033[92mview\033[0m                Create a new View\n";
+                $show .= "  \033[92mrouter\033[0m              Create a new Router\n";
                 $show .= "  \033[92mjs\033[0m                  Create a new JavaScript file\n";
                 $show .= "  \033[92mcss\033[0m                 Create a new Cascading Style Sheet file\n";
                 $show .= "  \033[92mremove-controller\033[0m   Remove a Controller\n";
                 $show .= "  \033[92mremove-model\033[0m        Remove a Model\n";
                 $show .= "  \033[92mremove-view\033[0m         Remove a View\n";
+                $show .= "  \033[92mremove-router\033[0m       Remove a Router\n";
                 $show .= "  \033[92mremove-js\033[0m           Remove a JavaScript file\n";
                 $show .= "  \033[92mremove-css\033[0m          Remove a Cascading Style Sheet file\n\n";
 

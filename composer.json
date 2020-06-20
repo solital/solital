@@ -15,7 +15,10 @@
     "psr-4": {
       "Solital\\": "app/",
       "Component\\": "components/"
-    }
+    },
+    "files": [
+      "app/Solital/Course/helpers.php"
+    ]
   },
   "scripts": {
     "post-create-project-cmd": [

@@ -43,6 +43,19 @@ class Components
         return false;   
     }
 
+    protected static function removeRouter(string $name)
+    {
+        $file = "./routers/".$name.".php";
+
+        if (is_file($file)) {
+            unlink($file);
+        
+            return true;
+        }
+        
+        return false;   
+    }
+
     protected static function removeJs(string $name)
     {
         $file = "./public/assets/_js/".$name.".js";
@@ -67,6 +80,18 @@ class Components
         }
         
         return false;   
+    }
+
+    protected static function router(string $name) 
+    {
+        $dir = "./routers/";
+        if (is_dir($dir)) {
+            file_put_contents($dir."$name.php", "<?php\n\nuse Solital\Course\Course;\nuse Solital\Wolf\Wolf;\n\nCourse::get('/', function(){\n\x20\x20\x20\x20\x20Wolf::loadView('');\n});");
+            
+            return true;
+        }
+        
+        return false;
     }
     
     protected static function controller(string $name) 
@@ -99,7 +124,7 @@ class Components
         $dir = \dirname(__DIR__)."/Components/Model/";
         
         if (is_dir($dir)) {
-            file_put_contents($dir."$name.php", "<?php\n\nnamespace Solital\Components\Model;\nuse Solital\Components\Model;\n\nclass ".$name." extends Model\n{\n\n}");
+            file_put_contents($dir."$name.php", "<?php\n\nnamespace Solital\Components\Model;\nuse Solital\Components\Model\Model;\n\nclass ".$name." extends Model\n{\n\n}");
             
             return true;
         }

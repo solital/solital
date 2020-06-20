@@ -28,6 +28,12 @@ class Wolf
 
         return __CLASS__;
     }
+
+    public static function loadFile(string $asset) 
+    {
+        $css = '//'.$_SERVER['HTTP_HOST'].'/'.$asset;
+        return $css;
+    }
     
     public static function loadCss(string $asset) 
     {

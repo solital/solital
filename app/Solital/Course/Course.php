@@ -77,8 +77,6 @@ class Course
         foreach(glob('../config/*.php') as $configs){
             require_once $configs;
         }
-
-        require_once ROOT.'/helpers.php';
         
         foreach(glob('../routers/*.php') as $routers){
             require_once $routers;
