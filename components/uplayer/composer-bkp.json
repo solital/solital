@@ -1,9 +1,0 @@
-{
-    "name": "brenno/upload",
-    "description": "descrição",
-    "autoload": {
-        "psr-4": {
-            "Uplayer\\": "uplayer/"
-        }
-    }
-}

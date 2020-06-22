@@ -77,7 +77,7 @@
 
         <div class="info-2">
             <p>All right!!! You can now start creating your projects</p>
-            <p class="version">Version: <?= Solital\Vinci\Vinci::SOLITAL_VERSION; ?></p>
+            <p class="version">Version: <?= Solital\Core\Console\Console::SOLITAL_VERSION; ?></p>
         </div>
     </section>
 </body>

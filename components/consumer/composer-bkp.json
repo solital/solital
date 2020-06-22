@@ -1,9 +1,0 @@
-{
-    "name": "brenno/api",
-    "description": "descrição",
-    "autoload": {
-        "psr-4": {
-            "Source\\": "Source/"
-        }
-    }
-}

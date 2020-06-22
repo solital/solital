@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CONFIG CONSTANTS
  */
@@ -8,8 +9,8 @@ define('ERRORS_DISPLAY', true);
  * GUARDIAN CONSTANTS
  */
 
-define('URL_LOGIN', '/login');
-define('URL_DASHBOARD', '/dashboard');
+define('URL_LOGIN', 'your_login_url');
+define('URL_DASHBOARD', 'your_dashboard_url');
 define('INDEX_LOGIN', 'solital_index_login');
 
 /**

@@ -13,11 +13,10 @@
   },
   "autoload": {
     "psr-4": {
-      "Solital\\": "app/",
-      "Component\\": "components/"
+      "Solital\\": "app/"
     },
     "files": [
-      "app/Solital/Course/helpers.php"
+      "app/Core/Course/Functions/helpers.php"
     ]
   },
   "scripts": {

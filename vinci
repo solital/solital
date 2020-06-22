@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+define('ROOT_VINCI', __DIR__);
+
 require_once __DIR__.'/vendor/autoload.php';
 
 $command = $argv[1];
@@ -9,10 +11,10 @@ if (stripos($command, ":") !== false) {
     
     $file = explode(':', $command);
 
-    Solital\Vinci\Vinci::verify($file[0], $file[1]);
+    Solital\Core\Console\Console::verify($file[0], $file[1]);
 
 } else {
 
-    Solital\Vinci\Vinci::vinciCommand($command);
+    Solital\Core\Console\Console::vinciCommand($command);
 
 }
