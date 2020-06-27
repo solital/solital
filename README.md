@@ -1,8 +1,15 @@
-# Solital
+<p align=center>
+https://res.cloudinary.com/bdlsltfmk/image/upload/v1592856523/Solital_logo/solital-logo_qu2rty.png
+</p>
 
+<p align=center>
 ![GitHub](https://img.shields.io/github/license/solital/solital)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/solital/solital)
-![GitHub](https://img.shields.io/github/license/solital/solital)
+<p>
+
+<p align=center>
+Attention: this framework is still in beta, do not use in a real project
+<p>
 
 ## About
 
@@ -10,7 +17,7 @@ Solital is a complete PHP framework with everything you need to create high valu
 
 ## Documentation
 
-You can access the complete documentation at the following link: [https://solital.com](https://solital.com)
+You can access the complete documentation at the following link: [https://solitalframework.com](https://solitalframework.com)
 
 ## Resources
 

@@ -5,7 +5,7 @@ namespace Solital\Core\Course\Handlers;
 use Solital\Core\Course\Event\EventArgument;
 use Solital\Core\Course\Router;
 
-class EventHandler implements IEventHandler
+class EventHandler implements EventHandlerInterface
 {
     /**
      * Fires when a event is triggered.

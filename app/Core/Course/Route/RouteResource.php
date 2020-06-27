@@ -4,7 +4,7 @@ namespace Solital\Core\Course\Route;
 
 use Solital\Core\Http\Request;
 
-class RouteResource extends LoadableRoute implements IControllerRoute
+class RouteResource extends LoadableRoute implements ControllerRouteInterface
 {
     protected $urls = [
         'index'   => '',

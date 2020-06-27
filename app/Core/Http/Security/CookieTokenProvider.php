@@ -4,7 +4,7 @@ namespace Solital\Core\Http\Security;
 
 use Solital\Core\Http\Security\Exceptions\SecurityException;
 
-class CookieTokenProvider implements ITokenProvider
+class CookieTokenProvider implements TokenProviderInterface
 {
     public const CSRF_KEY = 'CSRF-TOKEN';
 

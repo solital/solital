@@ -5,7 +5,7 @@ namespace Solital\Core\Course\Event;
 use Solital\Core\Http\Request;
 use Solital\Core\Course\Router;
 
-class EventArgument implements IEventArgument
+class EventArgument implements EventArgumentInterface
 {
     /**
      * Event name

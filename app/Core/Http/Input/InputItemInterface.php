@@ -2,7 +2,7 @@
 
 namespace Solital\Core\Http\Input;
 
-interface IInputItem
+interface InputItemInterface
 {
 
     public function getIndex(): string;

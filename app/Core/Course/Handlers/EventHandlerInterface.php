@@ -4,7 +4,7 @@ namespace Solital\Core\Course\Handlers;
 
 use Solital\Core\Course\Router;
 
-interface IEventHandler
+interface EventHandlerInterface
 {
 
     /**

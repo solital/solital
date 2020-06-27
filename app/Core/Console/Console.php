@@ -5,8 +5,8 @@ use Solital\Core\Console\Commands;
 
 class Console extends Commands
 {
-    const SOLITAL_VERSION = "0.4.0";
-    const VINCI_VERSION = "0.4.0";
+    const SOLITAL_VERSION = "0.5.0";
+    const VINCI_VERSION = "0.4.1";
 
     public static function verify($command, $file_create)
     {
@@ -17,17 +17,16 @@ class Console extends Commands
                 $return = Commands::controller($file_complete);
             
                 if ($return == true) {
-                    print_r("Controller $file created\n\n");
+                    print_r("Controller ".$file."Controller created\n\n");
                 } else {
-                    print_r("Error: Controller $file not created\n\n");
+                    print_r("Error: Controller ".$file."Controller not created\n\n");
                 }
 
                 break;
 
             case 'model':
                 $file = ucfirst($file_create);
-                $file_complete = $file.'Model';
-                $return = Commands::model($file_complete);
+                $return = Commands::model($file);
             
                 if ($return == true) {
                     print_r("Model $file created\n\n");
@@ -87,7 +86,7 @@ class Console extends Commands
                 $return = Commands::removeController($file_complete);
             
                 if ($return == true) {
-                    print_r("Controller $file removed\n\n");
+                    print_r("Controller ".$file."Controller removed\n\n");
                 } else {
                     print_r("Error: Controller $file not removed or doesn't exist\n\n");
                 }
@@ -96,8 +95,7 @@ class Console extends Commands
 
             case 'remove-model':
                 $file = ucfirst($file_create);
-                $file_complete = $file.'Model';
-                $return = Commands::removeModel($file_complete);
+                $return = Commands::removeModel($file);
             
                 if ($return == true) {
                     print_r("Model $file removed\n\n");

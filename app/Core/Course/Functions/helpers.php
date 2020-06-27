@@ -1,31 +1,21 @@
 <?php
 
-use Solital\Course\Course as Router;
-use Solital\Http\Url;
-use Solital\Http\Response;
-use Solital\Http\Request;
+use Solital\Core\Http\Uri;
+use Solital\Core\Http\Request;
+use Solital\Core\Http\Response;
+use Solital\Core\Http\UploadedFile;
+use Solital\Core\Course\Course as Course;
 
 /**
- * Get url for a route by using either name/alias, class or method name.
- *
- * The name parameter supports the following values:
- * - Route name
- * - Controller/resource name (with or without method)
- * - Controller class name
- *
- * When searching for controller/resource by name, you can use this syntax "route.name@method".
- * You can also use the same syntax when searching for a specific controller-class "MyController@home".
- * If no arguments is specified, it will return the url for the current loaded route.
- *
  * @param string|null $name
  * @param string|array|null $parameters
  * @param array|null $getParams
- * @return \Solital\Http\Url
+ * @return \Solital\Http\Uri
  * @throws \InvalidArgumentException
  */
-function url(?string $name = null, $parameters = null, ?array $getParams = null): Url
+function url(?string $name = null, $parameters = null, ?array $getParams = null): Uri
 {
-    return Router::getUrl($name, $parameters, $getParams);
+    return Course::getUri($name, $parameters, $getParams);
 }
 
 /**
@@ -33,7 +23,7 @@ function url(?string $name = null, $parameters = null, ?array $getParams = null)
  */
 function response(): Response
 {
-    return Router::response();
+    return Course::response();
 }
 
 /**
@@ -41,7 +31,7 @@ function response(): Response
  */
 function request(): Request
 {
-    return Router::request();
+    return Course::request();
 }
 
 /**
@@ -58,6 +48,16 @@ function input($index = null, $defaultValue = null, ...$methods)
     }
 
     return request()->getInputHandler();
+}
+
+/**
+ * Upload a file
+ * @param string
+ */
+function upload($file): UploadedFile
+{
+    $upload = new UploadedFile($file);
+    return $upload;
 }
 
 /**
@@ -80,7 +80,7 @@ function redirect(string $url, ?int $code = null): void
  */
 function csrf_token(): ?string
 {
-    $baseVerifier = Router::router()->getCsrfVerifier();
+    $baseVerifier = Course::router()->getCsrfVerifier();
     if ($baseVerifier !== null) {
         return $baseVerifier->getTokenProvider()->getToken();
     }

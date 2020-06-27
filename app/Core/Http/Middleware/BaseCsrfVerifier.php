@@ -5,9 +5,9 @@ namespace Solital\Core\Http\Middleware;
 use Solital\Core\Http\Middleware\Exceptions\TokenMismatchException;
 use Solital\Core\Http\Request;
 use Solital\Core\Http\Security\CookieTokenProvider;
-use Solital\Core\Http\Security\ITokenProvider;
+use Solital\Core\Http\Security\TokenProviderInterface;
 
-class BaseCsrfVerifier implements IMiddleware
+class BaseCsrfVerifier implements MiddlewareInterface
 {
     public const POST_KEY = 'csrf_token';
     public const HEADER_KEY = 'X-CSRF-TOKEN';
@@ -43,9 +43,9 @@ class BaseCsrfVerifier implements IMiddleware
             $url = rtrim($url, '/');
             if ($url[\strlen($url) - 1] === '*') {
                 $url = rtrim($url, '*');
-                $skip = $request->getUrl()->contains($url);
+                $skip = $request->getUri()->contains($url);
             } else {
-                $skip = ($url === $request->getUrl()->getOriginalUrl());
+                $skip = ($url === $request->getUri()->getOriginalUrl());
             }
 
             if ($skip === true) {
@@ -74,7 +74,8 @@ class BaseCsrfVerifier implements IMiddleware
             );
 
             if ($this->tokenProvider->validate((string)$token) === false) {
-                throw new TokenMismatchException('Invalid CSRF-token.');
+                #throw new TokenMismatchException('Invalid CSRF-token.');
+                TokenMismatchException::alertMessage(404, "Invalid CSRF-token");
             }
 
         }
@@ -84,16 +85,16 @@ class BaseCsrfVerifier implements IMiddleware
 
     }
 
-    public function getTokenProvider(): ITokenProvider
+    public function getTokenProvider(): TokenProviderInterface
     {
         return $this->tokenProvider;
     }
 
     /**
      * Set token provider
-     * @param ITokenProvider $provider
+     * @param TokenProviderInterface $provider
      */
-    public function setTokenProvider(ITokenProvider $provider): void
+    public function setTokenProvider(TokenProviderInterface $provider): void
     {
         $this->tokenProvider = $provider;
     }

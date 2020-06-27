@@ -5,7 +5,7 @@ namespace Solital\Core\Course\Route;
 use Solital\Core\Http\Request;
 use Solital\Core\Course\Router;
 
-interface ILoadableRoute extends IRoute
+interface LoadableRouteInterface extends RouteInterface
 {
     /**
      * Find url that matches method, parameters or name.
@@ -30,14 +30,14 @@ interface ILoadableRoute extends IRoute
      * Get url
      * @return string
      */
-    public function getUrl(): string;
+    public function getUri(): string;
 
     /**
      * Set url
      * @param string $url
      * @return static
      */
-    public function setUrl(string $url): self;
+    public function setUri(string $url): self;
 
     /**
      * Prepend url

@@ -10,21 +10,20 @@
 
 namespace Solital\Core\Course;
 
-use DI\Container;
 use Solital\Core\Wolf\Wolf;
 use Solital\Core\Exceptions\InvalidArgumentException;
 use Solital\Core\Http\Exceptions\MalformedUrlException;
 use Solital\Core\Http\Middleware\BaseCsrfVerifier;
 use Solital\Core\Http\Request;
 use Solital\Core\Http\Response;
-use Solital\Core\Http\Url;
-use Solital\Core\Course\ClassLoader\IClassLoader;
+use Solital\Core\Http\Uri;
+use Solital\Core\Course\ClassLoader\ClassLoaderInterface;
 use Solital\Core\Course\Exceptions\HttpException;
 use Solital\Core\Course\Handlers\CallbackExceptionHandler;
-use Solital\Core\Course\Handlers\IEventHandler;
-use Solital\Core\Course\Route\IGroupRoute;
-use Solital\Core\Course\Route\IPartialGroupRoute;
-use Solital\Core\Course\Route\IRoute;
+use Solital\Core\Course\Handlers\EventHandlerInterface;
+use Solital\Core\Course\Route\GroupRouteInterface;
+use Solital\Core\Course\Route\PartialGroupRouteInterface;
+use Solital\Core\Course\Route\RouteInterface;
 use Solital\Core\Course\Route\RouteController;
 use Solital\Core\Course\Route\RouteGroup;
 use Solital\Core\Course\Route\RoutePartialGroup;
@@ -70,7 +69,7 @@ class Course
      * @return array
      */
     
-    public static function verifyComponents() 
+    public static function loadComponents() 
     {
         /* Load external routes file */
         
@@ -122,7 +121,7 @@ class Course
         $router = static::router();
 
         return [
-            'url'             => $request->getUrl(),
+            'url'             => $request->getUri(),
             'method'          => $request->getMethod(),
             'host'            => $request->getHost(),
             'loaded_routes'   => $request->getLoadedRoutes(),
@@ -161,9 +160,9 @@ class Course
     /**
      * Add new event handler to the router
      *
-     * @param IEventHandler $eventHandler
+     * @param EventHandlerInterface $eventHandler
      */
-    public static function addEventHandler(IEventHandler $eventHandler): void
+    public static function addEventHandler(EventHandlerInterface $eventHandler): void
     {
         static::router()->addEventHandler($eventHandler);
     }
@@ -172,9 +171,9 @@ class Course
      * Boot managers allows you to alter the routes before the routing occurs.
      * Perfect if you want to load pretty-urls from a file or database.
      *
-     * @param IRouterBootManager $bootManager
+     * @param RouterBootManagerInterface $bootManager
      */
-    public static function addBootManager(IRouterBootManager $bootManager): void
+    public static function addBootManager(RouterBootManagerInterface $bootManager): void
     {
         static::router()->addBootManager($bootManager);
     }
@@ -185,9 +184,9 @@ class Course
      * @param string $where
      * @param string $to
      * @param int $httpCode
-     * @return IRoute
+     * @return RouteInterface
      */
-    public static function redirect($where, $to, $httpCode = 301): IRoute
+    public static function redirect($where, $to, $httpCode = 301): RouteInterface
     {
         return static::get($where, function () use ($to, $httpCode) {
             static::response()->redirect($to, $httpCode);
@@ -203,7 +202,7 @@ class Course
      *
      * @return RouteUrl
      */
-    public static function get(string $url, $callback, array $settings = null): IRoute
+    public static function get(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['get'], $url, $callback, $settings);
     }
@@ -216,7 +215,7 @@ class Course
      * @param array|null $settings
      * @return RouteUrl
      */
-    public static function post(string $url, $callback, array $settings = null): IRoute
+    public static function post(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['post'], $url, $callback, $settings);
     }
@@ -229,7 +228,7 @@ class Course
      * @param array|null $settings
      * @return RouteUrl
      */
-    public static function put(string $url, $callback, array $settings = null): IRoute
+    public static function put(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['put'], $url, $callback, $settings);
     }
@@ -242,7 +241,7 @@ class Course
      * @param array|null $settings
      * @return RouteUrl
      */
-    public static function patch(string $url, $callback, array $settings = null): IRoute
+    public static function patch(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['patch'], $url, $callback, $settings);
     }
@@ -255,7 +254,7 @@ class Course
      * @param array|null $settings
      * @return RouteUrl
      */
-    public static function options(string $url, $callback, array $settings = null): IRoute
+    public static function options(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['options'], $url, $callback, $settings);
     }
@@ -268,7 +267,7 @@ class Course
      * @param array|null $settings
      * @return RouteUrl
      */
-    public static function delete(string $url, $callback, array $settings = null): IRoute
+    public static function delete(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['delete'], $url, $callback, $settings);
     }
@@ -281,7 +280,7 @@ class Course
      * @return RouteGroup
      * @throws InvalidArgumentException
      */
-    public static function group(array $settings, \Closure $callback): IGroupRoute
+    public static function group(array $settings, \Closure $callback): GroupRouteInterface
     {
         if (\is_callable($callback) === false) {
             throw new InvalidArgumentException('Invalid callback provided. Only functions or methods supported');
@@ -306,7 +305,7 @@ class Course
      * @return RoutePartialGroup
      * @throws InvalidArgumentException
      */
-    public static function partialGroup(string $url, \Closure $callback, array $settings = []): IPartialGroupRoute
+    public static function partialGroup(string $url, \Closure $callback, array $settings = []): PartialGroupRouteInterface
     {
         if (\is_callable($callback) === false) {
             throw new InvalidArgumentException('Invalid callback provided. Only functions or methods supported');
@@ -332,7 +331,7 @@ class Course
      * @see Course::form
      * @return RouteUrl
      */
-    public static function basic(string $url, $callback, array $settings = null): IRoute
+    public static function basic(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['get', 'post'], $url, $callback, $settings);
     }
@@ -347,7 +346,7 @@ class Course
      * @see Course::form
      * @return RouteUrl
      */
-    public static function form(string $url, $callback, array $settings = null): IRoute
+    public static function form(string $url, $callback, array $settings = null): RouteInterface
     {
         return static::match(['get', 'post'], $url, $callback, $settings);
     }
@@ -359,7 +358,7 @@ class Course
      * @param string $url
      * @param string|\Closure $callback
      * @param array|null $settings
-     * @return RouteUrl|IRoute
+     * @return RouteUrl|RouteInterface
      */
     public static function match(array $requestMethods, string $url, $callback, array $settings = null)
     {
@@ -380,7 +379,7 @@ class Course
      * @param string $url
      * @param string|\Closure $callback
      * @param array|null $settings
-     * @return RouteUrl|IRoute
+     * @return RouteUrl|RouteInterface
      */
     public static function all(string $url, $callback, array $settings = null)
     {
@@ -400,7 +399,7 @@ class Course
      * @param string $url
      * @param string $controller
      * @param array|null $settings
-     * @return RouteController|IRoute
+     * @return RouteController|RouteInterface
      */
     public static function controller(string $url, $controller, array $settings = null)
     {
@@ -420,7 +419,7 @@ class Course
      * @param string $url
      * @param string $controller
      * @param array|null $settings
-     * @return RouteResource|IRoute
+     * @return RouteResource|RouteInterface
      */
     public static function resource(string $url, $controller, array $settings = null)
     {
@@ -471,17 +470,17 @@ class Course
      * @param string|null $name
      * @param string|array|null $parameters
      * @param array|null $getParams
-     * @return Url
+     * @return Uri
      */
-    public static function getUrl(?string $name = null, $parameters = null, ?array $getParams = null): Url
+    public static function getUri(?string $name = null, $parameters = null, ?array $getParams = null): Uri
     {
         try {
-            return static::router()->getUrl($name, $parameters, $getParams);
+            return static::router()->getUri($name, $parameters, $getParams);
         } catch (\Exception $e) {
             try {
-                return new Url('/');
+                return new Uri('/');
             } catch (MalformedUrlException $e) {
-
+                #echo $e->getMessage();
             }
         }
 
@@ -507,7 +506,7 @@ class Course
     public static function response(): Response
     {
         if (static::$response === null) {
-            static::$response = new Response(static::request());
+            static::$response = new Response(static::request(), 'php://memory', 200, getallheaders());
         }
 
         return static::$response;
@@ -530,10 +529,10 @@ class Course
     /**
      * Prepends the default namespace to all new routes added.
      *
-     * @param IRoute $route
-     * @return IRoute
+     * @param RouteInterface $route
+     * @return RouteInterface
      */
-    public static function addDefaultNamespace(IRoute $route): IRoute
+    public static function addDefaultNamespace(RouteInterface $route): RouteInterface
     {
         if (static::$defaultNamespace !== null) {
 
@@ -556,20 +555,6 @@ class Course
         }
 
         return $route;
-    }
-
-    /**
-     * Enable or disable dependency injection
-     *
-     * @param Container $container
-     * @return IClassLoader
-     */
-    public static function enableDependencyInjection(Container $container): IClassLoader
-    {
-        return static::router()
-            ->getClassLoader()
-            ->useDependencyInjection(true)
-            ->setContainer($container);
     }
 
     /**

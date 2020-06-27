@@ -4,7 +4,7 @@ namespace Solital\Core\Course\Handlers;
 
 use Solital\Core\Http\Request;
 
-interface IExceptionHandler
+interface ExceptionHandlerInterface
 {
     /**
      * @param Request $request

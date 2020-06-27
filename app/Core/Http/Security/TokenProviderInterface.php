@@ -2,7 +2,7 @@
 
 namespace Solital\Core\Http\Security;
 
-interface ITokenProvider
+interface TokenProviderInterface
 {
 
     /**

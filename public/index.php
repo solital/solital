@@ -5,9 +5,6 @@
  * Changing them may cause a fatal error in your project.
  */
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 
 require_once __DIR__.'/../vendor/autoload.php';
@@ -25,6 +22,6 @@ Course::setDefaultNamespace('\Solital\Components\Controller');
 /**
  * DON'T REMOVE OR CHANGE THE METHOD BELOW
  */
-Course::verifyComponents();
+Course::loadComponents();
 
 Course::start();

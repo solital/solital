@@ -8,7 +8,7 @@ class RouteUrl extends LoadableRoute
 {
     public function __construct($url, $callback)
     {
-        $this->setUrl($url);
+        $this->setUri($url);
         $this->setCallback($callback);
     }
 

@@ -2,7 +2,7 @@
 
 namespace Solital\Core\Course\Route;
 
-interface IPartialGroupRoute
+interface PartialGroupRouteInterface
 {
 
 }

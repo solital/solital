@@ -2,12 +2,12 @@
 
 namespace Solital\Core\Course\Route;
 
-use Solital\Core\Http\Middleware\IMiddleware;
+use Solital\Core\Http\Middleware\MiddlewareInterface;
 use Solital\Core\Http\Request;
 use Solital\Core\Course\Exceptions\NotFoundHttpException;
 use Solital\Core\Course\Router;
 
-abstract class Route implements IRoute
+abstract class Route implements RouteInterface
 {
     protected const PARAMETERS_REGEX_FORMAT = '%s([\w]+)(\%s?)%s';
     protected const PARAMETERS_DEFAULT_REGEX = '[\w]+';
@@ -207,7 +207,7 @@ abstract class Route implements IRoute
      * @param array $methods
      * @return static
      */
-    public function setRequestMethods(array $methods): IRoute
+    public function setRequestMethods(array $methods): RouteInterface
     {
         $this->requestMethods = $methods;
 
@@ -225,9 +225,9 @@ abstract class Route implements IRoute
     }
 
     /**
-     * @return IRoute|null
+     * @return RouteInterface|null
      */
-    public function getParent(): ?IRoute
+    public function getParent(): ?RouteInterface
     {
         return $this->parent;
     }
@@ -235,9 +235,9 @@ abstract class Route implements IRoute
     /**
      * Get the group for the route.
      *
-     * @return IGroupRoute|null
+     * @return GroupRouteInterface|null
      */
-    public function getGroup(): ?IGroupRoute
+    public function getGroup(): ?GroupRouteInterface
     {
         return $this->group;
     }
@@ -245,10 +245,10 @@ abstract class Route implements IRoute
     /**
      * Set group
      *
-     * @param IGroupRoute $group
+     * @param GroupRouteInterface $group
      * @return static
      */
-    public function setGroup(IGroupRoute $group): IRoute
+    public function setGroup(GroupRouteInterface $group): RouteInterface
     {
         $this->group = $group;
 
@@ -260,10 +260,10 @@ abstract class Route implements IRoute
     /**
      * Set parent route
      *
-     * @param IRoute $parent
+     * @param RouteInterface $parent
      * @return static
      */
-    public function setParent(IRoute $parent): IRoute
+    public function setParent(RouteInterface $parent): RouteInterface
     {
         $this->parent = $parent;
 
@@ -276,7 +276,7 @@ abstract class Route implements IRoute
      * @param string $callback
      * @return static
      */
-    public function setCallback($callback): IRoute
+    public function setCallback($callback): RouteInterface
     {
         $this->callback = $callback;
 
@@ -313,14 +313,14 @@ abstract class Route implements IRoute
         return null;
     }
 
-    public function setMethod(string $method): IRoute
+    public function setMethod(string $method): RouteInterface
     {
         $this->callback = sprintf('%s@%s', $this->getClass(), $method);
 
         return $this;
     }
 
-    public function setClass(string $class): IRoute
+    public function setClass(string $class): RouteInterface
     {
         $this->callback = sprintf('%s@%s', $class, $this->getMethod());
 
@@ -331,7 +331,7 @@ abstract class Route implements IRoute
      * @param string $namespace
      * @return static
      */
-    public function setNamespace(string $namespace): IRoute
+    public function setNamespace(string $namespace): RouteInterface
     {
         $this->namespace = $namespace;
 
@@ -342,7 +342,7 @@ abstract class Route implements IRoute
      * @param string $namespace
      * @return static
      */
-    public function setDefaultNamespace($namespace): IRoute
+    public function setDefaultNamespace($namespace): RouteInterface
     {
         $this->defaultNamespace = $namespace;
 
@@ -401,7 +401,7 @@ abstract class Route implements IRoute
      * @param bool $merge
      * @return static
      */
-    public function setSettings(array $values, bool $merge = false): IRoute
+    public function setSettings(array $values, bool $merge = false): RouteInterface
     {
         if ($this->namespace === null && isset($values['namespace']) === true) {
             $this->setNamespace($values['namespace']);
@@ -447,7 +447,7 @@ abstract class Route implements IRoute
      * @param array $options
      * @return static
      */
-    public function setWhere(array $options): IRoute
+    public function setWhere(array $options): RouteInterface
     {
         $this->where = $options;
 
@@ -490,7 +490,7 @@ abstract class Route implements IRoute
      * @param array $parameters
      * @return static
      */
-    public function setParameters(array $parameters): IRoute
+    public function setParameters(array $parameters): RouteInterface
     {
         /*
          * If this is the first time setting parameters we store them so we
@@ -509,7 +509,7 @@ abstract class Route implements IRoute
      * Add middleware class-name
      *
      * @deprecated This method is deprecated and will be removed in the near future.
-     * @param IMiddleware|string $middleware
+     * @param MiddlewareInterface|string $middleware
      * @return static
      */
     public function setMiddleware($middleware)
@@ -522,10 +522,10 @@ abstract class Route implements IRoute
     /**
      * Add middleware class-name
      *
-     * @param IMiddleware|string $middleware
+     * @param MiddlewareInterface|string $middleware
      * @return static
      */
-    public function addMiddleware($middleware): IRoute
+    public function addMiddleware($middleware): RouteInterface
     {
         $this->middlewares[] = $middleware;
 
@@ -538,7 +538,7 @@ abstract class Route implements IRoute
      * @param array $middlewares
      * @return static
      */
-    public function setMiddlewares(array $middlewares): IRoute
+    public function setMiddlewares(array $middlewares): RouteInterface
     {
         $this->middlewares = $middlewares;
 

@@ -189,7 +189,7 @@ class InputHandler
      *
      * @param string $index
      * @param array ...$methods
-     * @return IInputItem|array|null
+     * @return InputItemInterface|array|null
      */
     public function find(string $index, ...$methods)
     {

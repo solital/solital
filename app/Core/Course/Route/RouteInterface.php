@@ -5,7 +5,7 @@ namespace Solital\Core\Course\Route;
 use Solital\Core\Http\Request;
 use Solital\Core\Course\Router;
 
-interface IRoute
+interface RouteInterface
 {
     /**
      * Method called to check if a domain matches
@@ -52,32 +52,32 @@ interface IRoute
     public function getRequestMethods(): array;
 
     /**
-     * @return IRoute|null
+     * @return RouteInterface|null
      */
-    public function getParent(): ?IRoute;
+    public function getParent(): ?RouteInterface;
 
     /**
      * Get the group for the route.
      *
-     * @return IGroupRoute|null
+     * @return GroupRouteInterface|null
      */
-    public function getGroup(): ?IGroupRoute;
+    public function getGroup(): ?GroupRouteInterface;
 
     /**
      * Set group
      *
-     * @param IGroupRoute $group
+     * @param GroupRouteInterface $group
      * @return static
      */
-    public function setGroup(IGroupRoute $group): self;
+    public function setGroup(GroupRouteInterface $group): self;
 
     /**
      * Set parent route
      *
-     * @param IRoute $parent
+     * @param RouteInterface $parent
      * @return static
      */
-    public function setParent(IRoute $parent): self;
+    public function setParent(RouteInterface $parent): self;
 
     /**
      * Set callback
@@ -129,7 +129,7 @@ interface IRoute
      * @param string $namespace
      * @return static
      */
-    public function setDefaultNamespace($namespace): IRoute;
+    public function setDefaultNamespace($namespace): RouteInterface;
 
     /**
      * Get default namespace

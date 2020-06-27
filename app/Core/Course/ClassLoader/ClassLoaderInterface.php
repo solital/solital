@@ -2,7 +2,7 @@
 
 namespace Solital\Core\Course\ClassLoader;
 
-interface IClassLoader
+interface ClassLoaderInterface
 {
 
     public function loadClass(string $class);

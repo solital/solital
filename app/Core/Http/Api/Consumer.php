@@ -1,6 +1,6 @@
 <?php
 
-namespace Solital\Core\Http;
+namespace Solital\Core\Http\Api;
 
 class Consumer 
 {

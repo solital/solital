@@ -1,7 +1,7 @@
 <?php
 
 namespace Solital\Core\Cache;
-use Solital\Core\Cache\CacheInterface;
+use Psr\SimpleCache\CacheInterface;
 
 class Cache implements CacheInterface
 {

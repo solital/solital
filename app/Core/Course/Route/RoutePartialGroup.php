@@ -4,7 +4,7 @@ namespace Solital\Core\Course\Route;
 
 use Solital\Core\Http\Request;
 
-class RoutePartialGroup extends RouteGroup implements IPartialGroupRoute
+class RoutePartialGroup extends RouteGroup implements PartialGroupRouteInterface
 {
 
     /**

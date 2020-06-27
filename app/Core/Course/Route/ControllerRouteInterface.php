@@ -2,7 +2,7 @@
 
 namespace Solital\Core\Course\Route;
 
-interface IControllerRoute extends IRoute
+interface ControllerRouteInterface extends RouteInterface
 {
     /**
      * Get controller class-name

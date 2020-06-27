@@ -2,23 +2,24 @@
 
 namespace Solital\Core\Course;
 
-use Solital\Core\Exceptions\InvalidArgumentException;
-use Solital\Core\Http\Exceptions\MalformedUrlException;
-use Solital\Core\Http\Middleware\BaseCsrfVerifier;
+use Solital\Core\Http\Uri;
 use Solital\Core\Http\Request;
-use Solital\Core\Http\Url;
-use Solital\Core\Course\ClassLoader\ClassLoader;
-use Solital\Core\Course\ClassLoader\IClassLoader;
-use Solital\Core\Course\Exceptions\HttpException;
-use Solital\Core\Course\Exceptions\NotFoundHttpException;
+use Solital\Core\Http\Response;
+use Solital\Core\Http\Middleware\BaseCsrfVerifier;
+use Solital\Core\Http\Exceptions\MalformedUrlException;
+use Solital\Core\Course\Route\RouteInterface;
 use Solital\Core\Course\Handlers\EventHandler;
-use Solital\Core\Course\Handlers\IEventHandler;
-use Solital\Core\Course\Handlers\IExceptionHandler;
-use Solital\Core\Course\Route\IControllerRoute;
-use Solital\Core\Course\Route\IGroupRoute;
-use Solital\Core\Course\Route\ILoadableRoute;
-use Solital\Core\Course\Route\IPartialGroupRoute;
-use Solital\Core\Course\Route\IRoute;
+use Solital\Core\Course\ClassLoader\ClassLoader;
+use Solital\Core\Course\Exceptions\HttpException;
+use Solital\Core\Course\Route\GroupRouteInterface;
+use Solital\Core\Course\Route\LoadableRouteInterface;
+use Solital\Core\Exceptions\InvalidArgumentException;
+use Solital\Core\Course\Handlers\EventHandlerInterface;
+use Solital\Core\Course\Route\ControllerRouteInterface;
+use Solital\Core\Course\ClassLoader\ClassLoaderInterface;
+use Solital\Core\Course\Exceptions\NotFoundHttpException;
+use Solital\Core\Course\Route\PartialGroupRouteInterface;
+use Solital\Core\Course\Handlers\ExceptionHandlerInterface;
 
 class Router
 {
@@ -28,6 +29,12 @@ class Router
      * @var Request
      */
     protected $request;
+
+    /**
+     * Current request
+     * @var Uri
+     */
+    private $uri;
 
     /**
      * Defines if a route is currently being processed.
@@ -111,11 +118,18 @@ class Router
     protected $classLoader;
 
     /**
+     * @var array
+     */
+    private $server;
+
+    /**
      * Router constructor.
      */
     public function __construct()
     {
         $this->reset();
+        $this->server = $_SERVER;
+        $this->uri = new Uri();
     }
 
     /**
@@ -127,7 +141,7 @@ class Router
         $this->isProcessingRoute = false;
 
         try {
-            $this->request = new Request();
+            $this->request = new Request($this->server["REQUEST_METHOD"], $this->server["REQUEST_URI"], 'php://memory', getallheaders());
         } catch (MalformedUrlException $e) {
             $this->debug(sprintf('Invalid request-uri url: %s', $e->getMessage()));
         }
@@ -146,10 +160,10 @@ class Router
 
     /**
      * Add route
-     * @param IRoute $route
-     * @return IRoute
+     * @param RouteInterface $route
+     * @return RouteInterface
      */
-    public function addRoute(IRoute $route): IRoute
+    public function addRoute(RouteInterface $route): RouteInterface
     {
         $this->fireEvents(EventHandler::EVENT_ADD_ROUTE, [
             'route' => $route,
@@ -171,10 +185,10 @@ class Router
     /**
      * Render and process any new routes added.
      *
-     * @param IRoute $route
+     * @param RouteInterface $route
      * @throws NotFoundHttpException
      */
-    protected function renderAndProcess(IRoute $route): void
+    protected function renderAndProcess(RouteInterface $route): void
     {
 
         $this->isProcessingRoute = true;
@@ -188,7 +202,7 @@ class Router
             $this->routeStack = [];
 
             /* Route any routes added to the stack */
-            $this->processRoutes($stack, ($route instanceof IGroupRoute) ? $route : null);
+            $this->processRoutes($stack, ($route instanceof GroupRouteInterface) ? $route : null);
         }
     }
 
@@ -196,10 +210,10 @@ class Router
      * Process added routes.
      *
      * @param array $routes
-     * @param IGroupRoute|null $group
+     * @param GroupRouteInterface|null $group
      * @throws NotFoundHttpException
      */
-    protected function processRoutes(array $routes, ?IGroupRoute $group = null): void
+    protected function processRoutes(array $routes, ?GroupRouteInterface $group = null): void
     {
         $this->debug('Processing routes');
 
@@ -207,15 +221,15 @@ class Router
         $exceptionHandlers = [];
 
         // Stop processing routes if no valid route is found.
-        if ($this->request->getRewriteRoute() === null && $this->request->getUrl() === null) {
+        if ($this->request->getRewriteRoute() === null && $this->request->getUri() === null) {
             $this->debug('Halted route-processing as no valid route was found');
 
             return;
         }
 
-        $url = $this->request->getRewriteUrl() ?? $this->request->getUrl()->getPath();
+        $url = $this->request->getRewriteUrl() ?? $this->request->getUri()->getPath();
 
-        /* @var $route IRoute */
+        /* @var $route RouteInterface */
         foreach ($routes as $route) {
 
             $this->debug('Processing route "%s"', \get_class($route));
@@ -225,8 +239,8 @@ class Router
                 $route->setGroup($group);
             }
 
-            /* @var $route IGroupRoute */
-            if ($route instanceof IGroupRoute) {
+            /* @var $route GroupRouteInterface */
+            if ($route instanceof GroupRouteInterface) {
 
                 if ($route->matchRoute($url, $this->request) === true) {
 
@@ -237,20 +251,20 @@ class Router
                     }
 
                     /* Only render partial group if it matches */
-                    if ($route instanceof IPartialGroupRoute === true) {
+                    if ($route instanceof PartialGroupRouteInterface === true) {
                         $this->renderAndProcess($route);
                     }
 
                 }
 
-                if ($route instanceof IPartialGroupRoute === false) {
+                if ($route instanceof PartialGroupRouteInterface === false) {
                     $this->renderAndProcess($route);
                 }
 
                 continue;
             }
 
-            if ($route instanceof ILoadableRoute === true) {
+            if ($route instanceof LoadableRouteInterface === true) {
 
                 /* Add the route to the map, so we can find the active one when all routes has been loaded */
                 $this->processedRoutes[] = $route;
@@ -275,7 +289,7 @@ class Router
 
         /* Initialize boot-managers */
 
-        /* @var $manager IRouterBootManager */
+        /* @var $manager RouteInterfacerBootManager */
         foreach ($this->bootManagers as $manager) {
 
             $className = \get_class($manager);
@@ -353,9 +367,9 @@ class Router
         $methodNotAllowed = false;
 
         try {
-            $url = $this->request->getRewriteUrl() ?? $this->request->getUrl()->getPath();
+            $url = $this->request->getRewriteUrl() ?? $this->request->getUri()->getPath();
 
-            /* @var $route ILoadableRoute */
+            /* @var $route LoadableRouteInterface */
             foreach ($this->processedRoutes as $key => $route) {
 
                 $this->debug('Matching route "%s"', \get_class($route));
@@ -411,8 +425,8 @@ class Router
         }
 
         if ($methodNotAllowed === true) {
-            return NotFoundHttpException::alertWarning(403, "Route ".$this->request->getUrl()->getPath()." or method ".$this->request->getMethod()." not allowed", $this->request->getUrl()->getPath());
-            /*$message = sprintf('Route "%s" or method "%s" not allowed.', $this->request->getUrl()->getPath(), $this->request->getMethod());
+            return NotFoundHttpException::alertWarning(403, "Route ".$this->request->getUri()->getPath()." or method ".$this->request->getMethod()." not allowed", $this->request->getUri()->getPath());
+            /*$message = sprintf('Route "%s" or method "%s" not allowed.', $this->request->getUri()->getPath(), $this->request->getMethod());
             $this->handleException(new NotFoundHttpException($message, 403));*/
         }
 
@@ -421,15 +435,16 @@ class Router
             $rewriteUrl = $this->request->getRewriteUrl();
 
             if ($rewriteUrl !== null) {
-                $message = sprintf('Route not found: "%s" (rewrite from: "%s")', $rewriteUrl, $this->request->getUrl()->getPath());
+                $message = NotFoundHttpException::alertMessage(404, "Route ".$rewriteUrl." not found (rewrite from: ", $this->request->getUri()->getPath().")");
+                #$message = sprintf('Route not found: "%s" (rewrite from: "%s")', $rewriteUrl, $this->request->getUri()->getPath());
             } else {
-                return NotFoundHttpException::alertMessage(404, "Route ".$this->request->getUrl()->getPath()." not found", $this->request->getUrl()->getPath());
-                #$message = sprintf('Route not found: "%s"', $this->request->getUrl()->getPath());
+                $message = NotFoundHttpException::alertMessage(404, "Route ".$this->request->getUri()->getPath()." not found", $this->request->getUri()->getPath());
+                #$message = sprintf('Route not found: "%s"', $this->request->getUri()->getPath());
             }
 
-            #$this->debug($message);
+            $this->debug($message);
 
-            #return $this->handleException(new NotFoundHttpException($message, 404));
+            return $this->handleException(new NotFoundHttpException($message, 404));
         }
 
         return null;
@@ -490,7 +505,7 @@ class Router
             'exceptionHandlers' => $this->exceptionHandlers,
         ]);
 
-        /* @var $handler IExceptionHandler */
+        /* @var $handler ExceptionHandlerInterface */
         foreach ($this->exceptionHandlers as $key => $handler) {
 
             if (\is_object($handler) === false) {
@@ -505,8 +520,8 @@ class Router
 
             $this->debug('Processing exception-handler "%s"', \get_class($handler));
 
-            if (($handler instanceof IExceptionHandler) === false) {
-                throw new HttpException('Exception handler must implement the IExceptionHandler interface.', 500);
+            if (($handler instanceof ExceptionHandlerInterface) === false) {
+                throw new HttpException('Exception handler must implement the ExceptionHandlerInterface interface.', 500);
             }
 
             try {
@@ -547,29 +562,29 @@ class Router
      * Find route by alias, class, callback or method.
      *
      * @param string $name
-     * @return ILoadableRoute|null
+     * @return LoadableRouteInterface|null
      */
-    public function findRoute(string $name): ?ILoadableRoute
+    public function findRoute(string $name): ?LoadableRouteInterface
     {
         $this->debug('Finding route by name "%s"', $name);
 
         $this->fireEvents(EventHandler::EVENT_FIND_ROUTE, [
             'name' => $name,
         ]);
-
-        /* @var $route ILoadableRoute */
+        
+        /* @var $route LoadableRouteInterface */
         foreach ($this->processedRoutes as $route) {
 
             /* Check if the name matches with a name on the route. Should match either router alias or controller alias. */
             if ($route->hasName($name) === true) {
-                $this->debug('Found route "%s" by name "%s"', $route->getUrl(), $name);
+                $this->debug('Found route "%s" by name "%s"', $route->getUri(), $name);
 
                 return $route;
             }
 
             /* Direct match to controller */
-            if ($route instanceof IControllerRoute && strtoupper($route->getController()) === strtoupper($name)) {
-                $this->debug('Found route "%s" by controller "%s"', $route->getUrl(), $name);
+            if ($route instanceof ControllerRouteInterface && strtoupper($route->getController()) === strtoupper($name)) {
+                $this->debug('Found route "%s" by controller "%s"', $route->getUri(), $name);
 
                 return $route;
             }
@@ -579,7 +594,7 @@ class Router
                 [$controller, $method] = array_map('strtolower', explode('@', $name));
 
                 if ($controller === strtolower($route->getClass()) && $method === strtolower($route->getMethod())) {
-                    $this->debug('Found route "%s" by controller "%s" and method "%s"', $route->getUrl(), $controller, $method);
+                    $this->debug('Found route "%s" by controller "%s" and method "%s"', $route->getUri(), $controller, $method);
 
                     return $route;
                 }
@@ -591,14 +606,14 @@ class Router
 
                 /* Check if the entire callback is matching */
                 if (strpos($callback, $name) === 0 || strtolower($callback) === strtolower($name)) {
-                    $this->debug('Found route "%s" by callback "%s"', $route->getUrl(), $name);
+                    $this->debug('Found route "%s" by callback "%s"', $route->getUri(), $name);
 
                     return $route;
                 }
 
                 /* Check if the class part of the callback matches (class@method) */
                 if (strtolower($name) === strtolower($route->getClass())) {
-                    $this->debug('Found route "%s" by class "%s"', $route->getUrl(), $name);
+                    $this->debug('Found route "%s" by class "%s"', $route->getUri(), $name);
 
                     return $route;
                 }
@@ -625,11 +640,11 @@ class Router
      * @param string|null $name
      * @param string|array|null $parameters
      * @param array|null $getParams
-     * @return Url
+     * @return Uri
      * @throws InvalidArgumentException
      * @throws \Solital\Http\Exceptions\MalformedUrlException
      */
-    public function getUrl(?string $name = null, $parameters = null, ?array $getParams = null): Url
+    public function getUri(?string $name = null, $parameters = null, ?array $getParams = null): Uri
     {
         $this->debug('Finding url', \func_get_args());
 
@@ -644,7 +659,7 @@ class Router
         }
 
         if ($name === '' && $parameters === '') {
-            return new Url('/');
+            return new Uri('/');
         }
 
         /* Only merge $_GET when all parameters are null */
@@ -683,7 +698,7 @@ class Router
 
             /* Loop through all the routes to see if we can find a match */
 
-            /* @var $route ILoadableRoute */
+            /* @var $route LoadableRouteInterface */
             foreach ($this->processedRoutes as $route) {
 
                 /* Check if the route contains the name/alias */
@@ -695,7 +710,7 @@ class Router
                 }
 
                 /* Check if the route controller is equal to the name */
-                if ($route instanceof IControllerRoute && strtolower($route->getController()) === strtolower($controller)) {
+                if ($route instanceof ControllerRouteInterface && strtolower($route->getController()) === strtolower($controller)) {
                     return $this->request
                         ->getUrlCopy()
                         ->setPath($route->findUrl($method, $parameters, $name))
@@ -709,10 +724,14 @@ class Router
         $url = trim(implode('/', array_merge((array)$name, (array)$parameters)), '/');
         $url = (($url === '') ? '/' : '/' . $url . '/');
 
-        return $this->request
+        if ($this->uri->getSheme() != 'https') {
+            return $this->request
+            ->getUrlScheme()
             ->getUrlCopy()
             ->setPath($url)
-            ->setParams($getParams);
+            ->setParams($getParams);    
+        }
+        
     }
 
     /**
@@ -740,10 +759,10 @@ class Router
     /**
      * Add BootManager
      *
-     * @param IRouterBootManager $bootManager
+     * @param RouteInterfacerBootManager $bootManager
      * @return static
      */
-    public function addBootManager(IRouterBootManager $bootManager): self
+    public function addBootManager(RouteInterfacerBootManager $bootManager): self
     {
         $this->bootManagers[] = $bootManager;
 
@@ -813,9 +832,9 @@ class Router
     /**
      * Set class loader
      *
-     * @param IClassLoader $loader
+     * @param ClassLoaderInterface $loader
      */
-    public function setClassLoader(IClassLoader $loader): void
+    public function setClassLoader(ClassLoaderInterface $loader): void
     {
         $this->classLoader = $loader;
     }
@@ -825,7 +844,7 @@ class Router
      *
      * @return ClassLoader
      */
-    public function getClassLoader(): IClassLoader
+    public function getClassLoader(): ClassLoaderInterface
     {
         return $this->classLoader;
     }
@@ -833,9 +852,9 @@ class Router
     /**
      * Register event handler
      *
-     * @param IEventHandler $handler
+     * @param EventHandlerInterface $handler
      */
-    public function addEventHandler(IEventHandler $handler): void
+    public function addEventHandler(EventHandlerInterface $handler): void
     {
         $this->eventHandlers[] = $handler;
     }
@@ -862,7 +881,7 @@ class Router
             return;
         }
 
-        /* @var IEventHandler $eventHandler */
+        /* @var EventHandlerInterface $eventHandler */
         foreach ($this->eventHandlers as $eventHandler) {
             $eventHandler->fireEvents($this, $name, $arguments);
         }

@@ -2,7 +2,7 @@
 
 namespace Solital\Core\Http\Input;
 
-class InputItem implements IInputItem
+class InputItem implements InputItemInterface
 {
     public $index;
     public $name;
@@ -25,7 +25,7 @@ class InputItem implements IInputItem
         return $this->index;
     }
 
-    public function setIndex(string $index): IInputItem
+    public function setIndex(string $index): InputItemInterface
     {
         $this->index = $index;
 
@@ -45,7 +45,7 @@ class InputItem implements IInputItem
      * @param string $name
      * @return static
      */
-    public function setName(string $name): IInputItem
+    public function setName(string $name): InputItemInterface
     {
         $this->name = $name;
 
@@ -65,7 +65,7 @@ class InputItem implements IInputItem
      * @param string $value
      * @return static
      */
-    public function setValue(string $value): IInputItem
+    public function setValue(string $value): InputItemInterface
     {
         $this->value = $value;
 

@@ -4,7 +4,7 @@ namespace Solital\Core\Http\Input;
 
 use Solital\Core\Exceptions\InvalidArgumentException;
 
-class InputFile implements IInputItem
+class InputFile implements InputItemInterface
 {
     public $index;
     public $name;
@@ -69,7 +69,7 @@ class InputFile implements IInputItem
      * @param string $index
      * @return static
      */
-    public function setIndex(string $index): IInputItem
+    public function setIndex(string $index): InputItemInterface
     {
         $this->index = $index;
 
@@ -89,7 +89,7 @@ class InputFile implements IInputItem
      * @param int $size
      * @return static
      */
-    public function setSize(int $size): IInputItem
+    public function setSize(int $size): InputItemInterface
     {
         $this->size = $size;
 
@@ -118,7 +118,7 @@ class InputFile implements IInputItem
      * @param string $type
      * @return static
      */
-    public function setType(string $type): IInputItem
+    public function setType(string $type): InputItemInterface
     {
         $this->type = $type;
 
@@ -152,7 +152,7 @@ class InputFile implements IInputItem
      * @param string $name
      * @return static
      */
-    public function setName(string $name): IInputItem
+    public function setName(string $name): InputItemInterface
     {
         $this->name = $name;
 
@@ -165,7 +165,7 @@ class InputFile implements IInputItem
      * @param string $name
      * @return static
      */
-    public function setFilename($name): IInputItem
+    public function setFilename($name): InputItemInterface
     {
         $this->filename = $name;
 
@@ -229,7 +229,7 @@ class InputFile implements IInputItem
      * @param int $error
      * @return static
      */
-    public function setError($error): IInputItem
+    public function setError($error): InputItemInterface
     {
         $this->errors = (int)$error;
 
@@ -249,7 +249,7 @@ class InputFile implements IInputItem
      * @param string $name
      * @return static
      */
-    public function setTmpName($name): IInputItem
+    public function setTmpName($name): InputItemInterface
     {
         $this->tmpName = $name;
 
@@ -270,7 +270,7 @@ class InputFile implements IInputItem
      * @param string $value
      * @return static
      */
-    public function setValue(string $value): IInputItem
+    public function setValue(string $value): InputItemInterface
     {
         $this->filename = $value;
 

@@ -4,7 +4,7 @@ namespace Solital\Core\Course;
 
 use Solital\Core\Http\Request;
 
-interface IRouterBootManager
+interface RouterBootManagerInterface
 {
     /**
      * Called when router loads it's routes

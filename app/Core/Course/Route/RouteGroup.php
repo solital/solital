@@ -3,9 +3,9 @@
 namespace Solital\Core\Course\Route;
 
 use Solital\Core\Http\Request;
-use Solital\Core\Course\Handlers\IExceptionHandler;
+use Solital\Core\Course\Handlers\ExceptionHandlerInterface;
 
-class RouteGroup extends Route implements IGroupRoute
+class RouteGroup extends Route implements GroupRouteInterface
 {
     protected $prefix;
     protected $name;
@@ -63,10 +63,10 @@ class RouteGroup extends Route implements IGroupRoute
     /**
      * Add exception handler
      *
-     * @param IExceptionHandler|string $handler
+     * @param ExceptionHandlerInterface|string $handler
      * @return static
      */
-    public function addExceptionHandler($handler): IGroupRoute
+    public function addExceptionHandler($handler): GroupRouteInterface
     {
         $this->exceptionHandlers[] = $handler;
 
@@ -79,7 +79,7 @@ class RouteGroup extends Route implements IGroupRoute
      * @param array $handlers
      * @return static
      */
-    public function setExceptionHandlers(array $handlers): IGroupRoute
+    public function setExceptionHandlers(array $handlers): GroupRouteInterface
     {
         $this->exceptionHandlers = $handlers;
 
@@ -112,7 +112,7 @@ class RouteGroup extends Route implements IGroupRoute
      * @param array $domains
      * @return static
      */
-    public function setDomains(array $domains): IGroupRoute
+    public function setDomains(array $domains): GroupRouteInterface
     {
         $this->domains = $domains;
 
@@ -123,7 +123,7 @@ class RouteGroup extends Route implements IGroupRoute
      * @param string $prefix
      * @return static
      */
-    public function setPrefix($prefix): IGroupRoute
+    public function setPrefix($prefix): GroupRouteInterface
     {
         $this->prefix = '/' . trim($prefix, '/');
 
@@ -147,7 +147,7 @@ class RouteGroup extends Route implements IGroupRoute
      * @param bool $merge
      * @return static
      */
-    public function setSettings(array $values, bool $merge = false): IRoute
+    public function setSettings(array $values, bool $merge = false): RouteInterface
     {
 
         if (isset($values['prefix']) === true) {

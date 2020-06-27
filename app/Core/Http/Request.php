@@ -1,15 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Solital\Core\Http;
 
-use Solital\Core\Http\Exceptions\MalformedUrlException;
-use Solital\Core\Http\Input\InputHandler;
-use Solital\Core\Course\Route\ILoadableRoute;
-use Solital\Core\Course\Route\RouteUrl;
 use Solital\Core\Course\Course;
+use Solital\Core\Course\Route\RouteUrl;
+use Solital\Core\Course\Route\LoadableRouteInterface;
+use Solital\Core\Http\Uri;
+use Solital\Core\Http\RequestBody;
+use Solital\Core\Http\Input\InputHandler;
+use Solital\Core\Http\Traits\RequestTrait;
+use Solital\Core\Http\Exceptions\MalformedUrlException;
+use Psr\Http\Message\RequestInterface;
 
-class Request
+class Request implements RequestInterface
 {
+    use RequestTrait;
+    
     /**
      * Additional data
      *
@@ -21,7 +29,7 @@ class Request
      * Server headers
      * @var array
      */
-    protected $headers = [];
+    private $headers = [];
 
     /**
      * Request host
@@ -31,15 +39,21 @@ class Request
 
     /**
      * Current request url
-     * @var Url
+     * @var Uri
      */
     protected $url;
+
+    /**
+     * Current request url
+     * @var Uri
+     */
+    protected $scheme;
 
     /**
      * Request method
      * @var string
      */
-    protected $method;
+    #protected $method = '';
 
     /**
      * Input handler
@@ -54,7 +68,7 @@ class Request
     protected $hasPendingRewrite = false;
 
     /**
-     * @var ILoadableRoute|null
+     * @var LoadableRouteInterface|null
      */
     protected $rewriteRoute;
 
@@ -70,24 +84,45 @@ class Request
     protected $loadedRoutes = [];
 
     /**
+     * @var string
+     */
+    private $server;
+
+    /**
+     * List of request body parsers (e.g., url-encoded, JSON, XML, multipart)
+     *
+     * @var callable[]
+     */
+    protected $bodyParsers = [];
+
+    /**
      * Request constructor.
      * @throws MalformedUrlException
      */
-    public function __construct()
+    public function __construct(string $method = null, $uri = null, $body = 'php://memory', array $headers = [])
     {
+        $this->initialize($method, $uri, $body, $headers);
+
         foreach ($_SERVER as $key => $value) {
             $this->headers[strtolower($key)] = $value;
             $this->headers[strtolower(str_replace('_', '-', $key))] = $value;
         }
 
-        $this->setHost($this->getHeader('http-host'));
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+            $this->scheme = 'https://';
+        } else {
+            $this->scheme = 'http://';
+        }
+
+        $this->setHost($this->scheme.$this->getHeader('http-host'));
 
         // Check if special IIS header exist, otherwise use default.
-        $this->setUrl(new Url($this->getHeader('unencoded-url', $this->getHeader('request-uri'))));
+        $this->setUrl(new Uri($this->getHeader('unencoded-url', $this->getHeader('request-uri'))));
         
         $this->method = strtolower($this->getHeader('request-method'));
         $this->inputHandler = new InputHandler($this);
         $this->method = strtolower($this->inputHandler->value('_method', $this->getHeader('request-method')));
+        $this->server = $_SERVER;
     }
 
     public function isSecure(): bool
@@ -96,19 +131,45 @@ class Request
     }
 
     /**
-     * @return Url
+     * @return Uri
      */
-    public function getUrl(): Url
+    public function getUri(): Uri
     {
         return $this->url;
     }
 
     /**
+     * @param Uri $url
+     */
+    public function setUrl(Uri $url): void
+    {
+        $this->url = $url;
+
+        if ($this->url->getHost() === null) {
+            if ($this->url->getScheme() !== null) {
+                $this->url->setHost($this->getUrlScheme().(string)$this->getHost());    
+            }
+            
+            $this->url->setHost((string)$this->getHost());
+        }
+    }
+
+    /**
      * Copy url object
      *
-     * @return Url
+     * @return Uri
      */
-    public function getUrlCopy(): Url
+    /*public function getUrlScheme(): ?string
+    {
+        return $this->scheme;
+    }*/
+    
+    /**
+     * Copy url object
+     *
+     * @return Uri
+     */
+    public function getUrlCopy(): Uri
     {
         return clone $this->url;
     }
@@ -256,18 +317,6 @@ class Request
     }
 
     /**
-     * @param Url $url
-     */
-    public function setUrl(Url $url): void
-    {
-        $this->url = $url;
-
-        if ($this->url->getHost() === null) {
-            $this->url->setHost((string)$this->getHost());
-        }
-    }
-
-    /**
      * @param string|null $host
      */
     public function setHost(?string $host): void
@@ -286,13 +335,13 @@ class Request
     /**
      * Set rewrite route
      *
-     * @param ILoadableRoute $route
+     * @param LoadableRouteInterface $route
      * @return static
      */
-    public function setRewriteRoute(ILoadableRoute $route): self
+    public function setRewriteRoute(LoadableRouteInterface $route): self
     {
         $this->hasPendingRewrite = true;
-        $this->rewriteRoute = SimpleRouter::addDefaultNamespace($route);
+        $this->rewriteRoute = Course::addDefaultNamespace($route);
 
         return $this;
     }
@@ -300,9 +349,9 @@ class Request
     /**
      * Get rewrite route
      *
-     * @return ILoadableRoute|null
+     * @return LoadableRouteInterface|null
      */
-    public function getRewriteRoute(): ?ILoadableRoute
+    public function getRewriteRoute(): ?LoadableRouteInterface
     {
         return $this->rewriteRoute;
     }
@@ -345,9 +394,9 @@ class Request
 
     /**
      * Get loaded route
-     * @return ILoadableRoute|null
+     * @return LoadableRouteInterface|null
      */
-    public function getLoadedRoute(): ?ILoadableRoute
+    public function getLoadedRoute(): ?LoadableRouteInterface
     {
         return (\count($this->loadedRoutes) > 0) ? end($this->loadedRoutes) : null;
     }
@@ -378,10 +427,10 @@ class Request
     /**
      * Added loaded route
      *
-     * @param ILoadableRoute $route
+     * @param LoadableRouteInterface $route
      * @return static
      */
-    public function addLoadedRoute(ILoadableRoute $route): self
+    public function addLoadedRoute(LoadableRouteInterface $route): self
     {
         $this->loadedRoutes[] = $route;
 
@@ -440,5 +489,4 @@ class Request
     {
         return $this->data[$name] ?? null;
     }
-
 }

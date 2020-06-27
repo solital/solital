@@ -5,7 +5,7 @@ namespace Solital\Core\Course\Route;
 use Solital\Core\Http\Request;
 use Solital\Core\Course\Handlers\IExceptionHandler;
 
-interface IGroupRoute extends IRoute
+interface GroupRouteInterface extends RouteInterface
 {
     /**
      * Method called to check if a domain matches
