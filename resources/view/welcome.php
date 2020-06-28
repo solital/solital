@@ -10,7 +10,9 @@
     <title>Welcome to Solital</title>
 
     <style>
-        body {
+        html, body {
+            padding: 0px;
+            margin: 0 auto;
             font-family: 'Montserrat', sans-serif;
         }
 
@@ -25,7 +27,6 @@
 
         .container {
             text-align: center;
-            margin-top: 100px;
         }
 
         .link {
@@ -42,19 +43,19 @@
 
         .info-2 {
             font-size: 25px;
-            margin-top: 100px;
+            margin-top: 80px;
         }
 
         .info {
             background-color: #DCDCDC;
             padding: 20px;
-            margin-top: 30px;
+            margin-bottom: 30px;
             font-size: 18px;
         }
 
         .info-2 > .version {
             font-size: 20px;
-            margin-top: 100px;
+            margin-top: 50px;
         }
 
         .info a {
@@ -66,8 +67,6 @@
 
 <body>
     <section class="container">
-        <h1 class="main-text">Welcome to Solital</h1>
-
         <div class="info">
             <a href="#" target="_blank" class="link">Documentation</a>
             <a href="/vinci-mode" target="_blank" class="link">Vinci Mode</a>
@@ -75,8 +74,10 @@
             <a href="#" target="_blank" class="link">Blog</a>
         </div>
 
+        <img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1593342725/Solital_logo/solital-logo_iyoo2u.png" align="center" width="600">
+
         <div class="info-2">
-            <p>All right!!! You can now start creating your projects</p>
+            <p><strong>All right!!! You can now start creating your projects</strong></p>
             <p class="version">Version: <?= Solital\Core\Console\Console::SOLITAL_VERSION; ?></p>
         </div>
     </section>

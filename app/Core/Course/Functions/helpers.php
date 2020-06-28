@@ -87,3 +87,13 @@ function csrf_token(): ?string
 
     return null;
 }
+
+/**
+ * Show result pre-formatted
+ */
+function pre($value)
+{
+    echo '<pre>';
+    var_dump($value);
+    echo '</pre>';
+}

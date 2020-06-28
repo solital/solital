@@ -1,5 +1,22 @@
 # Released Notes
 
+## v0.5.1 - (2020-06-28)
+
+### Added
+
+- Added total support for PSR-16 (Simple Cache)
+- Added function `pre()` in `helpers.php`
+- Added support for Katrina ORM in pre created `Model`
+
+### Fixed
+
+- Fixed tags and comments in `Cache.php`
+
+### Changed
+
+- Changed `welcome.php`
+- Changed `Consumer.php` to `Client.php`
+
 ## v0.5.0 - (2020-06-27)
 
 ### Added
