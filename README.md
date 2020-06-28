@@ -1,10 +1,12 @@
 <img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1593342725/Solital_logo/solital-logo_iyoo2u.png" align="center">
 
-[![Latest Version](https://img.shields.io/github/release/solital/solital.svg?style=flat-square)](https://github.com/solital/solital/releases)
-[![License](https://img.shields.io/github/license/solital/solital.svg?style=flat-square)](https://github.com/solital/solital/blob/master/LICENSE)
+<p align="center">
+  <a href="https://github.com/solital/solital/releases"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/solital/solital?style=flat-square"></a>
+  <a href="https://github.com/solital/solital/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/solital/solital?style=flat-square"></a>
+</p>
 
 <p align="center">
-Attention: this framework is still in alpha, do not use in a real project
+  <h3><strong>Attention: this framework is still in alpha, do not use in a real project</strong></h3>
 </p>
 
 ## About
