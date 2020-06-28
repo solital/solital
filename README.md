@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  <h3><strong>Attention: this framework is still in alpha, do not use in a real project</strong></h3>
+  <strong>Attention: this framework is still in alpha, do not use in a real project</strong>
 </p>
 
 ## About
