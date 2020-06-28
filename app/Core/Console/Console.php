@@ -5,7 +5,7 @@ use Solital\Core\Console\Commands;
 
 class Console extends Commands
 {
-    const SOLITAL_VERSION = "0.5.0";
+    const SOLITAL_VERSION = "0.5.1";
     const VINCI_VERSION = "0.4.1";
 
     public static function verify($command, $file_create)

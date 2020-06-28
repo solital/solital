@@ -1,8 +1,8 @@
 <?php
 
-namespace Solital\Core\Http\Api;
+namespace Solital\Core\Http;
 
-class Consumer 
+class Client 
 {
 
     private $url;
