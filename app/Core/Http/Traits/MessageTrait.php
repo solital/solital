@@ -60,7 +60,7 @@ trait MessageTrait
      */
     public function __set($name, $value)
     {
-        throw new InvalidArgumentException('Cannot add new property $' . $name . ' to instance of ' . __CLASS__);
+        InvalidArgumentException::alertMessage(400, 'Cannot add new property $' . $name . ' to instance of ' . __CLASS__);
     }
 
     /**
@@ -108,7 +108,7 @@ trait MessageTrait
     private function validateProtocolVersion($version)
     {
         if (! is_string($version) || ! in_array($version, self::$validProtocolVersions, true)) {
-            throw new InvalidArgumentException(
+            InvalidArgumentException::alertMessage(400, 
                 'Invalid HTTP protocol version. Must be ' .
                 implode(', ', self::$validProtocolVersions)
             );
@@ -154,7 +154,7 @@ trait MessageTrait
 
         $value = array_map(function ($value) {
             if (! is_string($value) && ! is_numeric($value)) {
-                throw new InvalidArgumentException(
+                InvalidArgumentException::alertMessage(400, 
                     'Invalid header value type. Must be a string or numeric, received ' .
                     (is_object($value) ? get_class($value) : gettype($value))
                 );
@@ -165,7 +165,7 @@ trait MessageTrait
             if (preg_match("#(?:(?:(?<!\r)\n)|(?:\r(?!\n))|(?:\r\n(?![ \t])))#", $value) ||
                 preg_match('/[^\x09\x0a\x0d\x20-\x7E\x80-\xFE]/', $value)
             ) {
-                throw new InvalidArgumentException($value . ' is not a valid header name');
+                InvalidArgumentException::alertMessage(400, $value . ' is not a valid header name');
             }
 
             return $value;
@@ -184,14 +184,14 @@ trait MessageTrait
     private function validateHeaderName($name)
     {
         if (! is_string($name)) {
-            throw new InvalidArgumentException(
+            InvalidArgumentException::alertMessage(400, 
                 'Invalid header name type. Must be a string, received ' .
                 (is_object($name) ? get_class($name) : gettype($name))
             );
         }
 
         if (! preg_match('/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/', $name)) {
-            throw new InvalidArgumentException($name . ' is not a valid header name');
+            InvalidArgumentException::alertMessage(400, $name . ' is not a valid header name');
         }
     }
 
@@ -404,7 +404,7 @@ trait MessageTrait
         }
 
         if (! $stream instanceof StreamInterface && $stream !== null) {
-            throw new InvalidArgumentException(
+            InvalidArgumentException::alertMessage(400, 
                 'The stream must be a string stream identifier, ' .
                 'stream resource or a Psr\Http\Message\StreamInterface implementation'
             );

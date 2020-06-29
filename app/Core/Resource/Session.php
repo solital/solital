@@ -22,8 +22,6 @@ class Session
     {
         if (isset($_SESSION[$index])) {
             return $_SESSION[$index];
-        } else {
-            NotFoundException::sessionNotFound($index);
         }
     }
     

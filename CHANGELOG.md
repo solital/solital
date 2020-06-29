@@ -1,5 +1,23 @@
 # Released Notes
 
+## v0.6.0 - (2020-06-29)
+
+### Added
+
+- Added templates for exceptions
+- Added bridge to Katrina ORM
+- Added version 0.2.0 to Katrina ORM in `composer.json`
+- Added keywords in `composer.json`
+- Added `serverRequest()` method in `helpers.php` to manipule ServerRequest class
+
+### Changed
+
+- Changed Vinci to version 0.4.2
+
+### Removed
+
+- Removed `vinci-mode` link in `welcome.php`
+
 ## v0.5.1 - (2020-06-28)
 
 ### Added

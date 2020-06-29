@@ -69,9 +69,8 @@
     <section class="container">
         <div class="info">
             <a href="#" target="_blank" class="link">Documentation</a>
-            <a href="/vinci-mode" target="_blank" class="link">Vinci Mode</a>
             <a href="https://github.com/solital/solital" target="_blank" class="link">Github</a>
-            <a href="#" target="_blank" class="link">Blog</a>
+            <a href="#" target="_blank" class="link">News</a>
         </div>
 
         <img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1593342725/Solital_logo/solital-logo_iyoo2u.png" align="center" width="600">

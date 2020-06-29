@@ -460,11 +460,11 @@ class Request implements RequestInterface
         return $this;
     }
 
-    public function getParamsInput()
+    public function getParamsInput(): ?array
     {
         $body = file_get_contents('php://input');
-        
-        return $body;
+        $json = json_decode($body, true);
+        return $json;
     }
 
     public function getParamInput(string $param)
