@@ -7,19 +7,19 @@ use Solital\Core\Http\Request;
 use Solital\Core\Http\Response;
 use Solital\Core\Http\Middleware\BaseCsrfVerifier;
 use Solital\Core\Http\Exceptions\MalformedUrlException;
+use Solital\Core\Exceptions\HttpException;
+use Solital\Core\Exceptions\InvalidArgumentException;
+use Solital\Core\Exceptions\NotFoundHttpException;
 use Solital\Core\Course\Route\RouteInterface;
 use Solital\Core\Course\Handlers\EventHandler;
 use Solital\Core\Course\ClassLoader\ClassLoader;
-use Solital\Core\Course\Exceptions\HttpException;
+use Solital\Core\Course\Route\PartialGroupRouteInterface;
+use Solital\Core\Course\Handlers\ExceptionHandlerInterface;
 use Solital\Core\Course\Route\GroupRouteInterface;
 use Solital\Core\Course\Route\LoadableRouteInterface;
-use Solital\Core\Exceptions\InvalidArgumentException;
 use Solital\Core\Course\Handlers\EventHandlerInterface;
 use Solital\Core\Course\Route\ControllerRouteInterface;
 use Solital\Core\Course\ClassLoader\ClassLoaderInterface;
-use Solital\Core\Course\Exceptions\NotFoundHttpException;
-use Solital\Core\Course\Route\PartialGroupRouteInterface;
-use Solital\Core\Course\Handlers\ExceptionHandlerInterface;
 
 class Router
 {
@@ -425,9 +425,9 @@ class Router
         }
 
         if ($methodNotAllowed === true) {
-            return NotFoundHttpException::alertWarning(403, "Route ".$this->request->getUri()->getPath()." or method ".$this->request->getMethod()." not allowed", $this->request->getUri()->getPath());
-            /*$message = sprintf('Route "%s" or method "%s" not allowed.', $this->request->getUri()->getPath(), $this->request->getMethod());
-            $this->handleException(new NotFoundHttpException($message, 403));*/
+            $message = NotFoundHttpException::alertMessage(403, "Route '".$this->request->getUri()->getPath()."' or method '".$this->request->getMethod()."' not allowed", $this->request->getUri()->getPath());
+            #$message = sprintf('Route "%s" or method "%s" not allowed.', $this->request->getUri()->getPath(), $this->request->getMethod());
+            $this->handleException(new NotFoundHttpException($message, 403));
         }
 
         if (\count($this->request->getLoadedRoutes()) === 0) {
@@ -435,10 +435,10 @@ class Router
             $rewriteUrl = $this->request->getRewriteUrl();
 
             if ($rewriteUrl !== null) {
-                $message = NotFoundHttpException::alertMessage(404, "Route ".$rewriteUrl." not found (rewrite from: ", $this->request->getUri()->getPath().")");
+                $message = NotFoundHttpException::alertMessage(404, "Route '".$rewriteUrl."' not found (rewrite from: '", $this->request->getUri()->getPath()."')");
                 #$message = sprintf('Route not found: "%s" (rewrite from: "%s")', $rewriteUrl, $this->request->getUri()->getPath());
             } else {
-                $message = NotFoundHttpException::alertMessage(404, "Route ".$this->request->getUri()->getPath()." not found", $this->request->getUri()->getPath());
+                $message = NotFoundHttpException::alertMessage(404, "Route '".$this->request->getUri()->getPath()."' not found", $this->request->getUri()->getPath());
                 #$message = sprintf('Route not found: "%s"', $this->request->getUri()->getPath());
             }
 
@@ -548,7 +548,7 @@ class Router
                 }
 
             } catch (\Exception $e) {
-
+                echo "<strong>Exceptionnnnnnn</strong>".$e->getMessage();
             }
 
             $this->debug('Finished processing');

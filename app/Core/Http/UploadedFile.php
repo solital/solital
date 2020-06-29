@@ -93,7 +93,7 @@ class UploadedFile implements UploadedFileInterface
         $this->size = $size;
 
         if ($error < 0 || $error > 8) {
-            throw new InvalidArgumentException('The error status must be an UPLOAD_ERR_* constant');
+            InvalidArgumentException::alertMessage(400, 'The error status must be an UPLOAD_ERR_* constant');
         }
 
         $this->error = $error;
@@ -121,7 +121,7 @@ class UploadedFile implements UploadedFileInterface
             $this->file = $file->getMetadata('uri');
             $this->stream = $file;
         } else {
-            throw new InvalidArgumentException(
+            InvalidArgumentException::alertMessage(400, 
                 'The file must be a string, resource or instance of Psr\Http\Message\StreamInterface'
             );
         }
@@ -135,7 +135,7 @@ class UploadedFile implements UploadedFileInterface
     public function getStream() : StreamInterface
     {
         if ($this->moved) {
-            throw new RuntimeException('Cannot retrieve stream as it was moved');
+            RuntimeException::alertMessage('Cannot retrieve stream as it was moved');
         }
 
         return $this->stream;
@@ -151,33 +151,33 @@ class UploadedFile implements UploadedFileInterface
     public function moveTo($targetPath)
     {
         if (empty($targetPath) || ! is_string($targetPath)) {
-            throw new InvalidArgumentException('The target path must be a non-empty string');
+            InvalidArgumentException::alertMessage(400, 'The target path must be a non-empty string');
         }
 
         $targetIsStream = strpos($targetPath, '://') > 0;
 
         if (! $targetIsStream && ! is_writable(dirname($targetPath))) {
-            throw new InvalidArgumentException('The upload target path ' . $targetPath . ' is not writable');
+            InvalidArgumentException::alertMessage(400, 'The upload target path ' . $targetPath . ' is not writable');
         }
 
         if ($this->moved) {
-            throw new RuntimeException('The uploaded file was already moved');
+            RuntimeException::alertMessage('The uploaded file was already moved');
         }
 
         if ($targetIsStream) {
             if (! copy($this->file, $targetPath)) {
-                throw new RuntimeException('The file ' . $this->file . ' could not be moved to ' . $targetPath);
+                RuntimeException::alertMessage('The file ' . $this->file . ' could not be moved to ' . $targetPath);
             }
 
             if (! unlink($this->file)) {
-                throw new RuntimeException('The file ' . $this->file . ' could not be removed');
+                RuntimeException::alertMessage('The file ' . $this->file . ' could not be removed');
             }
         } elseif ($this->sapi) {
             if (! move_uploaded_file($this->file, $targetPath)) {
-                throw new RuntimeException('The file ' . $this->file . '"could not be moved to ' . $targetPath);
+                RuntimeException::alertMessage('The file ' . $this->file . '"could not be moved to ' . $targetPath);
             }
         } elseif (! rename($this->file, $targetPath)) {
-            throw new RuntimeException('The file ' . $this->file . ' could not be moved to ' . $targetPath);
+            RuntimeException::alertMessage('The file ' . $this->file . ' could not be moved to ' . $targetPath);
         }
 
         $this->moved = true;

@@ -3,7 +3,8 @@
 namespace Solital\Core\Wolf;
 use Solital\Core\Wolf\Wolf;
 use Solital\Core\Wolf\WolfCache;
-use Solital\Core\Wolf\NotFoundException;
+use Solital\Core\Exceptions\NotFoundException;
+
 
 class Wolf extends WolfCache
 {
@@ -42,7 +43,7 @@ class Wolf extends WolfCache
                 file_put_contents(self::$file_cache, $res);
             }
         } else {
-            NotFoundException::alertMessage($view, $ext);
+            NotFoundException::WolfNotFound($view, $ext);
         }
 
         return __CLASS__;

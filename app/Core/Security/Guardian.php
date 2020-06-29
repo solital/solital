@@ -145,15 +145,15 @@ class Guardian
     private static function verifyConstants() 
     {
         if (INDEX_LOGIN == "" || empty(INDEX_LOGIN)) {
-            NotFoundException::indexNotFound("INDEX_LOGIN not defined", "You have not determined any indexes in the INDEX_LOGIN constant. Check your 'config.php' file");
+            NotFoundException::GuardianNotFound("INDEX_LOGIN not defined", "You have not determined any indexes in the INDEX_LOGIN constant. Check your 'config.php' file");
         }
         
         if (URL_DASHBOARD == "" || empty(URL_DASHBOARD)) {
-            NotFoundException::indexNotFound("URL_DASHBOARD not defined", "You have not determined any indexes in the URL_DASHBOARD constant. Check your 'config.php' file");
+            NotFoundException::GuardianNotFound("URL_DASHBOARD not defined", "You have not determined any indexes in the URL_DASHBOARD constant. Check your 'config.php' file");
         }
         
         if (URL_LOGIN == "" || empty(URL_LOGIN)) {
-            NotFoundException::indexNotFound("URL_LOGIN not defined", "You have not determined any indexes in the URL_LOGIN constant. Check your 'config.php' file");
+            NotFoundException::GuardianNotFound("URL_LOGIN not defined", "You have not determined any indexes in the URL_LOGIN constant. Check your 'config.php' file");
         }
     }
 

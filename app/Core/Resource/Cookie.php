@@ -21,8 +21,6 @@ class Cookie {
     {
         if (isset($_COOKIE[$index])) {
             return $_COOKIE[$index];
-        } else {
-            NotFoundException::cookieNotFound($index);
         }
     }
     

@@ -4,7 +4,7 @@ namespace Solital\Core\Course\Route;
 
 use Solital\Core\Http\Middleware\MiddlewareInterface;
 use Solital\Core\Http\Request;
-use Solital\Core\Course\Exceptions\NotFoundHttpException;
+use Solital\Core\Exceptions\NotFoundHttpException;
 use Solital\Core\Course\Router;
 
 abstract class Route implements RouteInterface
@@ -116,7 +116,7 @@ abstract class Route implements RouteInterface
         $method = $controller[1];
 
         if (method_exists($class, $method) === false) {
-            NotFoundHttpException::alertMessage(404, "Method '$method' does not exist in class '$className'");
+            NotFoundHttpException::alertMessage(404, "Method '$method' doesn't exist in namespace '$className'");
         }
 
         $router->debug('Executing callback');

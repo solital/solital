@@ -1,17 +1,17 @@
 <?php
 
 namespace Solital\Components\Model;
-use Katrina\Katrina;
+use Solital\Database\ORM;
 
 abstract class Model
 {
     protected $table;
-    protected $columnPrimaryKey;
+    protected $primaryKey;
     protected $columns;
 
     protected function instance()
     {
-        $katrina = new Katrina($this->table, $this->columnPrimaryKey, $this->columns);
+        $katrina = new ORM($this->table, $this->primaryKey, $this->columns);
         return $katrina;
     }
 }

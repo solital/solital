@@ -4,6 +4,7 @@ use Solital\Core\Http\Uri;
 use Solital\Core\Http\Request;
 use Solital\Core\Http\Response;
 use Solital\Core\Http\UploadedFile;
+use Solital\Core\Http\ServerRequest;
 use Solital\Core\Course\Course as Course;
 
 /**
@@ -54,10 +55,37 @@ function input($index = null, $defaultValue = null, ...$methods)
  * Upload a file
  * @param string
  */
-function upload($file): UploadedFile
+function uploadFile($file): UploadedFile
 {
     $upload = new UploadedFile($file);
     return $upload;
+}
+
+/**
+ * Creates an instance of the ServerRequest class
+ */
+function serverRequest(array $headers = null, $protocol = null): ServerRequest
+{
+    if (request()->getParamsInput()) {
+        $queryParams = request()->getParamsInput();
+    } else {
+        $queryParams = [];
+    }
+
+    $method = request()->getMethod();
+    $uri = request()->getUri()->getHost();
+    $body = "php://input";
+    $serverParams = $_SERVER;
+    $cookieParams = $_COOKIE; 
+    #$queryParams = request()->getParamsInput();
+    $uploadedFiles = $_FILES;
+    $headers = [];
+    $protocol = '1.1';
+
+    $server = new ServerRequest($method, $uri, $body, $serverParams, 
+    $cookieParams, $queryParams, $uploadedFiles, $headers, $protocol);
+    
+    return $server;
 }
 
 /**
@@ -90,6 +118,7 @@ function csrf_token(): ?string
 
 /**
  * Show result pre-formatted
+ * @param mixed $value
  */
 function pre($value)
 {

@@ -31,7 +31,7 @@ class Stream implements StreamInterface
         }
 
         if (! is_resource($stream) || get_resource_type($stream) !== 'stream') {
-            throw new InvalidArgumentException(
+            InvalidArgumentException::alertMessage(400, 
                 'The stream must be a string stream identifier or stream resource, received ' .
                 (is_object($stream) ? get_class($stream) : gettype($stream))
             );
@@ -101,7 +101,7 @@ class Stream implements StreamInterface
     public function tell() : int
     {
         if (! $this->stream || is_int($position = ftell($this->stream)) === false) {
-            throw new RuntimeException('Unable to determine stream position');
+            RuntimeException::alertMessage('Unable to determine stream position');
         }
 
         return $position;
@@ -129,7 +129,7 @@ class Stream implements StreamInterface
     public function seek($offset, $whence = SEEK_SET)
     {
         if (! $this->isSeekable() || fseek($this->stream, $offset, $whence) === -1) {
-            throw new RuntimeException('Unable tho seek stream position');
+            RuntimeException::alertMessage('Unable tho seek stream position');
         }
     }
 
@@ -187,7 +187,7 @@ class Stream implements StreamInterface
     public function read($length) : string
     {
         if (! $this->isReadable() || ($read = fread($this->stream, $length)) === false) {
-            throw new RuntimeException('Unable to read stream');
+            RuntimeException::alertMessage('Unable to read stream');
         }
 
         return $read;
@@ -200,7 +200,7 @@ class Stream implements StreamInterface
     public function getContents() : string
     {
         if (! $this->isReadable() || ($contents = stream_get_contents($this->stream)) === false) {
-            throw new RuntimeException('Unable to read stream contents');
+            RuntimeException::alertMessage('Unable to read stream contents');
         }
 
         return $contents;

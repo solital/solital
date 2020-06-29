@@ -4,7 +4,7 @@ namespace Solital\Core\Http;
 
 use Psr\Http\Message\ResponseInterface;
 use Solital\Core\Http\Traits\MessageTrait;
-use Solital\Core\Exceptions\InvalidArgumentException;
+use Solital\Core\Http\Exceptions\InvalidArgumentException;
 
 class Response implements ResponseInterface
 {
@@ -209,7 +209,7 @@ class Response implements ResponseInterface
     public function json($value, ?int $options = null, int $dept = 512): void
     {
         if (($value instanceof \JsonSerializable) === false && \is_array($value) === false) {
-            throw new InvalidArgumentException('Invalid type for parameter "value". Must be of type array or object implementing the \JsonSerializable interface.');
+            InvalidArgumentException::alertMessage(417, 'Invalid type. Must be of type array or object implementing the \JsonSerializable interface.');
         }
 
         $this->header('Content-Type: application/json; charset=utf-8');
@@ -264,9 +264,9 @@ class Response implements ResponseInterface
         $code = $this->sanitizeStatus($code);
 
         if (! is_string($reasonPhrase)) {
-            throw new InvalidArgumentException(
-                'HTTP reason phrase must be a string, received ' .
-                (is_object($reasonPhrase) ? get_class($reasonPhrase) : gettype($reasonPhrase))
+            InvalidArgumentException::alertMessage(400, 
+                "HTTP reason phrase must be a 'string', received '" .
+                (is_object($reasonPhrase) ? get_class($reasonPhrase) : gettype($reasonPhrase))."'"
             );
         }
 
@@ -278,7 +278,7 @@ class Response implements ResponseInterface
         }
 
         if ($reasonPhrase === '') {
-            throw new InvalidArgumentException('The HTTP reason phrase must be supplied for this code');
+            InvalidArgumentException::alertMessage(417, 'The HTTP reason phrase must be supplied for this code');
         }
 
         $clone->reasonPhrase = $reasonPhrase;
@@ -294,7 +294,7 @@ class Response implements ResponseInterface
     private function sanitizeStatus($code) : int
     {
         if (! is_numeric($code) || is_float($code) || $code < 100 || $code > 599) {
-            throw new InvalidArgumentException('Invalid HTTP status code. Must be numeric and between 100 and 599');
+            InvalidArgumentException::alertMessage(400, 'Invalid HTTP status code. Must be numeric and between 100 and 599');
         }
 
         return (int) $code;

@@ -5,8 +5,8 @@ use Solital\Core\Console\Commands;
 
 class Console extends Commands
 {
-    const SOLITAL_VERSION = "0.5.1";
-    const VINCI_VERSION = "0.4.1";
+    const SOLITAL_VERSION = "0.6.0";
+    const VINCI_VERSION = "0.4.2";
 
     public static function verify($command, $file_create)
     {
@@ -183,7 +183,7 @@ class Console extends Commands
                 $about .= "Thank you for using Solital, you can see the full documentation at https://solital.com/documentation/starting\n\n";
                 $about .= "Components Version\n";
                 $about .= "+------------------------+\n";
-                $about .= "+ Katrina ORM   |\033[93m ".\Katrina\Version::KATRINA_VERSION."\033[0m  +\n";
+                $about .= "+ Katrina ORM   |\033[93m ".\Solital\Database\ORM::KATRINA_VERSION."\033[0m  +\n";
                 $about .= "+------------------------+\n";
                 $about .= "+ Vinci Console |\033[93m ".Console::VINCI_VERSION."\033[0m  +\n";
                 $about .= "+------------------------+\n\n";
