@@ -43,9 +43,13 @@ class Commands
         return false;   
     }
 
-    protected static function removeRouter(string $name)
+    protected static function removeRouter(string $name, string $folder = null)
     {
         $file = "./routers/".$name.".php";
+        
+        if (isset($folder)) {
+            $file = "./routers".$folder."/".$name.".php";
+        }
 
         if (is_file($file)) {
             unlink($file);
@@ -82,11 +86,17 @@ class Commands
         return false;   
     }
 
-    protected static function router(string $name) 
+    protected static function router(string $name, string $folder = null) 
     {
         $dir = "./routers/";
+
+        if (isset($folder)) {
+            \mkdir("./routers".$folder);
+            $dir = "./routers".$folder."/";
+        }
+
         if (is_dir($dir)) {
-            file_put_contents($dir."$name.php", "<?php\n\nuse Solital\Course\Course;\nuse Solital\Wolf\Wolf;\n\nCourse::get('/', function(){\n\x20\x20\x20\x20\x20Wolf::loadView('');\n});");
+            file_put_contents($dir."$name.php", "<?php\n\nuse Solital\Course\Course;\nuse Solital\Wolf\Wolf;\n\nCourse::get('/', function(){\n\n});");
             
             return true;
         }

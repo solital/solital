@@ -6,15 +6,15 @@ define('ROOT_VINCI', __DIR__);
 require_once __DIR__.'/vendor/autoload.php';
 
 $command = $argv[1];
+$folder = null;
+
+if (isset($argv[2])) {
+    $folder = $argv[2];
+}
 
 if (stripos($command, ":") !== false) {
-    
     $file = explode(':', $command);
-
-    Solital\Core\Console\Console::verify($file[0], $file[1]);
-
+    Solital\Core\Console\Console::verify($file[0], $file[1], $folder);
 } else {
-
     Solital\Core\Console\Console::vinciCommand($command);
-
 }

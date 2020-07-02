@@ -6,9 +6,9 @@ use Solital\Core\Console\Commands;
 class Console extends Commands
 {
     const SOLITAL_VERSION = "0.6.0";
-    const VINCI_VERSION = "0.4.2";
+    const VINCI_VERSION = "0.5.0";
 
-    public static function verify($command, $file_create)
+    public static function verify($command, $file_create, $folder = null)
     {
         switch ($command) {
             case 'controller':
@@ -48,7 +48,7 @@ class Console extends Commands
                 break;
 
             case 'router':
-                $return = Commands::router($file_create);
+                $return = Commands::router($file_create, $folder);
             
                 if ($return == true) {
                     print_r("Router $file_create created\n\n");
@@ -117,7 +117,7 @@ class Console extends Commands
                 break;
 
             case 'remove-router':
-                $return = Commands::removeRouter($file_create);
+                $return = Commands::removeRouter($file_create, $folder);
             
                 if ($return == true) {
                     print_r("Router $file_create removed\n\n");
@@ -220,6 +220,10 @@ class Console extends Commands
                 $show .= "  \033[92mcache-clear\033[0m     Clears the solital cache\n";
                 
                 \print_r($show);
+                break;
+
+            case 'router':
+
                 break;
         }
     }

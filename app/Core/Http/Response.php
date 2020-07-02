@@ -117,6 +117,7 @@ class Response implements ResponseInterface
 
     public function __construct(Request $request, $body = null, $code = 200, array $headers = [])
     {
+        #$headers = \getallheaders();
         $this->request = $request;
         
         foreach ($_SERVER as $key => $value) {
@@ -161,21 +162,6 @@ class Response implements ResponseInterface
     public function refresh(): void
     {
         $this->redirect($this->request->getUrl()->getOriginalUrl());
-    }
-
-    /**
-     * Add http authorisation
-     * @param string $name
-     * @return static
-     */
-    public function auth(string $name = ''): self
-    {
-        $this->headers([
-            'WWW-Authenticate: Basic realm="' . $name . '"',
-            'HTTP/1.0 401 Unauthorized',
-        ]);
-
-        return $this;
     }
 
     public function cache(string $eTag, int $lastModifiedTime = 2592000): self

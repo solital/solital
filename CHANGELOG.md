@@ -1,5 +1,22 @@
 # Released Notes
 
+## v0.6.1 - (2020-07-02)
+
+### Added
+
+- Added route creation and removal by folder
+- Added monolog support
+- Added `MONOLOG_DIR` constant to insert log files
+- Added `LogFiles` folder
+
+## Fixed
+
+- Fixed Interfaces in `Core` folder
+
+### Changed
+
+- Changed Vinci to version 0.5.0
+
 ## v0.6.0 - (2020-06-29)
 
 ### Added

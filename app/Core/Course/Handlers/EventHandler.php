@@ -2,8 +2,9 @@
 
 namespace Solital\Core\Course\Handlers;
 
-use Solital\Core\Course\Event\EventArgument;
 use Solital\Core\Course\Router;
+use Solital\Core\Course\Event\EventArgument;
+use Solital\Core\Course\Handlers\EventHandlerInterface;
 
 class EventHandler implements EventHandlerInterface
 {
@@ -128,7 +129,7 @@ class EventHandler implements EventHandlerInterface
      * @param \Closure $callback
      * @return static
      */
-    public function register(string $name, \Closure $callback): IEventHandler
+    public function register(string $name, \Closure $callback): EventHandlerInterface
     {
         if (isset($this->registeredEvents[$name]) === true) {
             $this->registeredEvents[$name][] = $callback;

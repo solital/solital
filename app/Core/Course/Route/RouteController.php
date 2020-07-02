@@ -3,6 +3,8 @@
 namespace Solital\Core\Course\Route;
 
 use Solital\Core\Http\Request;
+use Solital\Core\Course\Route\RouteInterface;
+use Solital\Core\Course\Route\ControllerRouteInterface;
 
 class RouteController extends LoadableRoute implements ControllerRouteInterface
 {
@@ -13,7 +15,7 @@ class RouteController extends LoadableRoute implements ControllerRouteInterface
 
     public function __construct($url, $controller)
     {
-        $this->setUrl($url);
+        #$this->setUrl($url);
         $this->setName(trim(str_replace('/', '.', $url), '/'));
         $this->controller = $controller;
     }
@@ -134,7 +136,7 @@ class RouteController extends LoadableRoute implements ControllerRouteInterface
      * @param string $controller
      * @return static
      */
-    public function setController(string $controller): IControllerRoute
+    public function setController(string $controller): ControllerRouteInterface
     {
         $this->controller = $controller;
 
@@ -157,7 +159,7 @@ class RouteController extends LoadableRoute implements ControllerRouteInterface
      * @param string $method
      * @return static
      */
-    public function setMethod(string $method): IRoute
+    public function setMethod(string $method): RouteInterface
     {
         $this->method = $method;
 
@@ -171,7 +173,7 @@ class RouteController extends LoadableRoute implements ControllerRouteInterface
      * @param bool $merge
      * @return static
      */
-    public function setSettings(array $values, bool $merge = false): IRoute
+    public function setSettings(array $values, bool $merge = false): RouteInterface
     {
         if (isset($values['names']) === true) {
             $this->names = $values['names'];

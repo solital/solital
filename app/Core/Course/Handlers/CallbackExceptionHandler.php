@@ -3,6 +3,7 @@
 namespace Solital\Core\Course\Handlers;
 
 use Solital\Core\Http\Request;
+use Solital\Core\Course\Handlers\ExceptionHandlerInterface;
 
 /**
  * Class CallbackExceptionHandler
@@ -12,7 +13,7 @@ use Solital\Core\Http\Request;
  *
  * @package \Solital\Course\Handlers
  */
-class CallbackExceptionHandler implements IExceptionHandler
+class CallbackExceptionHandler implements ExceptionHandlerInterface
 {
 
     protected $callback;
