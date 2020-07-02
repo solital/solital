@@ -71,7 +71,10 @@ class Course
     
     public static function loadComponents() 
     {
-        /* Load external routes file */
+        if (ERRORS_DISPLAY === true) {
+            ini_set('display_errors', 1);
+            error_reporting(E_ALL);
+        }
         
         foreach(glob('../config/*.php') as $configs){
             require_once $configs;
@@ -79,11 +82,6 @@ class Course
         
         foreach(glob('../routers/*.php') as $routers){
             require_once $routers;
-        }
-
-        if (ERRORS_DISPLAY === true) {
-            ini_set('display_errors', 1);
-            error_reporting(E_ALL);
         }
     }
     
@@ -506,7 +504,7 @@ class Course
     public static function response(): Response
     {
         if (static::$response === null) {
-            static::$response = new Response(static::request(), 'php://memory', 200, getallheaders());
+            static::$response = new Response(static::request(), 'php://memory', 200);
         }
 
         return static::$response;

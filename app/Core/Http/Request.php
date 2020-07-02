@@ -99,13 +99,14 @@ class Request implements RequestInterface
      * Request constructor.
      * @throws MalformedUrlException
      */
-    public function __construct(string $method = null, $uri = null, $body = 'php://memory', array $headers = [])
+    public function __construct(string $method, $uri, $body = 'php://memory', array $headers = [])
     {
+        $this->headers = $_SERVER;
         $this->initialize($method, $uri, $body, $headers);
 
         foreach ($_SERVER as $key => $value) {
-            $this->headers[strtolower($key)] = $value;
-            $this->headers[strtolower(str_replace('_', '-', $key))] = $value;
+            $this->headers[\strtolower($key)] = $value;
+            $this->headers[\strtolower(str_replace('_', '-', $key))] = $value;
         }
 
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
@@ -117,12 +118,14 @@ class Request implements RequestInterface
         $this->setHost($this->scheme.$this->getHeader('http-host'));
 
         // Check if special IIS header exist, otherwise use default.
-        $this->setUrl(new Uri($this->getHeader('unencoded-url', $this->getHeader('request-uri'))));
+        if ($this->getHeader('unencoded-url', $this->getHeader('request-uri'))) {
+            $this->setUrl(new Uri($this->getHeader('unencoded-url', $this->getHeader('request-uri'))));
+        }
         
-        $this->method = strtolower($this->getHeader('request-method'));
+        $method_server = $this->getHeader('request-method');
+        $this->method = strtolower($method_server);
         $this->inputHandler = new InputHandler($this);
-        $this->method = strtolower($this->inputHandler->value('_method', $this->getHeader('request-method')));
-        $this->server = $_SERVER;
+        $this->method = strtolower($this->inputHandler->value('_method', $method_server));
     }
 
     public function isSecure(): bool
@@ -153,16 +156,6 @@ class Request implements RequestInterface
             $this->url->setHost((string)$this->getHost());
         }
     }
-
-    /**
-     * Copy url object
-     *
-     * @return Uri
-     */
-    /*public function getUrlScheme(): ?string
-    {
-        return $this->scheme;
-    }*/
     
     /**
      * Copy url object
@@ -273,7 +266,7 @@ class Request implements RequestInterface
      */
     public function getHeader($name, $defaultValue = null): ?string
     {
-        return $this->headers[strtolower($name)] ?? $defaultValue;
+        return $this->headers[$name] ?? $defaultValue;
     }
 
     /**

@@ -1,5 +1,6 @@
 <?php
 
+use Monolog\Logger;
 use Solital\Core\Http\Uri;
 use Solital\Core\Http\Request;
 use Solital\Core\Http\Response;

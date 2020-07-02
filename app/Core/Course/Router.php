@@ -118,17 +118,11 @@ class Router
     protected $classLoader;
 
     /**
-     * @var array
-     */
-    private $server;
-
-    /**
      * Router constructor.
      */
     public function __construct()
     {
         $this->reset();
-        $this->server = $_SERVER;
         $this->uri = new Uri();
     }
 
@@ -139,9 +133,9 @@ class Router
     {
         $this->debugStartTime = microtime(true);
         $this->isProcessingRoute = false;
-
+        
         try {
-            $this->request = new Request($this->server["REQUEST_METHOD"], $this->server["REQUEST_URI"], 'php://memory', getallheaders());
+            $this->request = new Request($_SERVER["REQUEST_METHOD"], $_SERVER["REQUEST_URI"], 'php://memory');
         } catch (MalformedUrlException $e) {
             $this->debug(sprintf('Invalid request-uri url: %s', $e->getMessage()));
         }
@@ -723,7 +717,7 @@ class Router
         /* No result so we assume that someone is using a hardcoded url and join everything together. */
         $url = trim(implode('/', array_merge((array)$name, (array)$parameters)), '/');
         $url = (($url === '') ? '/' : '/' . $url . '/');
-
+        
         if ($this->uri->getSheme() != 'https') {
             return $this->request
             ->getUrlScheme()
