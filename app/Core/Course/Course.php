@@ -70,14 +70,14 @@ class Course
      */
     
     public static function loadComponents() 
-    {
+    {   
+        foreach(glob('../config/*.php') as $configs){
+            require_once $configs;
+        }
+
         if (ERRORS_DISPLAY === true) {
             ini_set('display_errors', 1);
             error_reporting(E_ALL);
-        }
-        
-        foreach(glob('../config/*.php') as $configs){
-            require_once $configs;
         }
         
         foreach(glob('../routers/*.php') as $routers){

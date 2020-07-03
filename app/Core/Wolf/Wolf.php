@@ -17,8 +17,12 @@ class Wolf extends WolfCache
 
     public static function loadView(string $view, array $data = null, string $ext = "php") 
     {
-
         $file = ROOT.'/resources/view/'.$view.'.'.$ext;
+
+        if (strpos($view, "/")) {
+            $file = ROOT.'/resources/'.$view.'.'.$ext;
+        }
+
         self::$file_cache = self::$cache_dir.$view."-".date('Ymd')."-".self::$time.".cache.php";
         
         if (isset($data)) {

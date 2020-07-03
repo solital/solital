@@ -2,8 +2,7 @@
 
 namespace Solital\Core\Course\ClassLoader;
 
-#use DI\Container;
-use Solital\Core\Course\Exceptions\NotFoundHttpException;
+use Solital\Core\Exceptions\NotFoundHttpException;
 
 class ClassLoader implements ClassLoaderInterface
 {

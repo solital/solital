@@ -5,8 +5,8 @@ use Solital\Core\Console\Commands;
 
 class Console extends Commands
 {
-    const SOLITAL_VERSION = "0.6.0";
-    const VINCI_VERSION = "0.5.0";
+    const SOLITAL_VERSION = "0.6.2";
+    const VINCI_VERSION = "0.6.0";
 
     public static function verify($command, $file_create, $folder = null)
     {
@@ -218,11 +218,41 @@ class Console extends Commands
                 $show .= "  \033[92mabout\033[0m           Shows version of solital and components\n";
                 $show .= "  \033[92mshow\033[0m            Lists all Vinci commands\n";
                 $show .= "  \033[92mcache-clear\033[0m     Clears the solital cache\n";
+                $show .= "  \033[92mauth\033[0m            Create classes for login\n";
+                $show .= "  \033[92mremove-auth\033[0m     Removes the components created with the \033[92mauth\033[0m command\n";
                 
                 \print_r($show);
                 break;
 
-            case 'router':
+            case 'auth':
+                $return = Commands::authComponents();
+            
+                if ($return == true) {
+                    print_r("Created components. Run the command \033[92mcomposer dump-autoload -o\033[0m to load the classes\n\n");
+                } else {
+                    print_r("Error: it wasn't possible to create the components\n\n");
+                }
+                break;
+
+            case 'remove-auth':
+                
+                echo "Are you sure you want to delete the authentication components? (this process cannot be undone)? [Y/N]";
+                $stdin = fopen("php://stdin","rb");
+                $res = fgets($stdin);
+                $res = strtoupper($res);
+
+                if (\trim($res) == "Y") {
+                    $return = Commands::removeAuth();
+            
+                    if ($return == true) {
+                        print_r("Components removed\n\n");
+                    } else {
+                        print_r("Error: it wasn't possible to remove the components\n\n");
+                    }
+                } else if (\trim($res) == "N") {
+                    echo "Aborted\n\n";
+                    exit;
+                }
 
                 break;
         }
