@@ -1,11 +1,11 @@
 <?php
 
 namespace Solital\Components\Controller\Auth;
-use Solital\Security\Guardian;
+use Solital\Core\Security\Guardian;
 use Solital\Message\Message;
-use Katrina\Katrina;
+use Solital\Database\ORM;
 
-class AuthController
+class AuthController extends Guardian
 {
     /**
      * @var string

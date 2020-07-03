@@ -3,8 +3,7 @@
 namespace Solital\Core\Security;
 use Solital\Core\Exceptions\NotFoundException;
 use Solital\Core\Session\Session as Session;
-use Katrina\Connection\DB as DB;
-use Katrina\Exception\Exception;
+use Solital\Database\ORM;
 use PDO;
 
 class Guardian
@@ -23,48 +22,81 @@ class Guardian
         return $this;
     }
 
-    protected function fields(string $column_email, string $column_pass, string $email, string $password)
+    private static function queryDatabase($sql)
     {
         try {
-            $sql = "SELECT * FROM $this->table WHERE $column_email = '$email';";
-            $stmt = DB::query($sql);
+            $stmt = ORM::query($sql);
             $stmt->execute();
             $res = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if (password_verify($password, $res[$column_pass])) {
-                return $res;
-            } else {
-                return false;
-            }
-
+            return $res;
         } catch (\PDOException $e) {
-            Exception::alertMessage($e, "'verifyLogin()' error");
+            Exception::alertMessage($e, "'queryDatabase()' error");
         }
     }
 
-    public static function verifyEmail(string $email, int $type)
+    protected function fields(string $email_column, string $pass_column, string $email, string $password)
     {
-        switch ($type) {
-            case 1:
-                $email = filter_input(INPUT_GET, $email, FILTER_VALIDATE_EMAIL);
+        $sql = "SELECT * FROM $this->table WHERE $email_column = '$email';";
+        $res = self::queryDatabase($sql);
 
-                if (preg_match("/^[a-zA-Z0-9.-_]+@[a-z]+\.[a-z.]{1,6}$/", $email)) {
-                    return true;
-                } else {
-                    return false;
-                }
-                break;
-            
-            case 2:
-                $email = filter_input(INPUT_POST, $email, FILTER_VALIDATE_EMAIL);
+        if (password_verify($password, $res[$pass_column])) {
+            return $res;
+        } else {
+            return false;
+        }
+    }
 
-                if (preg_match("/^[a-zA-Z0-9.-_]+@[a-z]+\.[a-z.]{1,6}$/", $email)) {
-                    return true;
-                } else {
-                    return false;
-                }
-                break;
-        } 
+    public static function changeEmail(string $table, string $email_column, string $email, string $new_email)
+    {
+        $sql = "SELECT * FROM $table WHERE $email_column = '$email';";
+        $res = self::queryDatabase($sql);
+
+        if (isset($res)) {
+            self::updateEmail($table, $email_column, $email, $new_email);
+        } else {
+            return false;
+        }
+    }
+
+    public static function verifyEmail(string $table, string $email_column, string $email)
+    {
+        $sql = "SELECT * FROM $table WHERE $email_column = '$email';";
+        $res = self::queryDatabase($sql);
+
+        if (isset($res)) {
+            self::validateEmail($email);
+        } else {
+            return false;
+        }
+    }
+
+    private static function validateEmail(string $email)
+    {
+        $email = filter_input(INPUT_POST, $email, FILTER_VALIDATE_EMAIL);
+
+        if (preg_match("/^[a-zA-Z0-9.-_]+@[a-z]+\.[a-z.]{1,6}$/", $email)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static function updateEmail(string $table, string $email_column, string $email, string $new_email)
+    {
+        if (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
+        $sql = "UPDATE $table SET $email_column = '$new_email' WHERE $email_column = '$email'";
+        $stmt = ORM::prepare($sql);
+        $res = $stmt->execute();
+
+        if (isset($res)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static function encrypt(string $value, string $time = '+1 hour')

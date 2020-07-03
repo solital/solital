@@ -1,5 +1,22 @@
 # Released Notes
 
+## v0.6.2 - (2020-07-03)
+
+### Added
+
+- Added creating and removing login structure in Vinci
+- Added `query` and `prepare` method in `ORM` class
+- Added e-mail change on `Guardian`
+
+## Fixed
+
+- Fixed wrong interface in `ClassLoader`
+- Fixed template search outside the view folder in `Wolf`
+
+### Changed
+
+- Changed Vinci to version 0.6.0
+
 ## v0.6.1 - (2020-07-02)
 
 ### Added

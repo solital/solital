@@ -4,6 +4,8 @@
  * ALERT: The files below should not be changed. 
  * Changing them may cause a fatal error in your project.
  */
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 session_start();
 

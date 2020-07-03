@@ -9,8 +9,8 @@ define('ERRORS_DISPLAY', true);
  * GUARDIAN CONSTANTS
  */
 
-define('URL_LOGIN', 'your_login_url');
-define('URL_DASHBOARD', 'your_dashboard_url');
+define('URL_LOGIN', 'your_url_login');
+define('URL_DASHBOARD', 'your_url_dashboard');
 define('INDEX_LOGIN', 'solital_index_login');
 
 /**
