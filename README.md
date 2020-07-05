@@ -13,6 +13,14 @@
 
 Solital is a complete PHP framework with everything you need to create high value projects.
 
+## Installing via Composer
+
+To download Solital, use the command below:
+
+```
+composer create-project solital/solital [solital_project_folder]
+```
+
 ## Documentation
 
 You can access the complete documentation at the following link: [https://solital.github.io/docs-v1/](https://solital.github.io/docs-v1/)
