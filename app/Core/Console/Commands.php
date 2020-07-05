@@ -2,6 +2,8 @@
 
 namespace Solital\Core\Console;
 
+use Solital\Database\Create\Create;
+
 class Commands
 {
     protected static function removeController(string $name)
@@ -270,6 +272,9 @@ class Commands
         $routes = fopen("./routers/routes.php", "a+");
         fwrite($routes, $new_routes);
         fclose($routes);
+
+        $create = new Create();
+        $create->userAuth();
 
         \exec("composer dump-autoload -o", $output);
         \exec("php composer.phar dump-autoload -o", $output);

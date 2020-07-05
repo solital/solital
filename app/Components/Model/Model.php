@@ -9,7 +9,7 @@ abstract class Model
     protected $primaryKey;
     protected $columns;
 
-    protected function database()
+    protected function instance()
     {
         $katrina = new ORM($this->table, $this->primaryKey, $this->columns);
         return $katrina;
