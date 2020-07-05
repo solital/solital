@@ -15,7 +15,7 @@ Solital is a complete PHP framework with everything you need to create high valu
 
 ## Documentation
 
-You can access the complete documentation at the following link: [https://solitalframework.com](https://solitalframework.com)
+You can access the complete documentation at the following link: [https://solital.github.io/docs-v1/](https://solital.github.io/docs-v1/)
 
 ## Resources
 

@@ -2,11 +2,12 @@
 
 namespace Solital\Core\Console;
 use Solital\Core\Console\Commands;
+use Solital\Database\Create\Create;
 
 class Console extends Commands
 {
-    const SOLITAL_VERSION = "0.6.2";
-    const VINCI_VERSION = "0.6.0";
+    const SOLITAL_VERSION = "0.7.0";
+    const VINCI_VERSION = "0.7.0";
 
     public static function verify($command, $file_create, $folder = null)
     {
@@ -147,6 +148,26 @@ class Console extends Commands
                     print_r("Error: Cascading Style Sheet $file_createfile not removed or doesn't exist\n\n");
                 }
                 
+                break;
+
+            case 'katrina':
+                if ($file_create == "configure") {
+                    echo "Enter the drive, host, database name, username and password for your database separated by commas\n\n> ";
+                    $stdin = fopen("php://stdin","rb");
+                    $res = fgets($stdin);
+                }
+                
+                $create = new Create();
+                if (method_exists($create, $file_create)) {
+                    if ($file_create == "configure") {
+                        $create->configure(trim($res));
+                        exit;
+                    }
+
+                    $create->$file_create();
+                } else {
+                    echo "\n\033[91mError:\033[0m the reported method doesn't exist\n\n";
+                }
                 break;
         }
     }

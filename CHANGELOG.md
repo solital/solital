@@ -1,5 +1,17 @@
 # Released Notes
 
+## v0.7.0 - (2020-07-05)
+
+### Added
+
+- Added method to create a standard user in the database
+- Added method that configures `db.php` in` vinci`
+- Added method that creates table directly from `vinci`
+
+### Changed
+
+- Changed Vinci to version 0.7.0
+
 ## v0.6.2 - (2020-07-03)
 
 ### Added
