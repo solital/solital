@@ -62,22 +62,28 @@
             color: #1C1C1C;
             text-decoration: none;
         }
+
+        small {
+            font-size: 15px;
+        }
     </style>
 </head>
 
 <body>
     <section class="container">
         <div class="info">
-            <a href="#" target="_blank" class="link">Documentation</a>
+            <a href="https://solital.github.io/docs-v1/" target="_blank" class="link">Documentation</a>
             <a href="https://github.com/solital/solital" target="_blank" class="link">Github</a>
-            <a href="#" target="_blank" class="link">News</a>
+            <a href="https://github.com/solital/solital/blob/master/CHANGELOG.md" target="_blank" class="link">News</a>
         </div>
 
         <img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1593342725/Solital_logo/solital-logo_iyoo2u.png" align="center" width="600">
 
         <div class="info-2">
             <p><strong>All right!!! You can now start creating your projects</strong></p>
-            <p class="version">Version: <?= Solital\Core\Console\Console::SOLITAL_VERSION; ?></p>
+            <p class="version">Solital version: <?= Solital\Core\Console\Console::SOLITAL_VERSION; ?></p>
+
+            <small>PHP version: <?php echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION; ?></small>
         </div>
     </section>
 </body>

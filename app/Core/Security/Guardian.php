@@ -1,44 +1,48 @@
 <?php
 
 namespace Solital\Core\Security;
-use Solital\Core\Exceptions\NotFoundException;
-use Solital\Core\Session\Session as Session;
-use Solital\Database\ORM;
 use PDO;
+use DateTime;
+use Solital\Database\ORM;
+use Katrina\Exception\Exception;
+use Solital\Database\Forgot\Forgot;
+use Solital\Core\Session\Session as Session;
+use Solital\Core\Exceptions\NotFoundException;
 
 class Guardian
 {
+    /**
+     * @var string
+     */
     private $table;
-    private static $decoded;
 
+    /**
+     * Verify login
+     */
     protected static function verifyLogin()
     {
         return new static;
     }
 
-    protected function table(string $table)
+    /**
+     * @param string $table
+     */
+    public function table(string $table)
     {
         $this->table = $table;
         return $this;
     }
 
-    private static function queryDatabase($sql)
-    {
-        try {
-            $stmt = ORM::query($sql);
-            $stmt->execute();
-            $res = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            return $res;
-        } catch (\PDOException $e) {
-            Exception::alertMessage($e, "'queryDatabase()' error");
-        }
-    }
-
+    /**
+     * @param string $email_column
+     * @param string $pass_column
+     * @param string $email
+     * @param string $password
+     */
     protected function fields(string $email_column, string $pass_column, string $email, string $password)
     {
         $sql = "SELECT * FROM $this->table WHERE $email_column = '$email';";
-        $res = self::queryDatabase($sql);
+        $res = (new Forgot())->queryDatabase($sql);
 
         if (password_verify($password, $res[$pass_column])) {
             return $res;
@@ -47,99 +51,26 @@ class Guardian
         }
     }
 
-    public static function changeEmail(string $table, string $email_column, string $email, string $new_email)
-    {
-        $sql = "SELECT * FROM $table WHERE $email_column = '$email';";
-        $res = self::queryDatabase($sql);
-
-        if (isset($res)) {
-            self::updateEmail($table, $email_column, $email, $new_email);
-        } else {
-            return false;
-        }
-    }
-
+    /**
+     * @param string $table
+     * @param string $email_column
+     * @param string $email
+     */
     public static function verifyEmail(string $table, string $email_column, string $email)
     {
         $sql = "SELECT * FROM $table WHERE $email_column = '$email';";
-        $res = self::queryDatabase($sql);
-
-        if (isset($res)) {
-            self::validateEmail($email);
-        } else {
-            return false;
-        }
-    }
-
-    private static function validateEmail(string $email)
-    {
-        $email = filter_input(INPUT_POST, $email, FILTER_VALIDATE_EMAIL);
-
-        if (preg_match("/^[a-zA-Z0-9.-_]+@[a-z]+\.[a-z.]{1,6}$/", $email)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    private static function updateEmail(string $table, string $email_column, string $email, string $new_email)
-    {
-        if (!filter_var($new_email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
-
-        $sql = "UPDATE $table SET $email_column = '$new_email' WHERE $email_column = '$email'";
-        $stmt = ORM::prepare($sql);
-        $res = $stmt->execute();
-
-        if (isset($res)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static function encrypt(string $value, string $time = '+1 hour')
-    {
-        $data = [
-            'value' => $value,
-            'expire_at' => date("Y-m-d H:i:s", strtotime($time))
-        ];
-
-        $key = openssl_encrypt(json_encode($data), "AES-128-CBC", SECRET, 0, SECRET_IV);
-        $key = base64_encode($key);
-
-        return $key;
-    }
-
-    public static function decrypt(string $key)
-    {
-        $decode = base64_decode($key);
-        $decode = openssl_decrypt($decode, "AES-128-CBC", SECRET, 0, SECRET_IV);
+        $res = (new Forgot())->queryDatabase($sql);
         
-        self::$decoded = $decode;
-        
-        return __CLASS__;
-    }
-
-    public static function value()
-    {
-        $json = json_decode(self::$decoded, true);
-
-        return $json['value'];
-    }
-
-    public static function isValid()
-    {
-        $json = json_decode(self::$decoded, true);
-
-        if ($json['expire_at'] > date("Y-m-d H:i:s")) {
+        if ($res) {
             return true;
         } else {
             return false;
         }
     }
-    
+
+    /**
+     * @param string $index Optional
+     */
     public static function checkLogin(string $index = INDEX_LOGIN) 
     {
         self::verifyConstants();
@@ -149,6 +80,9 @@ class Guardian
         }
     }
     
+    /**
+     * @param string $index Optional
+     */
     public static function checkLogged(string $index = INDEX_LOGIN) 
     {
         self::verifyConstants();
@@ -158,6 +92,9 @@ class Guardian
         }
     }
     
+    /**
+     * @param string $index Optional
+     */
     protected static function validate(string $session, string $index = INDEX_LOGIN) 
     {
         self::verifyConstants();
@@ -166,6 +103,9 @@ class Guardian
         exit;
     }
     
+    /**
+     * @param string $index Optional
+     */
     public static function logoff(string $index = INDEX_LOGIN) 
     {
         self::verifyConstants();
@@ -174,6 +114,9 @@ class Guardian
         exit;
     }
     
+    /**
+     * Checks for constants
+     */
     private static function verifyConstants() 
     {
         if (INDEX_LOGIN == "" || empty(INDEX_LOGIN)) {
