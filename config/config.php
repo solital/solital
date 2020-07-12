@@ -21,6 +21,14 @@ define('SECRET_IV', pack('a16', 'first_secret'));
 define('SECRET', pack('a16', 'second_secret'));
 
 /**
+ * EMAIL CONSTANTS
+ */
+define('EMAIL', [
+    'SENDER' => '',
+    'RECIPIENT' => ''
+]);
+
+/**
  * MONOLOG DIRECTORY
  */
 define('MONOLOG_DIR', dirname(__DIR__).'/app/LogFiles/');

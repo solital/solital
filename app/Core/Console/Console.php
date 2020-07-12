@@ -7,15 +7,14 @@ use Solital\Database\Create\Create;
 class Console extends Commands
 {
     const SOLITAL_VERSION = "0.7.0";
-    const VINCI_VERSION = "0.7.0";
+    const VINCI_VERSION = "0.8.0";
 
     public static function verify($command, $file_create, $folder = null)
     {
         switch ($command) {
             case 'controller':
                 $file = ucfirst($file_create);
-                $file_complete = $file.'Controller';
-                $return = Commands::controller($file_complete);
+                $return = Commands::controller($file);
             
                 if ($return == true) {
                     print_r("Controller ".$file."Controller created\n\n");
@@ -83,8 +82,7 @@ class Console extends Commands
             
             case 'remove-controller':
                 $file = ucfirst($file_create);
-                $file_complete = $file.'Controller';
-                $return = Commands::removeController($file_complete);
+                $return = Commands::removeController($file);
             
                 if ($return == true) {
                     print_r("Controller ".$file."Controller removed\n\n");
@@ -155,6 +153,7 @@ class Console extends Commands
                     echo "Enter the drive, host, database name, username and password for your database separated by commas\n\n> ";
                     $stdin = fopen("php://stdin","rb");
                     $res = fgets($stdin);
+                    $res = \str_replace(" ", "", $res);
                 }
                 
                 $create = new Create();
@@ -203,11 +202,13 @@ class Console extends Commands
                 $about = "Solital framework \033[96m ".Console::SOLITAL_VERSION."\033[0m\n\n";
                 $about .= "Thank you for using Solital, you can see the full documentation at https://solital.com/documentation/starting\n\n";
                 $about .= "Components Version\n";
-                $about .= "+------------------------+\n";
-                $about .= "+ Katrina ORM   |\033[93m ".\Solital\Database\ORM::KATRINA_VERSION."\033[0m  +\n";
-                $about .= "+------------------------+\n";
-                $about .= "+ Vinci Console |\033[93m ".Console::VINCI_VERSION."\033[0m  +\n";
-                $about .= "+------------------------+\n\n";
+                $about .= "+-------------------------+\n";
+                $about .= "+ Katrina ORM   |\033[93m ".\Solital\Database\ORM::KATRINA_VERSION."\033[0m   +\n";
+                $about .= "+-------------------------+\n";
+                $about .= "+ Vinci Console |\033[93m ".Console::VINCI_VERSION."\033[0m   +\n";
+                $about .= "+-------------------------+\n";
+                $about .= "+ PHP Version   |\033[93m ".PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION.".".PHP_RELEASE_VERSION."\033[0m  +\n";
+                $about .= "+-------------------------+\n\n";
                 $about .= "To access the list of Vinci commands, run the command \033[92mphp vinci show\033[0m\n\n";
                 
                 \print_r($about);
@@ -264,6 +265,38 @@ class Console extends Commands
 
                 if (\trim($res) == "Y") {
                     $return = Commands::removeAuth();
+            
+                    if ($return == true) {
+                        print_r("Components removed\n\n");
+                    } else {
+                        print_r("Error: it wasn't possible to remove the components\n\n");
+                    }
+                } else if (\trim($res) == "N") {
+                    echo "Aborted\n\n";
+                    exit;
+                }
+
+                break;
+
+            case 'forgot':
+                $return = Commands::forgotComponents();
+            
+                if ($return == true) {
+                    print_r("Created components. Run the command \033[92mcomposer dump-autoload -o\033[0m to load the classes\n\n");
+                } else {
+                    print_r("Error: it wasn't possible to create the components\n\n");
+                }
+                break;
+
+            case 'remove-forgot':
+            
+                echo "Are you sure you want to delete the forgot password components? (this process cannot be undone)? [Y/N]";
+                $stdin = fopen("php://stdin","rb");
+                $res = fgets($stdin);
+                $res = strtoupper($res);
+
+                if (\trim($res) == "Y") {
+                    $return = Commands::removeForgot();
             
                     if ($return == true) {
                         print_r("Components removed\n\n");

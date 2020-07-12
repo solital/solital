@@ -1,5 +1,24 @@
 # Released Notes
 
+## v0.7.1 - (2020-07-12)
+
+### Added
+
+- Added PHP version check in Vinci
+- Added email recovery class
+- Added new classes: `Hash`,` Reset` and `Forgot`
+- Added email constant in the `config.php` file
+
+### Changed
+
+- Changed links in the `welcome.php` file
+- Changed `Guardian` functions
+- Changed email validation for the `Mail` class
+
+### Fixed
+
+- Fixed key verification when expiring in `Hash`
+
 ## v0.7.0 - (2020-07-05)
 
 ### Added
