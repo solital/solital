@@ -1,31 +1,57 @@
 <?php
 
-namespace Solital\Core\Session;
-use Solital\Core\Exceptions\NotFoundException;
+namespace Solital\Core\Resource;
 
 class Session 
 {
-    
-    public static function new($index, $session) 
+    /**
+     * @param string $index
+     * @param mixed $value
+     */
+    public static function new(string $index, $value): object
     {
-        $_SESSION[$index] = $session;
-        return $_SESSION[$index];
+        $_SESSION[$index] = (is_array($value) ? (object)$value : $value);
+        return new static;
     }
     
-    public static function delete($index) 
+    /**
+     * @param string $index
+     * @return bool
+     */
+    public static function delete(string $index): bool
     {
-        unset($_SESSION[$index]);
-        return true;
+        if (isset($_SESSION[$index])) {
+            unset($_SESSION[$index]);
+            return true;
+        }
     }
     
-    public static function show($index) 
+    /**
+     * @param string $index
+     */
+    public static function show(string $index)
     {
         if (isset($_SESSION[$index])) {
             return $_SESSION[$index];
         }
     }
+
+    /**
+     * @param string $index
+     */
+    public static function has(string $index): bool
+    {
+        if (isset($_SESSION[$index])) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     
-    public static function destroyAll($index) 
+    /**
+     * @return bool
+     */
+    public static function destroy(): bool
     {
         session_destroy();
         return true;

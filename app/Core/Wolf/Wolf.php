@@ -1,20 +1,16 @@
 <?php
 
 namespace Solital\Core\Wolf;
-use Solital\Core\Wolf\Wolf;
 use Solital\Core\Wolf\WolfCache;
 use Solital\Core\Exceptions\NotFoundException;
 
-
 class Wolf extends WolfCache
 {
-    
-    private static $header = ROOT.'/resources/view/header.php';
-    private static $footer = ROOT.'/resources/view/footer.php';
-    private static $view;
-    private static $ext;
-    private static $data;
-
+    /**
+     * @param string $view
+     * @param array $data
+     * @param string $ext
+     */
     public static function loadView(string $view, array $data = null, string $ext = "php") 
     {
         $file = ROOT.'/resources/view/'.$view.'.'.$ext;
@@ -53,24 +49,36 @@ class Wolf extends WolfCache
         return __CLASS__;
     }
 
-    public static function loadFile(string $asset) 
+    /**
+     * @param string @asset
+     */
+    public static function loadFile(string $asset)
     {
         $css = '//'.$_SERVER['HTTP_HOST'].'/'.$asset;
         return $css;
     }
     
+    /**
+     * @param string @asset
+     */
     public static function loadCss(string $asset) 
     {
         $css = '//'.$_SERVER['HTTP_HOST'].'/assets/_css/'.$asset;
         return $css;
     }
     
+    /**
+     * @param string @asset
+     */
     public static function loadJs(string $asset) 
     {
         $js = '//'.$_SERVER['HTTP_HOST'].'/assets/_js/'.$asset;
         return $js;
     }
     
+    /**
+     * @param string @asset
+     */
     public static function loadImg(string $asset) 
     {
         $img = '//'.$_SERVER['HTTP_HOST'].'/assets/_img/'.$asset;

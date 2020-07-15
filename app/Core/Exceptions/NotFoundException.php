@@ -15,5 +15,11 @@ class NotFoundException
         include_once ROOT.'/app/Core/Exceptions/templates/error-guardian.php';
         die;
     }
+
+    public static function FileSystemNotFound(string $view)
+    {
+        include_once ROOT.'/app/Core/Exceptions/templates/error-file.php';
+        die;
+    }
     
 }

@@ -1,27 +1,51 @@
 <?php
 
-namespace Solital\Core\Cookie;
-use Solital\Core\Exceptions\NotFoundException;
+namespace Solital\Core\Resource;
 
-class Cookie {
-    
-    public static function new($index, $cookie, $time = null) 
+class Cookie
+{
+    /**
+     * @param string $index
+     * @param mixed $value
+     * @return bool
+     */
+    public static function new(string $index, string $value, $time = null, string $path = null): bool
     {
-        setcookie($index, $cookie, $time);
+        setcookie($index, $value, $time, $path);
         return true;
     }
     
-    public static function delete($index) 
+    /**
+     * @param string $index
+     * @return bool
+     */
+    public static function delete($index): bool
     {
         setcookie($index, NULL, -1);
         return true;
     }
     
-    public static function show($index) 
+    /**
+     * @param string $index
+     * @return bool
+     */
+    public static function show(string $index) 
     {
-        if (isset($_COOKIE[$index])) {
-            return $_COOKIE[$index];
+        if (\filter_input(INPUT_COOKIE, $index, FILTER_SANITIZE_STRING)) {
+            return \filter_input(INPUT_COOKIE, $index);
         }
     }
-    
+
+    /**
+     * @param string $index
+     * @return bool
+     */
+    public static function has($index): bool
+    {
+        if (\filter_input(INPUT_COOKIE, $index)) {
+            return true;
+        } else {
+            return false;
+        }
+    }    
 }
