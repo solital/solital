@@ -1,5 +1,24 @@
 # Released Notes
 
+## v0.7.2 - (2020-07-15)
+
+### Added
+
+- Added `pass_hash` and `pass_verify` helpers
+- Added `error-file.php` template
+- Added `FileSystem` class
+
+### Fixed
+
+- Fixed Vinci did not create a new folder inside the `view` folder
+- Fixed comments on the `Session` and `Cookie` class
+- Fixed namespace in `Session` and `Cookie`
+- Fixed comments and `Use` on the class `Wolf` and` WolfCache`
+
+### Changed
+
+- Changed $_COOKIE global variable to `filter_input`
+
 ## v0.7.1 - (2020-07-12)
 
 ### Added

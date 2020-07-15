@@ -32,9 +32,13 @@ class Commands
         return false;   
     }
 
-    protected static function removeView(string $name)
+    protected static function removeView(string $name, string $folder = null)
     {
         $file = "./resources/view/".$name.".php";
+
+        if (isset($folder)) {
+            $file = "./resources/view/".$folder."/".$name.".php";
+        }
 
         if (is_file($file)) {
             unlink($file);
@@ -119,9 +123,15 @@ class Commands
         return false;
     }
     
-    protected static function view(string $name) 
+    protected static function view(string $name, string $folder = null) 
     {
         $dir = "./resources/view/";
+
+        if (isset($folder)) {
+            \mkdir("./resources/view/".$folder);
+            $dir = "./resources/view/".$folder."/";
+        }
+        
         if (is_dir($dir)) {
             file_put_contents($dir."$name.php", "<h1>$name</h1>");
             

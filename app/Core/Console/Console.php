@@ -6,7 +6,7 @@ use Solital\Database\Create\Create;
 
 class Console extends Commands
 {
-    const SOLITAL_VERSION = "0.7.0";
+    const SOLITAL_VERSION = "0.7.2";
     const VINCI_VERSION = "0.8.0";
 
     public static function verify($command, $file_create, $folder = null)
@@ -37,7 +37,7 @@ class Console extends Commands
                 break;
 
             case 'view':
-                $return = Commands::view($file_create);
+                $return = Commands::view($file_create, $folder);
             
                 if ($return == true) {
                     print_r("View $file_create created\n\n");
@@ -105,7 +105,7 @@ class Console extends Commands
                 break;
 
             case 'remove-view':
-                $return = Commands::removeView($file_create);
+                $return = Commands::removeView($file_create, $folder);
             
                 if ($return == true) {
                     print_r("View $file_create removed\n\n");
