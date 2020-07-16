@@ -1,6 +1,5 @@
 <?php
 
-use Monolog\Logger;
 use Solital\Core\Http\Uri;
 use Solital\Core\Http\Request;
 use Solital\Core\Http\Response;
@@ -64,6 +63,9 @@ function uploadFile($file): UploadedFile
 
 /**
  * Creates an instance of the ServerRequest class
+ * @param array $headers
+ * @param mixed $protocol
+ * @return ServerRequest
  */
 function serverRequest(array $headers = null, $protocol = null): ServerRequest
 {
