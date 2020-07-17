@@ -5,8 +5,12 @@
   "homepage": "https://solital.github.io/docs-v1/",
   "require": {
     "php": ">= 7.2",
-    "solital/core": "1.0.0-beta",
-    "solital/katrina": "1.0.0-beta1"
+    "solital/core": "1.0.0",
+    "solital/katrina": "1.0.0"
+  },
+  "require-dev": {
+    "monolog/monolog": "2.*",
+    "phpunit/phpunit": "^8"
   },
   "keywords": [
     "framework",
@@ -18,6 +22,7 @@
       "Solital\\": "app/"
     },
     "files": [
+      "app/Functions/components.php",
       "app/Functions/helpers.php"
     ]
   },
