@@ -9,8 +9,8 @@ define('ERRORS_DISPLAY', true);
  * GUARDIAN CONSTANTS
  */
 
-define('URL_LOGIN', 'your_url_login');
-define('URL_DASHBOARD', 'your_url_dashboard');
+define('URL_LOGIN', '/login');
+define('URL_DASHBOARD', '/dashboard');
 define('INDEX_LOGIN', 'solital_index_login');
 
 /**
@@ -32,3 +32,8 @@ define('EMAIL', [
  * MONOLOG DIRECTORY
  */
 define('MONOLOG_DIR', dirname(__DIR__).'/app/LogFiles/');
+
+/**
+ * UPLOAD FILES DIRECTORY
+ */
+define('UP_DIR', 'public/');

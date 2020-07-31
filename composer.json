@@ -3,20 +3,23 @@
   "description": "Solital is a framework for php projects. Contains a route system, template, ORM and API",
   "license": "MIT",
   "homepage": "https://solital.github.io/docs-v1/",
+  "keywords": [
+    "framework",
+    "php",
+    "framework-php",
+    "psr-16",
+    "orm",
+    "api-rest"
+  ],
   "require": {
     "php": ">= 7.2",
-    "solital/core": "1.0.0",
-    "solital/katrina": "1.0.0"
+    "solital/core": "1.0.*",
+    "solital/katrina": "1.1.*"
   },
   "require-dev": {
     "monolog/monolog": "2.*",
     "phpunit/phpunit": "^8"
   },
-  "keywords": [
-    "framework",
-    "php",
-    "framework-php"
-  ],
   "autoload": {
     "psr-4": {
       "Solital\\": "app/"

@@ -113,10 +113,21 @@ function csrf_token(): ?string
 {
     $baseVerifier = Course::router()->getCsrfVerifier();
     if ($baseVerifier !== null) {
-        return $baseVerifier->getTokenProvider()->getToken();
+        return "<input type='hidden' name='csrf_token' value='".$baseVerifier->getTokenProvider()->setToken()."'>";
     }
 
     return null;
+}
+
+/**
+ * Form Method Spoofing
+ * @param string $method
+ * @return string
+ */
+function spoofing(string $method): string
+{
+    $method = strtoupper($method);
+    return "<input type='hidden' name='_method' value='".$method."' readonly />";
 }
 
 /**
@@ -150,5 +161,23 @@ function pass_verify($value, string $hash): bool
         return true;
     } else {
         return false;
+    }
+}
+
+/**
+ * Remove all get param
+ * @return void
+ */
+function remove_param(): void
+{
+    $http = 'http://';
+    if (isset($_SERVER['HTTPS'])) {
+        $http = 'https://';
+    }
+    $url = $http.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
+    if (isset($_SERVER['QUERY_STRING'])) {
+        $url = preg_replace('/\\?.*/', '', $url);
+        response()->redirect($url);
     }
 }

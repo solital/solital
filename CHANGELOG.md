@@ -1,5 +1,14 @@
 # Released Notes
 
+## v1.0.1 - (2020-07-27)
+
+- Added CSRF check by default
+- Added constant `UP_DIR`
+- Added `Storage` folder to store sessions
+- Added `remove_param` and` spoofing` helper
+- Added standard HTML in the `csrf_token` helper
+- Added csrf check token in `index.php`
+--------------------------------------------------------------------
 ## v1.0.0 - (2020-07-17)
 
 ### Added
