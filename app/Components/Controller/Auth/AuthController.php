@@ -1,9 +1,8 @@
 <?php
 
 namespace Solital\Components\Controller\Auth;
+
 use Solital\Core\Security\Guardian;
-use Solital\Message\Message;
-use Solital\Database\ORM;
 
 class AuthController extends Guardian
 {
@@ -31,15 +30,15 @@ class AuthController extends Guardian
      * Authenticates the user in the system
      * @param string $table
      */
-    public function register(string $table) 
+    public function register(string $table)
     {
         $user = filter_input(INPUT_POST, $this->user_post);
         $pass = filter_input(INPUT_POST, $this->pass_post);
-        
+
         $res = Guardian::verifyLogin()
-               ->table($table)
-               ->fields($this->user_column, $this->pass_column, $user, $pass);
-        
+            ->table($table)
+            ->fields($this->user_column, $this->pass_column, $user, $pass);
+
         if ($res) {
             Guardian::validate($user);
         } else {

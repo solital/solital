@@ -3,6 +3,7 @@
 namespace Solital\Database\Forgot;
 use PDO;
 use Solital\Database\ORM;
+use Katrina\Exception\Exception;
 
 class Forgot
 {

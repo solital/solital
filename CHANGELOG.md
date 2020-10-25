@@ -1,6 +1,20 @@
 # Released Notes
 
-## v1.0.1 - (2020-07-27)
+## v1.0.2 - (2020-10-25)
+
+### Added
+
+- Added PHPDoc in `ORM.php`
+- Added time default in the `csrf_token` helper
+- Added `db.php` fole in vinci file
+
+### Changed
+
+- Change `remove_param` helper
+
+--------------------------------------------------------------------
+
+## v1.0.1 - (2020-07-31)
 
 - Added CSRF check by default
 - Added constant `UP_DIR`
