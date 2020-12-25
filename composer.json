@@ -13,7 +13,7 @@
   ],
   "require": {
     "php": ">= 7.2",
-    "solital/core": "1.0.*",
+    "solital/core": "1.1.*",
     "solital/katrina": "1.1.*"
   },
   "require-dev": {

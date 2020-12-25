@@ -1,6 +1,10 @@
 <?php
 
 if (!session_id()) {
+    if (!is_dir(dirname(__DIR__)."/Storage/")) {
+        mkdir(dirname(__DIR__)."/Storage/");
+    }
+    
     session_save_path(dirname(__DIR__)."/Storage/");
     session_start();
 }
