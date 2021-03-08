@@ -10,7 +10,8 @@
     <title>Welcome to Solital</title>
 
     <style>
-        html, body {
+        html,
+        body {
             padding: 0px;
             margin: 0 auto;
             font-family: 'Montserrat', sans-serif;
@@ -53,7 +54,7 @@
             font-size: 18px;
         }
 
-        .info-2 > .version {
+        .info-2>.version {
             font-size: 20px;
             margin-top: 50px;
         }
@@ -83,7 +84,7 @@
             <p><strong>All right!!! You can now start creating your projects</strong></p>
             <p class="version">Solital version: <?= Solital\Core\Console\Console::SOLITAL_VERSION; ?></p>
 
-            <small>PHP version: <?php echo PHP_MAJOR_VERSION.".".PHP_MINOR_VERSION; ?></small>
+            <small>PHP version: <?php echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION; ?></small>
         </div>
     </section>
 </body>

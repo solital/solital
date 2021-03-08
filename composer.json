@@ -8,12 +8,15 @@
     "php",
     "framework-php",
     "psr-16",
+    "psr-14",
+    "psr-11",
+    "psr-4",
     "orm",
     "api-rest"
   ],
   "require": {
-    "php": ">= 7.2",
-    "solital/core": "1.1.*",
+    "php": "^7.2|^8.0",
+    "solital/core": "1.2.*",
     "solital/katrina": "1.1.*"
   },
   "require-dev": {

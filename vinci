@@ -3,8 +3,8 @@
 
 define('ROOT_VINCI', __DIR__);
 
-require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/config/db.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config/db.php';
 
 $command = $argv[1];
 $folder = null;

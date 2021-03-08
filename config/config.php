@@ -29,9 +29,9 @@ define('EMAIL', [
 ]);
 
 /**
- * MONOLOG DIRECTORY
+ * LOG DIRECTORY
  */
-define('MONOLOG_DIR', dirname(__DIR__).'/app/LogFiles/');
+define('LOG_DIR', dirname(__DIR__) . '/app/LogFiles/');
 
 /**
  * UPLOAD FILES DIRECTORY

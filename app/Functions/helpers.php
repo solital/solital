@@ -79,15 +79,24 @@ function serverRequest(array $headers = null, $protocol = null): ServerRequest
     $uri = request()->getUri()->getHost();
     $body = "php://input";
     $serverParams = $_SERVER;
-    $cookieParams = $_COOKIE; 
+    $cookieParams = $_COOKIE;
     #$queryParams = request()->getParamsInput();
     $uploadedFiles = $_FILES;
     $headers = [];
     $protocol = '1.1';
 
-    $server = new ServerRequest($method, $uri, $body, $serverParams, 
-    $cookieParams, $queryParams, $uploadedFiles, $headers, $protocol);
-    
+    $server = new ServerRequest(
+        $method,
+        $uri,
+        $body,
+        $serverParams,
+        $cookieParams,
+        $queryParams,
+        $uploadedFiles,
+        $headers,
+        $protocol
+    );
+
     return $server;
 }
 
@@ -113,7 +122,7 @@ function csrf_token(int $seconds = 90): ?string
 {
     $baseVerifier = Course::router()->getCsrfVerifier();
     if ($baseVerifier !== null) {
-        return "<input type='hidden' name='csrf_token' value='".$baseVerifier->getTokenProvider()->setToken($seconds)."'>";
+        return "<input type='hidden' name='csrf_token' value='" . $baseVerifier->getTokenProvider()->setToken($seconds) . "'>";
     }
 
     return null;
@@ -127,7 +136,7 @@ function csrf_token(int $seconds = 90): ?string
 function spoofing(string $method): string
 {
     $method = strtoupper($method);
-    return "<input type='hidden' name='_method' value='".$method."' readonly />";
+    return "<input type='hidden' name='_method' value='" . $method . "' readonly />";
 }
 
 /**
@@ -171,20 +180,27 @@ function pass_verify($value, string $hash): bool
 function remove_param(): void
 {
     $http = 'http://';
+
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $http = 'https://';
     }
+
     $url = $http . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
     $url = parse_url($url);
 
     if (isset($url['query'])) {
-        if (isset($url['path'])) {
-            header('Refresh: 0, url =' . $url['scheme'] . "://" . $url['host'] . $url['path']);
+        if (strpos($_SERVER["HTTP_HOST"], "localhost") !== false) {
+            header('Refresh: 0, url =' . $url['scheme'] . "://" . $_SERVER["HTTP_HOST"] . $url['path']);
             die;
         } else {
-            header('Refresh: 0, url =' . $url['scheme'] . "://" . $url['host']);
-            die;
+            if (isset($url['path'])) {
+                header('Refresh: 0, url =' . $url['scheme'] . "://" . $url['host'] . $url['path']);
+                die;
+            } else {
+                header('Refresh: 0, url =' . $url['scheme'] . "://" . $url['host']);
+                die;
+            }
         }
     }
 }
