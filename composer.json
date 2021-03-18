@@ -16,8 +16,8 @@
   ],
   "require": {
     "php": "^7.2|^8.0",
-    "solital/core": "1.2.*",
-    "solital/katrina": "1.1.*"
+    "solital/core": "1.3.*",
+    "solital/katrina": "1.2.*"
   },
   "require-dev": {
     "monolog/monolog": "2.*",

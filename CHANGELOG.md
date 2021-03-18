@@ -1,5 +1,18 @@
 # Released Notes
 
+## v1.3.0 - (2021-03-18)
+
+### Added
+
+- Added Core 1.3.0
+- Added Katrina 1.2.0
+
+### Changed
+
+- Changed .gitignore
+
+--------------------------------------------------------------------
+
 ## v1.2.1 - (2021-03-16)
 
 ### Added
