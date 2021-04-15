@@ -14,7 +14,7 @@ Solital is a complete PHP framework with everything you need to create high valu
 To download Solital, use the command below:
 
 ```
-composer create-project solital/solital [solital_project_folder]
+composer create-project solital/solital project
 ```
 
 ## Documentation
