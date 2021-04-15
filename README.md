@@ -1,4 +1,4 @@
-<img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1593342725/Solital_logo/solital-logo_iyoo2u.png" align="center">
+<img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1615812227/Solital_logo_2/solital-logo-md_ozhuv4.png" align="center">
 
 <p align="center">
   <a href="https://github.com/solital/core/releases"><img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/solital/core?style=flat-square"></a>

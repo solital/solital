@@ -1,92 +1,17 @@
 # Released Notes
 
-## v1.3.0 - (2021-03-18)
+## v2.0.0 - (2021-04-15)
 
 ### Added
 
-- Added Core 1.3.0
-- Added Katrina 1.2.0
-
-### Changed
-
-- Changed .gitignore
-
---------------------------------------------------------------------
-
-## v1.2.1 - (2021-03-16)
-
-### Added
-
-- Added Core 1.2.1
-
-### Fixed
-
-- Fixed annotations
-
---------------------------------------------------------------------
-
-## v1.2.0 - (2021-03-05)
-
-### Added
-
-- Added Core 1.2.0
-
---------------------------------------------------------------------
-
-## v1.1.0 - (2020-12-25)
-
-### Added
-
-- Added Core 1.1.0
-
-### Fixed
-
-- Fixed bug in Storage folder
-
---------------------------------------------------------------------
-
-## v1.0.2 - (2020-10-25)
-
-### Added
-
-- Added PHPDoc in `ORM.php`
-- Added time default in the `csrf_token` helper
-- Added `db.php` fole in vinci file
-
-### Changed
-
-- Change `remove_param` helper
-
---------------------------------------------------------------------
-
-## v1.0.1 - (2020-07-31)
-
-- Added CSRF check by default
-- Added constant `UP_DIR`
-- Added `Storage` folder to store sessions
-- Added `remove_param` and` spoofing` helper
-- Added standard HTML in the `csrf_token` helper
-- Added csrf check token in `index.php`
---------------------------------------------------------------------
-## v1.0.0 - (2020-07-17)
-
-### Added
-
-- Added `components.php` file
-- Added `.gitkeep` file in `LogFiles` folder
-
-### Changed
-
-- Changed version 1.0.0-beta to 1.0.0
+- Added Core 2.0.0 by default
+- Added `.env` file
+- Added `config.php` file
 
 ### Removed
 
-- Removed `loadComponents` class in `index.php` file
-
-## v1.0.0-beta - (2020-07-16)
+- Removed Database folder 
 
 ### Changed
 
-- Changed the framework core to another repository
-- Changed standard version of Katrina ORM
-- Changed `helpers.php` file outside the core
+- Changed structure of Solital

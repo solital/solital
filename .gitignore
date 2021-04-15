@@ -2,4 +2,5 @@ composer.lock
 vendor/
 tests/tmp/*
 /nbproject/
-app/Storage/*
+app/Storage/session/*
+app/Helpers/System/*

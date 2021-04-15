@@ -1,15 +1,19 @@
 <?php
 
 /**
- * ALERT: The files below should not be changed. 
- * Changing them may cause a fatal error in your project.
+ * WARNING: DO NOT MAKE ANY KIND OF CHANGE IN THIS FILE. 
+ * ANY KIND OF MODIFICATION WILL BREAK YOUR PROJECT. 
  */
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once dirname(__DIR__). '/vendor/autoload.php';
 
 use Solital\Core\Course\Course;
 
-define('ROOT', dirname(__DIR__));
+define('SITE_ROOT', dirname(__DIR__));
+
+foreach (glob('../app/Helpers/System/*.php') as $helpers) {
+    require_once $helpers;
+}
 
 Course::setDefaultNamespace('\Solital\Components\Controller');
 Course::csrfVerifier(new \Solital\Core\Http\Middleware\BaseCsrfVerifier());
