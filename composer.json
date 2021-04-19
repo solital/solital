@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "solital/core-tests": "2.0.0",
+    "solital/core": "2.0.0",
     "slowprog/composer-copy-file": "^0.3.3"
   },
   "require-dev": {
