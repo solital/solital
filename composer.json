@@ -49,9 +49,9 @@
   },
   "extra": {
     "copy-file": {
-      "vendor/solital/core-tests/src/Resource/Helpers/": "app/Helpers/System",
-      "vendor/solital/core-tests/src/Console/Components/templates/Controller.php": "app/Components/Controller/",
-      "vendor/solital/core-tests/vinci": "vinci"
+      "vendor/solital/core/src/Resource/Helpers/": "app/Helpers/System",
+      "vendor/solital/core/src/Console/Components/templates/Controller.php": "app/Components/Controller/",
+      "vendor/solital/core/vinci": "vinci"
     }
   }
 }
