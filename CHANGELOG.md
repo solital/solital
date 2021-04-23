@@ -1,5 +1,12 @@
 # Released Notes
 
+## v2.1.0 - (2021-04-23)
+
+### Changed
+
+- Changed Core version in composer.json for future updates
+
+--------------------------------------------------------------------------
 ## v2.0.0 - (2021-04-15)
 
 ### Added
