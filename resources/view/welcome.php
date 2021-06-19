@@ -13,7 +13,7 @@
 <body>
     <section class="container">
         <div class="info">
-            <a href="https://solital.github.io/docs-v2/" target="_blank" class="link">Documentation</a>
+            <a href="http://solitalframework.com/" target="_blank" class="link">Documentation</a>
             <a href="https://github.com/solital/solital" target="_blank" class="link">Github</a>
             <a href="https://github.com/solital/solital/blob/master/CHANGELOG.md" target="_blank" class="link">News</a>
         </div>
