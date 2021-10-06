@@ -2,7 +2,7 @@
   "name": "solital/solital",
   "description": "Solital is a framework for php projects. Contains a route system, template, ORM and API",
   "license": "MIT",
-  "homepage": "https://solital.github.io/docs-v2/",
+  "homepage": "http://solitalframework/",
   "keywords": [
     "framework",
     "php",
@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "^7.4|^8.0",
-    "solital/core": "2.*",
+    "solital/core": "2.3.0",
     "slowprog/composer-copy-file": "^0.3.3"
   },
   "require-dev": {
