@@ -1,5 +1,16 @@
 # Released Notes
 
+## v2.3.0 - (2021-10-06)
+
+### Added
+
+- Added `PRODUCTION_MODE` environment
+
+### Fixed
+
+- Fixed `composer.json`
+--------------------------------------------------------------------------
+
 ## v2.2.2 - (2021-06-29)
 
 ### Changed
