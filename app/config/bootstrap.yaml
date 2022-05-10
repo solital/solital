@@ -1,0 +1,26 @@
+# true, false
+mail_exceptions: true
+
+mail_test:
+  mail_test_enable: false
+  mail_debug: 0
+  mail_host: 
+  mail_user: 
+  mail_pass: 
+  mail_security: tls
+  mail_port: 587
+
+# none, code, all
+exception_dark_theme: none
+
+wolf_cache:
+  enabled: false # false, custom
+  time: minute # minute, hour, day, week
+
+# style, script, all, false
+wolf_minify: false
+
+verify_domain:
+  enable_verification: false
+  send_to: 
+  recipient_name: 

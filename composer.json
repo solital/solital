@@ -1,57 +1,53 @@
 {
-  "name": "solital/solital",
-  "description": "Solital is a framework for php projects. Contains a route system, template, ORM and API",
-  "license": "MIT",
-  "homepage": "http://solitalframework/",
-  "keywords": [
-    "framework",
-    "php",
-    "framework-php",
-    "psr-16",
-    "psr-14",
-    "psr-11",
-    "psr-4",
-    "orm",
-    "api-rest",
-    "solital-framework",
-    "solital",
-    "orm-php-framework"
-  ],
-  "require": {
-    "php": "^7.4|^8.0",
-    "solital/core": "2.3.0",
-    "slowprog/composer-copy-file": "^0.3.3"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9"
-  },
-  "autoload": {
-    "psr-4": {
-      "Solital\\": "app/"
+    "name": "solital/solital",
+    "description": "Solital is a framework designed for those who need to create projects quickly and with an easy syntax",
+    "license": "MIT",
+    "homepage": "http://solitalframework/",
+    "keywords": [
+        "framework",
+        "php",
+        "framework-php",
+        "psr-16",
+        "psr-14",
+        "psr-11",
+        "psr-4",
+        "orm",
+        "api-rest",
+        "solital-framework",
+        "solital",
+        "orm-php-framework"
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "solital/core": "3.*"
     },
-    "files": [
-      "config.php"
-    ]
-  },
-  "scripts": {
-    "post-create-project-cmd": [
-      "SlowProg\\CopyFile\\ScriptHandler::copy",
-      "composer dump-autoload -o"
-    ],
-    "post-install-cmd": [
-      "SlowProg\\CopyFile\\ScriptHandler::copy",
-      "composer dump-autoload -o"
-    ],
-    "post-update-cmd": [
-      "SlowProg\\CopyFile\\ScriptHandler::copy",
-      "composer dump-autoload -o"
-    ]
-  },
-  "extra": {
-    "copy-file": {
-      "vendor/solital/core/src/Resource/Helpers/": "app/Helpers/System",
-      "vendor/solital/core/src/Console/Components/Templates/Controller.php": "app/Components/Controller/",
-      "vendor/solital/core/vinci": "vinci"
+    "require-dev": {
+        "phpunit/phpunit": "^9"
+    },
+    "autoload": {
+        "psr-4": {
+            "Solital\\": "app/"
+        },
+        "files": [
+            "config.php"
+        ]
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "composer dump-autoload -o"
+        ],
+        "post-install-cmd": [
+            "composer dump-autoload -o",
+            "php vinci generate:files"
+        ],
+        "post-update-cmd": [
+            "composer dump-autoload -o",
+            "php vinci generate:files"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true
     }
-  }
 }

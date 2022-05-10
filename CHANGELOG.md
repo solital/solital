@@ -1,55 +1,32 @@
 # Released Notes
 
-## v2.3.0 - (2021-10-06)
+## v3.0.0 - (2022-04-xx)
 
 ### Added
 
-- Added `PRODUCTION_MODE` environment
-
-### Fixed
-
-- Fixed `composer.json`
---------------------------------------------------------------------------
-
-## v2.2.2 - (2021-06-29)
+- Added Core 3.x
+- Added configuration files in `app/config`
+- Added `config.php` file in `app/Console/` folder
+- Added new tests in `tests/` folder
+- Added project status in `welcome.php`
 
 ### Changed
 
-- Changed `.env` file; default values
---------------------------------------------------------------------------
+- Changed minimum PHP version
+- Changed `routes.php` file in `routers/` folder
+- Changed `index.php` file in `public/` folder
+- Changed `vinci` file
+- Changed `config.php` file
+- Changed variables for sending emails
+- Changed `scripts` index from `composer.json`
 
-## v2.2.1 - (2021-06-28)
+## Removed
 
-### Fixed
-
-- Fixed `composer.json`
---------------------------------------------------------------------------
-
-## v2.2.0 - (2021-06-19)
-
-### Fixed
-
-- Fixed `welcome.php`
---------------------------------------------------------------------------
-
-## v2.1.0 - (2021-04-23)
-
-### Changed
-
-- Changed Core version in composer.json for future updates
---------------------------------------------------------------------------
-## v2.0.0 - (2021-04-15)
-
-### Added
-
-- Added Core 2.0.0 by default
-- Added `.env` file
-- Added `config.php` file
-
-### Removed
-
-- Removed Database folder 
-
-### Changed
-
-- Changed structure of Solital
+- Removed package `slowprog/composer-copy-file`
+- Removed `SQL.php` class
+- Removed `CustomConsole.php` class
+- Removed all helpers inside `app/`
+- Removed folders inside `Storage/`
+- Removed variables for dumping on Windows
+- Removed `extra` index from `composer.json`
+- Removed `style.min.css` file in `public/assets/_css/`

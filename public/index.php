@@ -8,18 +8,15 @@
 require_once dirname(__DIR__). '/vendor/autoload.php';
 
 use Solital\Core\Course\Course;
+use Solital\Core\Kernel\Application;
+use Solital\Core\Http\Middleware\BaseCsrfVerifier;
 
 define('SITE_ROOT', dirname(__DIR__));
 
-foreach (glob('../app/Helpers/System/*.php') as $helpers) {
-    require_once $helpers;
-}
+Application::autoload("../vendor/solital/core/src/Resource/Helpers/");
 
 Course::setDefaultNamespace('\Solital\Components\Controller');
-Course::csrfVerifier(new \Solital\Core\Http\Middleware\BaseCsrfVerifier());
+Course::csrfVerifier(new BaseCsrfVerifier());
 
-foreach (glob('../routers/*.php') as $routers) {
-    require_once $routers;
-}
-
-Course::start();
+Application::autoload("../routers/");
+Application::init();

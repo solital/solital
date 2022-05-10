@@ -1,0 +1,11 @@
+password:
+  algorithm: default # default - argon2 - argon2d
+  pepper: b3f952d5d9adea6f63bee9d4c6fceeaa
+  cost: 10
+  memory_cost: ''
+  time_cost: ''
+  threads: ''
+
+auth:
+  auth_dashboard_url: /dashboard
+  auth_login_url: /auth

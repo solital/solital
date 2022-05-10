@@ -1,0 +1,14 @@
+enable_test: false
+
+db_test:
+  drive: mysql
+  host: localhost
+  name: db_test
+  user: root
+  pass: 
+  sqlite: 
+
+dump_windows:
+  mysql: C:\xampp\mysql\bin\mysqldump.exe
+  pgsql: C:\Program Files\PostgreSQL\14\bin\pg_dump.exe
+  sqlite: 

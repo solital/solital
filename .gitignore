@@ -3,4 +3,4 @@ vendor/
 tests/tmp/*
 /nbproject/
 app/Storage/session/*
-app/Helpers/System/*
+.phpunit.result.cache

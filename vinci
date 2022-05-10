@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'vendor/autoload.php';
+
+define('SITE_ROOT', __DIR__);
+
+$class_commands = [
+    \Solital\Core\Kernel\Console\SolitalCommands::class,
+    \Solital\Console\Config::class
+];
+
+(new \Solital\Core\Console\Command($class_commands))->read($argv[1], $argv);
