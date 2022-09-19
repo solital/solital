@@ -24,3 +24,6 @@ verify_domain:
   enable_verification: false
   send_to: 
   recipient_name: 
+
+logs:
+  enabled_log_files: false

@@ -1,5 +1,14 @@
 # Released Notes
 
+## v3.0.1 - (2022-09-19)
+
+### Fixed
+
+- Fixed `less` javascript library import
+- Fixed log variable in `bootstrap.yaml` file
+
+--------------------------------------------------------------------------
+
 ## v3.0.0 - (2022-05-10)
 
 ### Added

@@ -24,7 +24,7 @@ $status = \Solital\Core\Kernel\Application::appStatus();
             {% if($status['status'] == true): %}
                 <p><strong class="message success">All right, you can now start creating your projects!</strong></p>
             {% else: %}
-                <p><strong class="message warning">You have settings to do!</strong>
+                <p><strong class="message warning">Some settings have errors!</strong>
                     <button class="btn" onclick="openModal('dv-modal')">View error</button>
                 </p>
             {% endif; %}
@@ -60,7 +60,7 @@ $status = \Solital\Core\Kernel\Application::appStatus();
     <div id="dv-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h1>You have settings to do!</h1>
+                <h1>Some settings have errors!</h1>
             </div>
 
             <div class="modal-body">
@@ -77,6 +77,7 @@ $status = \Solital\Core\Kernel\Application::appStatus();
         </div>
     </div>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
     <script src="{{ load_js('script.js') }}"></script>
 </body>
 
