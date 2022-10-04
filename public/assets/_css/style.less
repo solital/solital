@@ -1,14 +1,18 @@
-@alert             : #ca1e00;
+@alert             : #ff4423;
 @color-text-1      : #00FF00;
-@color-text-2      : #EEEE00;
+@color-text-2      : #b6b600;
 @color-text-3      : #1032E5;
+@text-white        : #ffffff;
+@text-dark         : #0f1929;
 @background-color-1: #696969;
 @background-color-2: #EEEE00;
 @background-color-3: #ffff00;
 @background-color-4: #81ffa6;
 @background-color-5: #000000cc;
-@font-family-1     : 'Montserrat', sans-serif;
-@font-family-2 : 'Source Sans Pro', sans-serif;
+@font-family-1     : 'Montserrat',
+sans-serif;
+@font-family-2 : 'Source Sans Pro',
+sans-serif;
 @padding: 10px;
 
 html,
@@ -24,6 +28,30 @@ img {
 
 small {
     font-size: 18px;
+}
+
+.dark {
+    background-color: @text-dark;
+    color           : @text-white;
+
+    .link,
+    .material-icons {
+        color: @text-white  !important;
+    }
+
+    .welcome {
+        background-color: #1a2a44;
+        padding-bottom  : 1px;
+    }
+
+    .modal-header,
+    .modal-footer {
+        background-color: #1a2a44;
+    }
+
+    .modal-body {
+        background-color: #1f3150;
+    }
 }
 
 .message {
@@ -48,8 +76,7 @@ small {
 }
 
 .info {
-    background-color: @background-color-1;
-    padding         : 5px;
+    padding: 3px;
 }
 
 .info-2 {
@@ -59,9 +86,8 @@ small {
 }
 
 .welcome {
-    background: rgb(255, 255, 255);
-    background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(214, 241, 255, 1) 100%);
-    padding   : 10px;
+    margin-top    : 20px;
+    padding-bottom: 1px;
 }
 
 .flex {

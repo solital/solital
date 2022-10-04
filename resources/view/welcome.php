@@ -1,8 +1,4 @@
-<?php
-
-$status = \Solital\Core\Kernel\Application::appStatus();
-
-?>
+<?php $status = \Solital\Core\Kernel\Application::appStatus(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,15 +14,15 @@ $status = \Solital\Core\Kernel\Application::appStatus();
     <title>Welcome to Solital Framework!</title>
 </head>
 
-<body>
+<body class="{{ $status['theme_dark'] }}">
     <section class="container">
         <section class="info">
             {% if($status['status'] == true): %}
-                <p><strong class="message success">All right, you can now start creating your projects!</strong></p>
+            <p><strong class="message success">All right, you can now start creating your projects!</strong></p>
             {% else: %}
-                <p><strong class="message warning">Some settings have errors!</strong>
-                    <button class="btn" onclick="openModal('dv-modal')">View error</button>
-                </p>
+            <p><strong class="message warning">Some settings have errors!</strong>
+                <button class="btn" onclick="openModal('dv-modal')">View error</button>
+            </p>
             {% endif; %}
         </section>
 
@@ -41,7 +37,7 @@ $status = \Solital\Core\Kernel\Application::appStatus();
         <div class="flex">
             <div class="flex-div">
                 <span class="material-icons">description</span>
-                <p><a href="http://solitalframework.com/" target="_blank" class="link">Documentation</a></p>
+                <p><a href="{{ Solital\Core\Kernel\Application::SITE_DOC_DOMAIN }}" target="_blank" class="link">Documentation</a></p>
             </div>
 
             <div class="flex-div">
@@ -66,7 +62,7 @@ $status = \Solital\Core\Kernel\Application::appStatus();
             <div class="modal-body">
                 <ul>
                     {% foreach($status['message'] as $message): %}
-                        <li>{{ $message }}</li>
+                    <li>{{ $message }}</li>
                     {% endforeach; %}
                 </ul>
             </div>

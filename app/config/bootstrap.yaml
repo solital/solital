@@ -10,8 +10,8 @@ mail_test:
   mail_security: tls
   mail_port: 587
 
-# none, code, all
-exception_dark_theme: none
+exception_dark_theme: false
+exception_json_return: false
 
 wolf_cache:
   enabled: false # false, custom
@@ -27,3 +27,5 @@ verify_domain:
 
 logs:
   enabled_log_files: false
+
+default_timezone: America/Fortaleza
