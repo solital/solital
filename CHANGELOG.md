@@ -1,5 +1,18 @@
 # Released Notes
 
+## v3.1.0 - (2022-10-03)
+
+### Added
+
+- Added autoload helpers in Vinci file
+- Added dark mode in `welcome.php`
+
+### Fixed
+
+- Fixed variables in `bootstrap.yaml`
+
+--------------------------------------------------------------------------
+
 ## v3.0.1 - (2022-09-19)
 
 ### Fixed
