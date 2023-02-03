@@ -29,3 +29,5 @@ logs:
   enabled_log_files: false
 
 default_timezone: America/Fortaleza
+
+json_exception: false
