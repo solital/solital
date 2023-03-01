@@ -18,4 +18,9 @@ class Config implements ExtendCommandsInterface
     {
         return $this->command_class;
     }
+
+    public function getTypeCommands(): string
+    {
+        return "";
+    }
 }
