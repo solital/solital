@@ -18,7 +18,7 @@
         "orm-php-framework"
     ],
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "ext-json": "*",
         "ext-pdo": "*",
         "solital/core": "3.*"
