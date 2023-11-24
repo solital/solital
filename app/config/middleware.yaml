@@ -1,2 +1,3 @@
+# Set middleware routes
 middleware:
   login: \Solital\Middleware\UserMiddleware

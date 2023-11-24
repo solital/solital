@@ -1,14 +1,17 @@
+# Enable test in another database
 enable_test: false
 
+# Set another database conection to tests
 db_test:
   drive: mysql
   host: localhost
-  name: db_test
+  name: teste
   user: root
   pass: 
   sqlite: 
 
+# Set Windows binary dump
 dump_windows:
-  mysql: C:\xampp\mysql\bin\mysqldump.exe
+  mysql: C:\wamp64\bin\mysql\mysql8.0.31\bin
   pgsql: C:\Program Files\PostgreSQL\14\bin\pg_dump.exe
   sqlite: 
