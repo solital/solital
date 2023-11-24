@@ -2,7 +2,7 @@
     "name": "solital/solital",
     "description": "Solital is a framework designed for those who need to create projects quickly and with an easy syntax",
     "license": "MIT",
-    "homepage": "http://solitalframework/",
+    "homepage": "https://solital.github.io/site/",
     "keywords": [
         "framework",
         "php",
@@ -24,7 +24,7 @@
         "solital/core": "3.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9"
+        "phpunit/phpunit": "^10"
     },
     "autoload": {
         "psr-4": {

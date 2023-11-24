@@ -1,5 +1,14 @@
 # Released Notes
 
+## v3.3.0 - (2023-11-24)
+
+### Added
+
+- Added `cache.yaml` file in configurations
+- Added comments in yaml files
+
+--------------------------------------------------------------------------
+
 ## v3.2.2 - (2023-10-23)
 
 ### Changed

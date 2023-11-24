@@ -1,0 +1,6 @@
+# Set cache type
+cache_drive: file
+
+# (If memcache is used) Set host and port
+cache_host: 127.0.0.1
+cache_port: 11211
