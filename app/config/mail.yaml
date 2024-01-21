@@ -1,0 +1,13 @@
+# Enable exception in Mailer class
+# Values: true, false
+mail_exceptions: true
+
+# Enable mail test in localhost
+mail_test:
+  mail_test_enable: false
+  mail_debug: 0
+  mail_host: 
+  mail_user: 
+  mail_pass: 
+  mail_security: tls
+  mail_port: 587

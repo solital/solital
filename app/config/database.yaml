@@ -12,6 +12,6 @@ db_test:
 
 # Set Windows binary dump
 dump_windows:
-  mysql: C:\wamp64\bin\mysql\mysql8.0.31\bin
+  mysql: C:\wamp64\bin\mysql\mysql8.2.0\bin
   pgsql: C:\Program Files\PostgreSQL\14\bin\pg_dump.exe
   sqlite: 

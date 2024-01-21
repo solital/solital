@@ -1,0 +1,19 @@
+enable_logs: true
+
+# Don't remove channel 'single'
+channel:
+  single: 
+    type: stream
+    path: log/logs.log
+    level: debug
+
+  main: 
+    type: syslog
+    path: log/syslogs.log
+    level: error
+
+  mail: 
+    type: mail
+    path: email@email.com
+    level: debug
+    processor: [IntrospectionProcessor, MemoryUsageProcessor, WebProcessor]

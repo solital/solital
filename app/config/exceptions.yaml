@@ -1,0 +1,16 @@
+title: 
+dark_mode: false
+
+# Enable `production mode` in Modern PHP Exception
+production_mode: false
+error_message: 
+
+# Use `false` only if you have no internet connection
+enable_cdn_assets: true
+
+# DATABASE CONFIG
+db_drive: mysql
+db_host: localhost
+db_name: teste
+db_user: root
+db_pass: 

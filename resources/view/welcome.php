@@ -5,76 +5,105 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="icon" href="{{ load_img('favicon.ico') }}">
-    <link rel="stylesheet/less" type="text/css" href="{{ load_css('style.less') }}" />
+    <link rel="stylesheet" href="{{ load_css('style.css') }}">
     <title>Welcome to Solital Framework!</title>
 </head>
 
-<body class="{{ $status['theme_dark'] }}">
-    <section class="container">
-        <section class="info">
-            {% if($status['status'] == true): %}
-            <p><strong class="message success">All right, you can now start creating your projects!</strong></p>
-            {% else: %}
-            <p><strong class="message warning">Some settings have errors!</strong>
-                <button class="btn" onclick="openModal('dv-modal')">View error</button>
-            </p>
-            {% endif; %}
-        </section>
-
-        <section class="welcome">
-            <img src="https://res.cloudinary.com/bdlsltfmk/image/upload/v1615812227/Solital_logo_2/solital-logo-md-trans_xotcpr.png" align="center">
-
-            <div class="info-2">
-                <p class="version">{{ Solital\Core\Kernel\Application::SOLITAL_VERSION }}</p>
+<body>
+    <div class="context">
+        <header>
+            <div class="sides" style="margin-left: 5px;">
+                <img src="https://res.cloudinary.com/bdlsltfmk/image/upload/c_thumb,w_200,g_face/v1616757121/Solital_logo_2/solital-logo-profile_logwvv.png">
             </div>
-        </section>
+            <div class="sides header-right solital-version">{{ Solital\Core\Kernel\Application::SOLITAL_VERSION }}</div>
+        </header>
 
-        <div class="flex">
-            <div class="flex-div">
-                <span class="material-icons">description</span>
-                <p><a href="{{ Solital\Core\Kernel\Application::SITE_DOC_DOMAIN }}" target="_blank" class="link">Documentation</a></p>
+        <main>
+            <h1>Solital Framework</h1>
+
+            <section class="alert-config">
+                {% if($status['status'] == true): %}
+                <p><strong class="message-success">All right, you can now start creating your projects!</strong></p>
+                {% else: %}
+                <p><strong class="message-warning">There are alerts you need to see</strong></p>
+                <p><a class="button" href="#popup">See alerts</a></p>
+                {% endif; %}
+            </section>
+
+            <div class="ag-format-container">
+                <div class="ag-courses_box">
+                    <div class="ag-courses_item">
+                        <a href="{{ Solital\Core\Kernel\Application::SITE_DOC_DOMAIN }}" target="_blank" class="ag-courses-item_link">
+                            <div class="ag-courses-item_bg"></div>
+
+                            <div class="ag-courses-item_title">
+                                Documentation
+                            </div>
+
+                            <div class="ag-courses-item_date-box">
+                                Read the full documentation on the project website
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="ag-courses_item">
+                        <a href="https://github.com/solital/solital" target="_blank" class="ag-courses-item_link">
+                            <div class="ag-courses-item_bg"></div>
+
+                            <div class="ag-courses-item_title">
+                                Github
+                            </div>
+
+                            <div class="ag-courses-item_date-box">
+                                Check the project source code on Github and help us implement new features
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="ag-courses_item">
+                        <a href="https://github.com/solital/solital/blob/master/CHANGELOG.md" target="_blank" class="ag-courses-item_link">
+                            <div class="ag-courses-item_bg"></div>
+
+                            <div class="ag-courses-item_title">
+                                News
+                            </div>
+
+                            <div class="ag-courses-item_date-box">
+                                See what new features are being implemented
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <div class="flex-div">
-                <span class="material-icons">code</span>
-                <p><a href="https://github.com/solital/solital" target="_blank" class="link">Github</a></p>
+            <div class="popup" id="popup">
+                <div class="popup-content">
+                    <h2 class="heading-secondary">There are alerts you need to see</h2>
+                    <ul>
+                        {% foreach($status['message'] as $key => $message): %}
+                        <li><span class="alert">{{ $key }}:</span> {{ $message }}</li>
+                        {% endforeach; %}
+                    </ul>
+                    <a href="#" class="button">Close Popup</a>
+                </div>
             </div>
+        </main>
 
-            <div class="flex-div">
-                <span class="material-icons">newspaper</span>
-                <p><a href="https://github.com/solital/solital/blob/master/CHANGELOG.md" target="_blank" class="link">News</a></p>
-            </div>
-        </div>
-
-    </section>
-
-    <div id="dv-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1>Some settings have errors!</h1>
-            </div>
-
-            <div class="modal-body">
-                <ul>
-                    {% foreach($status['message'] as $message): %}
-                    <li>{{ $message }}</li>
-                    {% endforeach; %}
-                </ul>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn" onclick="closeModal('dv-modal')">Fechar</button>
-            </div>
-        </div>
     </div>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.1/less.min.js"></script>
-    <script src="{{ load_js('script.js') }}"></script>
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 </body>
-
-</html>

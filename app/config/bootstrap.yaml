@@ -1,22 +1,3 @@
-# Enable exception in Mailer class
-# Values: true, false
-mail_exceptions: true
-
-# Enable mail test in localhost
-mail_test:
-  mail_test_enable: false
-  mail_debug: 0
-  mail_host: 
-  mail_user: 
-  mail_pass: 
-  mail_security: tls
-  mail_port: 587
-
-# Enable dark theme in Modern PHP exception and
-# exception in JSON format
-exception_dark_theme: false
-exception_json_return: false
-
 # Enable cache in view
 wolf_cache:
   enabled: false # false, custom
@@ -33,12 +14,11 @@ verify_domain:
   send_to: 
   recipient_name: 
 
-# Enable log files
-logs:
-  enabled_log_files: false
-
 # Set default timezone
 default_timezone: America/Fortaleza
 
 # Throws error in JSON class
 json_exception: false
+
+# Custom CSRF verifier class
+custom_csrf: BaseCsrfVerifier

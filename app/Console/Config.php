@@ -3,7 +3,11 @@
 namespace Solital\Console;
 
 use Solital\Core\Console\Interface\ExtendCommandsInterface;
+use Solital\Core\Kernel\Application;
 
+/**
+ * DON'T REMOVE THIS FILE
+ */
 class Config implements ExtendCommandsInterface
 {
     /**
@@ -16,11 +20,15 @@ class Config implements ExtendCommandsInterface
      */
     public function getCommandClass(): array
     {
+        $this->command_class = Application::getUserCommands();
         return $this->command_class;
     }
 
+    /**
+     * @return string
+     */
     public function getTypeCommands(): string
     {
-        return "";
+        return "User Command";
     }
 }
