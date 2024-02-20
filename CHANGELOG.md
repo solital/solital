@@ -1,5 +1,17 @@
 # Released Notes
 
+## v4.0.1 - (2024-02-20)
+
+### Added
+
+- Added `.gitattributes` file
+
+### Removed
+
+- Removed config files
+
+--------------------------------------------------------------------------
+
 ## v4.0.0 - (2024-01-21)
 
 ### Added

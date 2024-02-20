@@ -1,3 +1,0 @@
-# Set middleware routes
-middleware:
-  auth: \Solital\Middleware\AuthMiddleware
