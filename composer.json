@@ -3,6 +3,7 @@
     "description": "Solital is a framework designed for those who need to create projects quickly and with an easy syntax",
     "license": "MIT",
     "homepage": "https://solital.github.io/site/",
+    "version": "4.0.2",
     "keywords": [
         "framework",
         "php",
@@ -36,7 +37,8 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "composer dump-autoload -o"
+            "composer dump-autoload -o",
+            "php vinci generate:hash"
         ],
         "post-install-cmd": [
             "composer dump-autoload -o",

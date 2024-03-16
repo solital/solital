@@ -1,5 +1,18 @@
 # Released Notes
 
+## v4.0.2 - (2024-03-16)
+
+### Fixed
+
+- Fixed root version at `composer.json`
+- Fixed `config.php` file
+
+### Changed
+
+- Changed `.env` file
+
+--------------------------------------------------------------------------
+
 ## v4.0.1 - (2024-02-20)
 
 ### Added

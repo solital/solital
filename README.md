@@ -7,7 +7,13 @@
 
 ## About
 
-Solital is a complete PHP framework with everything you need to create high value projects.
+Solital is a fast, easy-to-use PHP framework and also has an easy-to-learn syntax. Solital emerged as a lighter and simpler alternative to other frameworks available on the market such as Laravel, Symfony and CodeIgniter.
+
+Solital Framework has several features to help you create PHP projects with fast performance. Vinci Console is a component to help create, remove, update components. Wolf is Solital's default template engine, as well as being quick to render views. Database manipulation is also possible using Katrina ORM, migations and seeders.
+
+PHP has several well-known frameworks such as Laravel, Symfony, CakePHP, among others. All of these projects contribute to the PHP community.
+
+The Solital Framework contributed to this huge community, offering an easier way to create PHP projects, while also offering several important features.
 
 ## Installing via Composer
 
@@ -32,8 +38,10 @@ You can access the complete documentation at the following link: [https://solita
 - ORM for database persistence
 - CSRF protection.
 - Sub-domain routing
-- Custom boot managers to rewrite urls to "nicer" ones.
 - Input manager; easily manage GET, POST and FILE values.
+- Task Scheduler
+- Async HTTP Client
+- And more...
 
 ## License
 

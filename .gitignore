@@ -4,3 +4,4 @@ tests/tmp/*
 /nbproject/
 app/Storage/session/*
 .phpunit.result.cache
+.phpunit.cache
