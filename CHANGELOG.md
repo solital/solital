@@ -1,5 +1,13 @@
 # Released Notes
 
+## v4.0.3 - (2024-04-05)
+
+### Changed
+
+- Changed `vinci` file when no command is passed
+
+--------------------------------------------------------------------------
+
 ## v4.0.2 - (2024-03-16)
 
 ### Fixed

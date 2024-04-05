@@ -3,13 +3,12 @@
 
 require_once 'vendor/autoload.php';
 
-use Solital\Core\Kernel\Application;
+use Solital\Console\Config;
+use Solital\Core\Console\Command;
+use Solital\Core\Kernel\{Application, Console\SolitalCommands};
 
 Application::autoload("vendor/solital/core/src/Resource/Helpers/");
 
-$class_commands = [
-    \Solital\Core\Kernel\Console\SolitalCommands::class,
-    \Solital\Console\Config::class
-];
+$class_commands = [SolitalCommands::class, Config::class];
 
-(new \Solital\Core\Console\Command($class_commands))->read($argv[1], $argv);
+(new Command($class_commands))->read($argv, $argv);
