@@ -1,5 +1,17 @@
 # Released Notes
 
+## v4.0.4 - (2024-08-14)
+
+### Changed
+
+- Changed `config.php` autoload file
+
+### Removed
+
+- Removed `ERRORS_DISPLAY` environment
+
+--------------------------------------------------------------------------
+
 ## v4.0.3 - (2024-04-05)
 
 ### Changed
