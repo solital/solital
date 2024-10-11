@@ -1,5 +1,13 @@
 # Released Notes
 
+## v4.1.0 - (2024-10-11)
+
+### Changed
+
+- Changed `config.php` autoload file to get `.env` file first
+
+--------------------------------------------------------------------------
+
 ## v4.0.4 - (2024-08-14)
 
 ### Changed
